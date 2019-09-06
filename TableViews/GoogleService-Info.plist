@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>521098640675-2aloltga21u2a6a0ualq3cb63ds42h2r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.521098640675-2aloltga21u2a6a0ualq3cb63ds42h2r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDuVU2oR7VmMAKymipH5QradV5178EmIe0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>521098640675</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Ramaas.TableViews</string>
+	<key>PROJECT_ID</key>
+	<string>netflix-clone-933db</string>
+	<key>STORAGE_BUCKET</key>
+	<string>netflix-clone-933db.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:521098640675:ios:7888e9628149bc31e1a096</string>
+	<key>DATABASE_URL</key>
+	<string>https://netflix-clone-933db.firebaseio.com</string>
+</dict>
+</plist>
