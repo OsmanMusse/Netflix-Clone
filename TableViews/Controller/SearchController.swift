@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class SearchController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
+    
+    
     
     var filmCategory: [VideoCategory]?
     
@@ -49,6 +52,17 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         setupCollectionView()
         setupLayout()
         
+        var firebaseDatabase = Database.database().reference().child("Categories")
+        var firebaseStorage  = Storage.storage().reference()
+  
+        
+        firebaseDatabase.observeSingleEvent(of: DataEventType.value) { (snapShot: DataSnapshot) in
+            print(snapShot)
+            
+            
+        }
+        
+        print("This is the database Info \(firebaseDatabase)")
         // set up the modal
         filmCategory = VideoCategory.getVideoCategory()
         

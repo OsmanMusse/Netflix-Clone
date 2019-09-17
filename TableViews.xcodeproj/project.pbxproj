@@ -39,6 +39,7 @@
 		D3CEFBB622EC044600421AC4 /* PopularViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CEFBB522EC044600421AC4 /* PopularViewCell.swift */; };
 		D3D816C9231809A900F244E1 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D816C8231809A900F244E1 /* SearchController.swift */; };
 		D3E552C22307956900CF984E /* EpisodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E552C12307956900CF984E /* EpisodeController.swift */; };
+		D3FA5388232AB4E1001F211E /* SettingOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FA5387232AB4E1001F211E /* SettingOptionCell.swift */; };
 		F435CE0850CAAAB060494EF1 /* Pods_TableViews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D34CB101967198B4DF380E8 /* Pods_TableViews.framework */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,7 @@
 		D3CEFBB522EC044600421AC4 /* PopularViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewCell.swift; sourceTree = "<group>"; };
 		D3D816C8231809A900F244E1 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		D3E552C12307956900CF984E /* EpisodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeController.swift; sourceTree = "<group>"; };
+		D3FA5387232AB4E1001F211E /* SettingOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +242,7 @@
 				D3C79D11230AF8B700A5748F /* CollectionRandomCell.swift */,
 				D3C79D13230B84F200A5748F /* VideoOptionCell.swift */,
 				D3B5159E2314053C00E9222A /* TrailerCustomView.swift */,
+				D3FA5387232AB4E1001F211E /* SettingOptionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				D3D816C9231809A900F244E1 /* SearchController.swift in Sources */,
 				D3893A19230316D500685C78 /* Colors.swift in Sources */,
 				D36DFFE422D3D1CB0044FF05 /* AnswerCell.swift in Sources */,
+				D3FA5388232AB4E1001F211E /* SettingOptionCell.swift in Sources */,
 				D32E1A28231AF51F00F93359 /* SearchBarHeader.swift in Sources */,
 				D3CEFBB622EC044600421AC4 /* PopularViewCell.swift in Sources */,
 				D3C79D14230B84F200A5748F /* VideoOptionCell.swift in Sources */,

@@ -1,0 +1,56 @@
+{
+  "Viodecategories": [
+    {
+      "name": "MyList",
+      "videoData": [
+        {
+          "videoTitle": "Jim-Jefferes-Bare",
+          "videoUrl": "Some URl in Firebase Storage",
+          "videoTrailer": [
+            {
+              "videoTrailerUrl": "Some trailer url in Firebase Storage",
+              "videoTitle": "Drunken Watermelon"
+            }
+
+          ]
+        },
+
+      {
+        "videoTitle": "Jim-Jefferies-ThisIsMeNow",
+        "videoUrl": "Some URl in Firebase Storage",
+        "videoTrailer": [
+          {
+            "videoTrailerUrl": "Some trailer url in Firebase Storage",
+            "videoTitle": "Drunken Watermelon"
+          }
+
+        ]
+      },
+
+      {
+        "videoTitle": "Bill-Buss-WalkYourWayOut",
+        "videoUrl": "Some URl in Firebase Storage",
+        "videoTrailer": [
+          {
+            "videoTrailerUrl": "Some trailer url in Firebase Storage",
+            "videoTitle": "Drunken Watermelon"
+          }
+
+        ]
+      },
+
+      {
+        "videoTitle": "Bill-Burr-I'm Sorry You Feel That Way",
+        "videoUrl": "Some URl in Firebase Storage",
+        "videoTrailer": [
+          {
+            "videoTrailerUrl": "Some trailer url in Firebase Storage",
+            "videoTitle": "Drunken Watermelon"
+          }
+
+        ]
+      }
+      ]
+    }
+  ]
+}
