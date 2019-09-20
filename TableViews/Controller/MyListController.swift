@@ -50,6 +50,20 @@ class MyListController: UIViewController {
         return view
     }()
     
+    
+    lazy var findSomethingBtn: UIButton = {
+       let button = UIButton()
+        button.setTitle("Find Something To Watch".uppercased(), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.borderColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1).cgColor
+        button.layer.borderWidth = 1
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(goToHomeScreen), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
        setupNavigationController()
         view.backgroundColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
@@ -68,20 +82,21 @@ class MyListController: UIViewController {
     
     
     @objc func handleBackBtn(){
-        
-        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-        
         self.navigationController?.popViewController(animated: true)
-        
-        
     }
+    
+    @objc func goToHomeScreen(){
+       // Present the Home screen when button is clicked on
+    }
+    
     func setupLayout() {
         view.addSubview(blackTopView)
         view.addSubview(addMessageView)
         view.addSubview(messageLabel)
+        view.addSubview(findSomethingBtn)
         
         
         NSLayoutConstraint.activate([
@@ -97,9 +112,14 @@ class MyListController: UIViewController {
               addMessageView.heightAnchor.constraint(equalToConstant: 150),
               
               messageLabel.topAnchor.constraint(equalTo: addMessageView.bottomAnchor, constant: 17),
-              messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-              messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-              messageLabel.heightAnchor.constraint(equalToConstant: 130)
+              messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+              messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+              messageLabel.heightAnchor.constraint(equalToConstant: 80),
+              
+              findSomethingBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+              findSomethingBtn.widthAnchor.constraint(equalToConstant: 250),
+              findSomethingBtn.heightAnchor.constraint(equalToConstant: 40),
+              findSomethingBtn.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10),
     
             ])
     }
