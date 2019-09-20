@@ -139,7 +139,7 @@ class SettingsHeader: UICollectionViewCell {
             addProfileBtn.heightAnchor.constraint(equalToConstant: 70),
             
             settingStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            settingStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 35),
+            settingStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0),
             settingStackView.widthAnchor.constraint(equalToConstant: 270),
             settingStackView.heightAnchor.constraint(equalToConstant: 70),
             

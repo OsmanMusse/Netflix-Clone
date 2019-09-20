@@ -28,6 +28,7 @@
 		D397C2EE22F11C4C0025DF9E /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D397C2ED22F11C4C0025DF9E /* VideoViewCell.swift */; };
 		D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81D8C230CD26A007852F8 /* extensions.swift */; };
 		D3A81D8F230EE121007852F8 /* EpisodeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */; };
+		D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0A56F2333F83F0049ED44 /* MyListController.swift */; };
 		D3B2BF2F2300CE5C00012CA3 /* SingleVideoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B2BF2E2300CE5C00012CA3 /* SingleVideoHeader.swift */; };
 		D3B2BF312301F58500012CA3 /* StretchHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */; };
 		D3B5159D23135FA900E9222A /* SingleVideoHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */; };
@@ -90,6 +91,7 @@
 		D397C2ED22F11C4C0025DF9E /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
 		D3A81D8C230CD26A007852F8 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeader.swift; sourceTree = "<group>"; };
+		D3B0A56F2333F83F0049ED44 /* MyListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListController.swift; sourceTree = "<group>"; };
 		D3B2BF2E2300CE5C00012CA3 /* SingleVideoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleVideoHeader.swift; sourceTree = "<group>"; };
 		D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchHeaderLayout.swift; sourceTree = "<group>"; };
 		D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleVideoHeaderProtocol.swift; path = TableViews/View/SingleVideoHeaderProtocol.swift; sourceTree = SOURCE_ROOT; };
@@ -222,6 +224,7 @@
 				D3E552C12307956900CF984E /* EpisodeController.swift */,
 				D376C9C32315E63900E1755F /* SettingScreen.swift */,
 				D3D816C8231809A900F244E1 /* SearchController.swift */,
+				D3B0A56F2333F83F0049ED44 /* MyListController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */,
 				D3C79D12230AF8B700A5748F /* CollectionRandomCell.swift in Sources */,
 				D338C1B922D0289900295657 /* AppDelegate.swift in Sources */,
+				D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */,
 				D376C9C42315E63900E1755F /* SettingScreen.swift in Sources */,
 				D37AC90B22FC767D00CA270C /* SingleVideoController.swift in Sources */,
 			);

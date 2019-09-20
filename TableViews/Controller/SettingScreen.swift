@@ -16,6 +16,9 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     
     override func viewDidLoad() {
+
+        setupNavigationBar()
+        
         collectionView.register(SettingsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: settingHeaderCellId)
         collectionView.register(SettingCustomCell.self, forCellWithReuseIdentifier: settingCustomCellId)
         collectionView.contentInsetAdjustmentBehavior = .never
@@ -26,6 +29,27 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
         }
 
     }
+    
+    
+    
+    func setupNavigationBar(){
+        
+        // Hides the navigation bar when back button is clicked on from the setting option cell
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    
+    func goToScreen(){
+        let listController = MyListController()
+        listController.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        listController.navigationController?.navigationBar.shadowImage = UIImage()
+        listController.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.pushViewController(listController, animated: true)
+    }
+    
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: settingHeaderCellId, for: indexPath) as? SettingsHeader
@@ -50,12 +74,14 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
         SettingCustomCell
         cell?.settingButton.setTitle(headerTitle[indexPath.item], for: .normal)
         let firstCell = indexPath.item == 0
-        var lastCell = indexPath.item == 5
+        let lastCell = indexPath.item == 5
         cell?.blackSeperatorLine.backgroundColor = firstCell ? UIColor.black : UIColor.clear
         if firstCell {
             cell?.settingButton.setImage(#imageLiteral(resourceName: "tick-gray").withRenderingMode(.alwaysOriginal), for: .normal)
             cell?.settingButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -18)
             cell?.rightArrow.isHidden = false
+            cell?.settingScreen = self
+            
         }
         if indexPath.item == 5 {
             cell?.settingButton.setTitleColor(Colors.btnLightGray, for: .normal)
@@ -78,6 +104,10 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
 
 class SettingCustomCell: UICollectionViewCell {
     
+    
+    var settingScreen: SettingScreen?
+    
+    
     let blackSeperatorLine: UIView = {
        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -92,19 +122,27 @@ class SettingCustomCell: UICollectionViewCell {
         return image
     }()
     
-    let settingButton: UIButton = {
+    lazy var settingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("My List", for: .normal)
+        button.addTarget(self, action: #selector(goToController), for: .touchUpInside)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
         setupLayout()
     }
+    
+    
+    @objc func goToController(){
+        settingScreen?.goToScreen()
+    }
+    
     
     func setupLayout(){
         addSubview(settingButton)

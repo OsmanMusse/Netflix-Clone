@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SearchController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -48,6 +49,23 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         collectionView.backgroundColor = Colors.collectionViewGray
         setupCollectionView()
         setupLayout()
+        
+        let firebaseDatabase = Database.database().reference()
+        
+        
+        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
+            
+            guard let dict = snapShot.value as? [String: [Dictionary<String, AnyObject>]] else {return}
+            
+            guard var firstItem = dict["Videocategories"]  else {return}
+
+            
+
+             print(dict)
+   
+            
+            
+        }
         
         // set up the modal
         filmCategory = VideoCategory.getVideoCategory()

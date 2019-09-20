@@ -32,17 +32,21 @@ class CustomTabBarController: UITabBarController {
         downloaderController.tabBarItem.image = #imageLiteral(resourceName: "download")
         downloaderController.tabBarItem.title = "Downloads"
         
+        
         let moreControllerlayout = UICollectionViewFlowLayout()
         let moreController = SettingScreen(collectionViewLayout: moreControllerlayout)
         moreController.tabBarItem.image = #imageLiteral(resourceName: "menu (2)")
         moreController.tabBarItem.title = "More"
         
+        let moreNavigationController = UINavigationController(rootViewController: moreController)
         
+        moreNavigationController.navigationController?.navigationBar.tintColor = .red
+        moreNavigationController.navigationController?.navigationBar.barTintColor = .red
         
         let mainNavigationController = UINavigationController(rootViewController: appScreenController)
     
         
-        viewControllers  = [mainNavigationController, searchController, downloaderController, moreController]
+        viewControllers  = [mainNavigationController, searchController, downloaderController, moreNavigationController]
         
         
         
