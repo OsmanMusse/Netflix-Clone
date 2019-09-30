@@ -9,7 +9,15 @@
 import UIKit
 
 
+protocol SettingScreenDelegate {
+    func goToHome()
+}
+
 class MyListController: UIViewController {
+    
+    
+    var delegate: SettingScreenDelegate?
+    var settingScreen: SettingScreen?
     
     let blackTopView: UIView = {
        let view = UIView()
@@ -59,18 +67,19 @@ class MyListController: UIViewController {
         button.layer.borderColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1).cgColor
         button.layer.borderWidth = 1
         button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(goToHomeScreen), for: .touchUpInside)
+        button.addTarget(self, action: #selector(goToHomeController), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     override func viewDidLoad() {
        setupNavigationController()
-        view.backgroundColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+        view.backgroundColor = Colors.settingBg
         setupLayout()
     }
     
     func setupNavigationController(){
+        
         self.navigationItem.title = "My List"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)]
 
@@ -88,8 +97,12 @@ class MyListController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func goToHomeScreen(){
-       // Present the Home screen when button is clicked on
+    @objc func goToHomeController(){
+        let homeScreen = self.tabBarController?.viewControllers?[0]
+        
+     
+        self.tabBarController?.selectedIndex = 0
+        
     }
     
     func setupLayout() {
@@ -117,7 +130,7 @@ class MyListController: UIViewController {
               messageLabel.heightAnchor.constraint(equalToConstant: 80),
               
               findSomethingBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-              findSomethingBtn.widthAnchor.constraint(equalToConstant: 250),
+              findSomethingBtn.widthAnchor.constraint(equalToConstant: 245),
               findSomethingBtn.heightAnchor.constraint(equalToConstant: 40),
               findSomethingBtn.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10),
     

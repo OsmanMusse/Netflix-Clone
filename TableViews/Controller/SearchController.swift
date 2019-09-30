@@ -42,7 +42,7 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         return searchBar
     }()
     
-    
+   
 
     
     override func viewDidLoad() {
@@ -100,6 +100,9 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         collectionView.register(SearchViewCell.self, forCellWithReuseIdentifier: searchCellId)
     }
     
+     
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width, height: 33)
@@ -110,6 +113,8 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         return cell!
     }
     
+    
+ 
 
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

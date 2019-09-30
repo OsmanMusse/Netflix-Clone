@@ -15,4 +15,6 @@ class Colors {
     static var darkGray: UIColor =  UIColor(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
     static var btnLightGray: UIColor = UIColor(red: 88/255, green: 88/255, blue: 88/255, alpha: 1)
     static var collectionViewGray: UIColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+    static var settingBg: UIColor =  UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+    static var switchColor: UIColor = UIColor(red: 54/255, green: 122/255, blue: 253/100, alpha: 1)
 }

@@ -42,9 +42,10 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return button
     }()
     
-    let myListBtn: UIButton = {
+    lazy var myListBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("My List", for: .normal)
+        button.addTarget(self, action: #selector(goToListController), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -91,14 +92,11 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     func setupNavBar(){
-        
-      
-    
+       
         let netflixLogo = UIBarButtonItem(image: #imageLiteral(resourceName: "netflix (1)").withRenderingMode(.alwaysOriginal), style: .plain, target: nil, action: nil)
         netflixLogo.imageInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
         
-        
-        let label = UIBarButtonItem(title: "hadsa", style: .plain, target: nil, action: nil)
+    
         let sview = UIStackView(arrangedSubviews: [seriesBtn,filmsBtn,myListBtn])
         sview.axis = .horizontal
         sview.alignment = .center
@@ -107,8 +105,7 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
         sview.translatesAutoresizingMaskIntoConstraints = false
         
         let customView = UIBarButtonItem(customView: sview)
-        self.navigationController?.navigationBar.backgroundColor = .red
-        
+
         navigationItem.setRightBarButtonItems([customView], animated: false)
         
         
@@ -139,7 +136,6 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let navigationController = UINavigationController(rootViewController: singleVideoController)
 
         self.present(navigationController, animated: true, completion: nil)
-//        self.present(singleVideoController, animated: true, completion: nil)
     }
     
   
@@ -237,6 +233,11 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return cell
         }
 }
+    
+    
+    @objc func goToListController(){
+        self.navigationController?.pushViewController(MyListController(), animated: true)
+    }
     
     func setupLayout(){
         view.addSubview(tableView)
