@@ -15,6 +15,7 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
     let VideoPlayBackCellId = "appSettingCellId"
     let downloadCellId = "downloadCellId"
     let cellHeaderId = "cellHeaderId"
+    let UserUsageCellId = "UserUsageCellId"
     
     
     let blackTopView: UIView = {
@@ -26,10 +27,23 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
     }()
     
     override func viewDidLoad() {
+        remainingDiskSpaceOnThisDevice()
         collectionView.backgroundColor = Colors.settingBg
         setupCollectionView()
         setupNavigationBar()
         setupLayout()
+        
+        
+    }
+
+    func remainingDiskSpaceOnThisDevice() -> String {
+        var remainingSpace = NSLocalizedString("Unknown", comment: "The remaining free disk space on this device is unknown.")
+        if let attributes = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()),
+            let freeSpaceSize = attributes[FileAttributeKey.systemFreeSize] as? Int64 {
+            remainingSpace = ByteCountFormatter.string(fromByteCount: freeSpaceSize, countStyle: .file)
+        }
+        print(" The Remaining Space is == \(remainingSpace)")
+        return remainingSpace
     }
     
     func setupNavigationBar(){
@@ -52,6 +66,7 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
         }
         collectionView.register(VideoPlayBackCell.self, forCellWithReuseIdentifier: VideoPlayBackCellId)
         collectionView.register(DownloadCell.self, forCellWithReuseIdentifier: downloadCellId)
+        collectionView.register(UserUsageCell.self, forCellWithReuseIdentifier: UserUsageCellId)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(AppSettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: cellHeaderId)
     }
@@ -62,44 +77,64 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
         if indexPath.section == 0 {
             cell?.headerLabel.text = appSettingTitles[0].uppercased()
             return cell!
-        } else {
-            cell?.headerLabel.text = appSettingTitles[1].uppercased()
+        }
+            
+        if indexPath.section == 1 {
+            cell?.headerLabel.text  = appSettingTitles[1].uppercased()
+            return cell!
+        }
+        
+        else {
+            cell?.headerLabel.text = ""
+            cell?.underlineView.isHidden = true
             return cell!
         }
         
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 2 {
+            return CGSize(width: self.view.frame.width, height: 0)
+        }
+        else {
         return CGSize(width: view.frame.width, height: 58)
+      }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-             return CGSize(width: self.view.frame.width, height: 65)
+             return CGSize(width: self.view.frame.width, height: 55)
             
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 4
-            
+        switch section {
+        case 0: return 1
+        case 1: return 4
+        case 2: return 1
+        default: return 4
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        var downloadTitles: [String] = ["Wi-Fi Only", "Smart Downloads", "Video Quality"]
+
         if indexPath.section == 0 {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoPlayBackCellId, for: indexPath) as? VideoPlayBackCell
             
             return cell!
-        } else {
+        }
+            
+        if indexPath.section == 2 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserUsageCellId, for: indexPath) as? UserUsageCell
+            
+            return cell!
+        }
+        
+        else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: downloadCellId, for: indexPath) as? DownloadCell
             
             if indexPath.item == 0 {
@@ -113,12 +148,18 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
                     cell?.topConstraint?.isActive = true
             case 2: cell?.settingLabel.text = "Video Quality";
                     cell?.settingDescription.text = "Standard";
-                    cell?.topConstraint?.isActive = false
-                    cell?.centerYConstraint?.isActive = true
+                    cell?.centerYConstraint?.isActive = false
+                    cell?.leftArrow.isHidden = false
+                    cell?.switchIcon.isHidden = true
+                    cell?.topConstraint?.isActive = true
+                    cell?.topConstraint?.constant = 5
             case 3: cell?.settingLabel.text = "Delete All Downloads";
-                    cell?.centerYConstraint?.isActive = false;
+                    cell?.settingDescription.isHidden = true
+                    cell?.centerYConstraint?.isActive = true;
                     cell?.topConstraint?.isActive = true
                     cell?.switchIcon.isHidden = true
+                    cell?.underlineView.isHidden = true
+                    cell?.underlineView.isHidden = true
             default: break
             }
             

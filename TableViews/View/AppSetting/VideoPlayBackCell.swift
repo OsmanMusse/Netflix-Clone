@@ -14,7 +14,7 @@ class VideoPlayBackCell: UICollectionViewCell {
     let MobileDataLabel: UIButton = {
       let button = UIButton(type: .system)
         button.setTitle("Mobile Data Usage", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 19)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -24,7 +24,7 @@ class VideoPlayBackCell: UICollectionViewCell {
        let label = UILabel()
         label.text = "Automatic"
         label.textColor = Colors.btnGray
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -56,7 +56,7 @@ class VideoPlayBackCell: UICollectionViewCell {
             MobileDataLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
              MobileDataLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
              
-             dataUsageType.topAnchor.constraint(equalTo: MobileDataLabel.bottomAnchor, constant: 4),
+             dataUsageType.topAnchor.constraint(equalTo: MobileDataLabel.bottomAnchor, constant: 2),
              dataUsageType.leadingAnchor.constraint(equalTo: MobileDataLabel.leadingAnchor),
              
              leftArrow.centerYAnchor.constraint(equalTo: self.centerYAnchor),

@@ -17,4 +17,7 @@ class Colors {
     static var collectionViewGray: UIColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
     static var settingBg: UIColor =  UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
     static var switchColor: UIColor = UIColor(red: 54/255, green: 122/255, blue: 253/100, alpha: 1)
+    static var underLineBackgroundColor: UIColor = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1)
+    
+    static var usedBarBackgroundColor: UIColor = UIColor(red: 73/255, green: 73/255, blue: 73/255, alpha: 1)
 }

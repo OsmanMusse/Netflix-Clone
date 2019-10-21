@@ -21,7 +21,7 @@ class AppSettingHeader: UICollectionViewCell {
       let label = UILabel()
         label.text = "Video Playback".uppercased()
         label.textColor = Colors.btnGray
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

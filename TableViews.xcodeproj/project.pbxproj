@@ -37,6 +37,7 @@
 		D3B2BF312301F58500012CA3 /* StretchHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */; };
 		D3B5159D23135FA900E9222A /* SingleVideoHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */; };
 		D3B5159F2314053C00E9222A /* TrailerCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5159E2314053C00E9222A /* TrailerCustomView.swift */; };
+		D3B7A97B234D52D60000A7DC /* UserUsageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B7A97A234D52D60000A7DC /* UserUsageCell.swift */; };
 		D3C79D12230AF8B700A5748F /* CollectionRandomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C79D11230AF8B700A5748F /* CollectionRandomCell.swift */; };
 		D3C79D14230B84F200A5748F /* VideoOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C79D13230B84F200A5748F /* VideoOptionCell.swift */; };
 		D3CEFBB222EBD11F00421AC4 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CEFBB122EBD11F00421AC4 /* CustomTabBarController.swift */; };
@@ -104,6 +105,7 @@
 		D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchHeaderLayout.swift; sourceTree = "<group>"; };
 		D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleVideoHeaderProtocol.swift; path = TableViews/View/SingleVideoHeaderProtocol.swift; sourceTree = SOURCE_ROOT; };
 		D3B5159E2314053C00E9222A /* TrailerCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCustomView.swift; sourceTree = "<group>"; };
+		D3B7A97A234D52D60000A7DC /* UserUsageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUsageCell.swift; sourceTree = "<group>"; };
 		D3C79D11230AF8B700A5748F /* CollectionRandomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRandomCell.swift; sourceTree = "<group>"; };
 		D3C79D13230B84F200A5748F /* VideoOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoOptionCell.swift; sourceTree = "<group>"; };
 		D3CEFBB122EBD11F00421AC4 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */,
 				D301FAEC233D4619008BD264 /* DownloadCell.swift */,
+				D3B7A97A234D52D60000A7DC /* UserUsageCell.swift */,
 			);
 			path = AppSetting;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 			files = (
 				D301FAE6233C212E008BD264 /* AppSettingScreen.swift in Sources */,
 				D3CEFBB422EC024000421AC4 /* DataModel.swift in Sources */,
+				D3B7A97B234D52D60000A7DC /* UserUsageCell.swift in Sources */,
 				D3D816C9231809A900F244E1 /* SearchController.swift in Sources */,
 				D3893A19230316D500685C78 /* Colors.swift in Sources */,
 				D36DFFE422D3D1CB0044FF05 /* AnswerCell.swift in Sources */,

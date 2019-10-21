@@ -59,11 +59,17 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
             
             guard var firstItem = dict["Videocategories"]  else {return}
 
-            
+            guard let videoData = firstItem[0]["videoData"] else {return}
+            guard let videoItems = videoData as? [Dictionary<String, AnyObject>] else {return}
+        
+            for item in videoItems {
 
-             print(dict)
-   
-            
+              
+                
+                print(item["videoUrl"]!)
+            }
+
+//             print(snapShot.value)
             
         }
         
