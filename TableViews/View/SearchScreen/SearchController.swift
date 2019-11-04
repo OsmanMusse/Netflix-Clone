@@ -12,6 +12,7 @@ import Firebase
 class SearchController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
     
     var filmCategory: [VideoCategory]?
+    var searchBarHeader: SearchBarHeader?
     
     let placeholderWidth: CGFloat = -265
     var offset = UIOffset()
@@ -46,32 +47,19 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
 
     
     override func viewDidLoad() {
+        view.backgroundColor = Colors.collectionViewGray
         collectionView.backgroundColor = Colors.collectionViewGray
+        
+        collectionView.alpha = 0
+        
         setupCollectionView()
         setupLayout()
+        setupFirebaseDatabase()
         
-        let firebaseDatabase = Database.database().reference()
+        searchBarHeader = SearchBarHeader()
         
         
-        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
-            
-            guard let dict = snapShot.value as? [String: [Dictionary<String, AnyObject>]] else {return}
-            
-            guard var firstItem = dict["Videocategories"]  else {return}
-
-            guard let videoData = firstItem[0]["videoData"] else {return}
-            guard let videoItems = videoData as? [Dictionary<String, AnyObject>] else {return}
-        
-            for item in videoItems {
-
-              
-                
-                print(item["videoUrl"]!)
-            }
-
-//             print(snapShot.value)
-            
-        }
+        // Database will be written within the view not the controller
         
         // set up the modal
         filmCategory = VideoCategory.getVideoCategory()
@@ -116,6 +104,7 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: searchBarHeaderCellId, for: indexPath) as? SearchBarHeader
+
         return cell!
     }
     
@@ -125,10 +114,10 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let videoCount =  filmCategory?[1].videoData?.count {
-            return videoCount
+            return filterVideoCollection.count
         }
         
-        return 9
+        return filterVideoCollection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -136,15 +125,99 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: searchCellId, for: indexPath) as? SearchViewCell
-        if let filmCollection = filmCategory?[1].videoData?[indexPath.item] {
-            cell?.filmVideos = filmCollection
+        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: searchCellId, for: indexPath) as? SearchViewCell
+        
+            cell?.videoCollection = filterVideoCollection[indexPath.item]
+
             return cell!
-        }
-    
-        return cell!
        
         
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterVideoCollection = self.videoCollection.filter { (videos) -> Bool in
+            guard let videoName = videos.videoName else {return true}
+            return videoName.contains(searchText)
+        }
+        
+        if filterVideoCollection.count == 0 {
+          
+           collectionView.isHidden = true
+               collectionView.alpha = 0
+        } else {
+            UIView.animate(withDuration: 0.8) {
+                self.collectionView.isHidden = false
+                 self.collectionView.alpha = 1
+            }
+        }
+    
+        
+   
+        self.collectionView.reloadData()
+
+        
+    }
+    
+    
+   
+    
+    
+    var videoCollection =  [VideoData]()
+    var filterVideoCollection = [VideoData]()
+    
+    func setupFirebaseDatabase(){
+        let firebaseDatabase = Database.database().reference()
+        
+        
+        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
+            
+            guard let dict = snapShot.value as? [String: [Dictionary<String, AnyObject>]] else {return}
+            
+            guard var firstItem = dict["Videocategories"]  else {return}
+            
+            guard let videoData = firstItem[0]["videoData"] else {return}
+            guard let videoItems = videoData as? [Dictionary<String, AnyObject>] else {return}
+            guard let videoUrls = videoItems[0]["videoUrl"] as? String else {return}
+            guard let videoName = videoItems[0]["videoTitle"] as? String else {return}
+            
+            
+            for item in videoItems {
+                
+                guard let videoTitle = item["videoTitle"] as? String else {return}
+                
+                let singleVideo = VideoData()
+                singleVideo.videoName = videoTitle
+                self.filterVideoCollection.append(singleVideo)
+                
+                
+                print("Filter Video Count == \(self.filterVideoCollection.count)")
+                
+                self.collectionView.reloadData()
+            }
+            //Performing The Asynchronous Networking Call
+            
+            guard let url = URL(string: videoUrls) else {return}
+            
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                guard let image = UIImage(data: data!) else {return}
+                
+                let video = VideoData()
+                video.videoImage = image
+                video.videoName = videoName
+                
+        
+                DispatchQueue.main.async {
+                  self.videoCollection.append(video)
+                    
+                  self.collectionView.reloadData()
+                }
+              
+            }).resume()
+            
+        }
+        
+
     }
  
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -199,41 +272,3 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
     
 }
 
-class SearchViewCell: UICollectionViewCell {
-    
-    var filmVideos: VideoData? {
-        didSet{
-            listImage.image = filmVideos?.videoImage
-        }
-    }
-    
-    let listImage: UIImageView = {
-      let image = UIImageView(image: #imageLiteral(resourceName: "the-end-of-the-world"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupLayout()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout(){
-        addSubview(listImage)
-        
-        NSLayoutConstraint.activate([
-            
-            listImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            listImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            listImage.topAnchor.constraint(equalTo: self.topAnchor),
-            listImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            
-            
-            ])
-    }
-    
-    
-}
