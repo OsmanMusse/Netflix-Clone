@@ -43,8 +43,17 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         return searchBar
     }()
     
+    
+    let notFoundLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Your search did not have any results"
+        label.textColor = .white
+        label.alpha = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
    
-
+var searchTextCharacter: Int?
     
     override func viewDidLoad() {
         view.backgroundColor = Colors.collectionViewGray
@@ -133,23 +142,42 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
        
         
     }
+
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
         filterVideoCollection = self.videoCollection.filter { (videos) -> Bool in
             guard let videoName = videos.videoName else {return true}
+            searchTextCharacter = searchText.count
             return videoName.contains(searchText)
+            
         }
         
         if filterVideoCollection.count == 0 {
-          
+
+            
            collectionView.isHidden = true
-               collectionView.alpha = 0
-        } else {
-            UIView.animate(withDuration: 0.8) {
-                self.collectionView.isHidden = false
-                 self.collectionView.alpha = 1
+           collectionView.alpha = 0
+           self.notFoundLabel.alpha = 0
+            
+           guard let textCharacterOptional = searchTextCharacter else {return}
+            if textCharacterOptional >= 5 {
+                UIView.animate(withDuration: 0.95) {
+                    self.notFoundLabel.alpha = 1
+                }
             }
+        } else if filterVideoCollection.count > 0 {
+            
+
+            
+            UIView.animate(withDuration: 0.8) {
+              
+                self.collectionView.isHidden = false
+                self.collectionView.alpha = 1
+            }
+            
+            
         }
     
         
@@ -238,6 +266,7 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blackSearchBarView)
         blackSearchBarView.addSubview(searchBar)
+        view.addSubview(notFoundLabel)
         NSLayoutConstraint.activate([
             
             blackSearchBarView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -257,6 +286,10 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
             collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
              collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+             
+             notFoundLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+             notFoundLabel.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor, constant: 30),
+             
             
         
             
