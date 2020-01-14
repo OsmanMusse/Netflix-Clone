@@ -8,11 +8,20 @@
 
 import UIKit
 
-class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     
     var videoCategory: [VideoCategory]?
     
+    lazy var searchBar: UISearchBar = {
+       let titleSearchBar = UISearchBar()
+        titleSearchBar.delegate = self
+        return titleSearchBar
+    }()
+    
+   
+    
 
+    
     
     lazy var tableView: UITableView = {
         let view = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.grouped)

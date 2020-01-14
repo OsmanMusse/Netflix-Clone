@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout, UITabBarDelegate{
     
     
     let cellId = "cellId"
@@ -84,6 +84,9 @@ class AppSettingScreen: UICollectionViewController, UICollectionViewDelegateFlow
             return cell!
         }
         
+            
+            
+            
         else {
             cell?.headerLabel.text = ""
             cell?.underlineView.isHidden = true

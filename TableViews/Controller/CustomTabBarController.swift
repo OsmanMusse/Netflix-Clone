@@ -31,9 +31,12 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         searchController.tabBarItem.image = #imageLiteral(resourceName: "magnifying-glass (1)")
         searchController.tabBarItem.title = "Search"
         
-        let downloaderController = UIViewController()
+        
+        let downloaderController = DownloadScreen()
         downloaderController.tabBarItem.image = #imageLiteral(resourceName: "download")
         downloaderController.tabBarItem.title = "Downloads"
+        
+        let downloaderNavigationController = UINavigationController(rootViewController: downloaderController)
         
         
         let moreControllerlayout = UICollectionViewFlowLayout()
@@ -47,7 +50,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         let mainNavigationController = UINavigationController(rootViewController: appScreenController)
     
         
-        viewControllers  = [mainNavigationController, searchController, downloaderController, moreNavigationController]
+        viewControllers  = [mainNavigationController, searchController, downloaderNavigationController, moreNavigationController]
         
         
         
@@ -56,7 +59,11 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return TabBarAnimatedTransitioning()
     }
-}
+    
+  
+
+
+
 
 
 public class TabBarAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
@@ -85,5 +92,7 @@ public class TabBarAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
         return 0.25
 }
     
+    
+}
     
 }

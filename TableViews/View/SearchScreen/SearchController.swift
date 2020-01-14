@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SearchController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
+class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout,UISearchBarDelegate {
     
     var filmCategory: [VideoCategory]?
     var searchBarHeader: SearchBarHeader?
@@ -32,16 +32,23 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
         return view
     }()
     
+    
+    
     lazy var searchBar: UISearchBar = {
-      let searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.barTintColor = UIColor.black
+      let titleSearchBar = UISearchBar()
+        titleSearchBar.delegate = self
+        titleSearchBar.barTintColor = UIColor.black
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = .white
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        return searchBar
+        titleSearchBar.translatesAutoresizingMaskIntoConstraints = false
+        return titleSearchBar
     }()
+    
+
+    
+    
+    
     
     
     let notFoundLabel: UILabel = {
@@ -55,11 +62,18 @@ class SearchController: UICollectionViewController, UISearchBarDelegate, UIColle
    
 var searchTextCharacter: Int?
     
+    
+
+    
     override func viewDidLoad() {
         view.backgroundColor = Colors.collectionViewGray
         collectionView.backgroundColor = Colors.collectionViewGray
-        
         collectionView.alpha = 0
+        
+        
+   
+    
+        
         
         setupCollectionView()
         setupLayout()
@@ -90,6 +104,8 @@ var searchTextCharacter: Int?
         }
         
         
+         
+        
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.minimumLineSpacing = padding
             layout.minimumInteritemSpacing = 0
@@ -118,11 +134,12 @@ var searchTextCharacter: Int?
     }
     
     
- 
 
+ 
+    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let videoCount =  filmCategory?[1].videoData?.count {
+        if var videoCount =  filmCategory?[1].videoData?.count {
             return filterVideoCollection.count
         }
         
@@ -145,6 +162,8 @@ var searchTextCharacter: Int?
 
     
     
+
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         filterVideoCollection = self.videoCollection.filter { (videos) -> Bool in
@@ -162,7 +181,7 @@ var searchTextCharacter: Int?
            self.notFoundLabel.alpha = 0
             
            guard let textCharacterOptional = searchTextCharacter else {return}
-            if textCharacterOptional >= 5 {
+            if textCharacterOptional >= 5 && filterVideoCollection.count == 0 {
                 UIView.animate(withDuration: 0.95) {
                     self.notFoundLabel.alpha = 1
                 }
@@ -193,6 +212,9 @@ var searchTextCharacter: Int?
     
     var videoCollection =  [VideoData]()
     var filterVideoCollection = [VideoData]()
+    
+    
+    
     
     func setupFirebaseDatabase(){
         let firebaseDatabase = Database.database().reference()
@@ -288,7 +310,7 @@ var searchTextCharacter: Int?
              collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
              
              notFoundLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-             notFoundLabel.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor, constant: 30),
+             notFoundLabel.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor, constant: 75),
              
             
         

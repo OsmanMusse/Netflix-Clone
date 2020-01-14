@@ -30,12 +30,6 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
 
     }
     
-    func playBtn(){
-        print("PLAY BUTTON")
- 
-    }
-    
-
 
     
     func setupNavigationBar(){
@@ -51,7 +45,6 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     func goToScreen(title:String){
         
-    print("The setting screen text is == \(title)")
         let layout = UICollectionViewFlowLayout()
         let listController = AppSettingScreen(collectionViewLayout: layout)
         listController.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -105,10 +98,6 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
         return cell!
     }
 
-    
-   
-    
-    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
