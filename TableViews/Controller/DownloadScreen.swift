@@ -25,6 +25,36 @@ class DownloadScreen: UIViewController {
         return image
     }()
     
+    var downloadTitle: UILabel = {
+       let label = UILabel()
+        label.text = "Never be without Netflix"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var downloadDescription: UILabel = {
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = "Download programmes and films so you'll never without something to watch - even when you're offline"
+        descriptionLabel.textColor = .white
+        descriptionLabel.textAlignment = .center
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        return descriptionLabel
+    }()
+    
+    var downloadBtn: UIButton = {
+      let button = UIButton(type: UIButton.ButtonType.custom)
+        button.setTitle("See What You Can Download", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        button.setTitleColor(.black, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 25, bottom: 14, right: 25)
+        button.backgroundColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     
     override func viewDidLoad() {
         view.backgroundColor = Colors.settingBg
@@ -76,6 +106,9 @@ class DownloadScreen: UIViewController {
     func setupLayout() {
         view.addSubview(downloadView)
         downloadView.addSubview(downloadIcon)
+        view.addSubview(downloadTitle)
+        view.addSubview(downloadDescription)
+        view.addSubview(downloadBtn)
         
         NSLayoutConstraint.activate([
             downloadView.widthAnchor.constraint(equalToConstant: 140),
@@ -86,8 +119,19 @@ class DownloadScreen: UIViewController {
             
             downloadIcon.centerXAnchor.constraint(equalTo: downloadView.centerXAnchor),
             downloadIcon.centerYAnchor.constraint(equalTo: downloadView.centerYAnchor),
-            downloadIcon.widthAnchor.constraint(equalToConstant: 50),
-            downloadIcon.heightAnchor.constraint(equalToConstant: 50)
+            downloadIcon.widthAnchor.constraint(equalToConstant: 60),
+            downloadIcon.heightAnchor.constraint(equalToConstant: 60),
+            
+            downloadTitle.topAnchor.constraint(equalTo: downloadView.bottomAnchor, constant: 20),
+            downloadTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            downloadDescription.topAnchor.constraint(equalTo: downloadTitle.bottomAnchor, constant: 20),
+            downloadDescription.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            downloadDescription.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            downloadDescription.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            
+            downloadBtn.topAnchor.constraint(equalTo: downloadDescription.bottomAnchor, constant: 20),
+            downloadBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             
             ])
     }
