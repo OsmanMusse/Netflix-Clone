@@ -10,6 +10,7 @@ import UIKit
 
 class DownloadScreen: UIViewController {
     
+ 
     
     var downloadView: UIView = {
        let view = UIView()
@@ -36,7 +37,7 @@ class DownloadScreen: UIViewController {
     
     var downloadDescription: UILabel = {
         let descriptionLabel = UILabel()
-        descriptionLabel.text = "Download programmes and films so you'll never without something to watch - even when you're offline"
+        descriptionLabel.text = "Download programmes and films so you'll never be without something to watch - even when you're offline"
         descriptionLabel.textColor = .white
         descriptionLabel.textAlignment = .center
         descriptionLabel.numberOfLines = 0
@@ -44,22 +45,30 @@ class DownloadScreen: UIViewController {
         return descriptionLabel
     }()
     
-    var downloadBtn: UIButton = {
+    lazy var downloadBtn: UIButton = {
       let button = UIButton(type: UIButton.ButtonType.custom)
         button.setTitle("See What You Can Download", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.setTitleColor(.black, for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 25, bottom: 14, right: 25)
         button.backgroundColor = .white
+        button.contentEdgeInsets = UIEdgeInsets(top: 14, left: 25, bottom: 14, right: 25)
+        button.addTarget(self, action: #selector(goTodownloadScreen), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     
     
     override func viewDidLoad() {
         view.backgroundColor = Colors.settingBg
         setupNavigationBar()
         setupLayout()
+    }
+    
+    @objc func goTodownloadScreen(){
+        let layout = UICollectionViewFlowLayout()
+        let secondDownloadScreen = innerDownloadScreen(collectionViewLayout: layout)
+        navigationController?.pushViewController(secondDownloadScreen, animated: true)
     }
     
     func setupNavigationBar(){
@@ -131,7 +140,11 @@ class DownloadScreen: UIViewController {
             downloadDescription.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             
             downloadBtn.topAnchor.constraint(equalTo: downloadDescription.bottomAnchor, constant: 20),
-            downloadBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            downloadBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            
+
+            
             
             ])
     }

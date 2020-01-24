@@ -26,7 +26,6 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     lazy var tableView: UITableView = {
         let view = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.grouped)
         view.delegate = self
-    
         view.dataSource = self
         view.separatorStyle = .none
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -76,11 +75,10 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         videoCategory = VideoCategory.getVideoCategory()
         
-          print(" The Video Information\(videoCategory?[0].videoData?[1].videoName)")
         
         navigationController?.hidesBarsOnSwipe = true
         view.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
-       tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.register(MyListViewCell.self, forCellReuseIdentifier: myListCellId)
         tableView.register(CustomPopularViewCell.self, forCellReuseIdentifier: popularCellId)
         tableView.register(CustomPreviewsViewCell.self, forCellReuseIdentifier: previewsCellId)
@@ -251,7 +249,6 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     func setupLayout(){
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
-
 
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
