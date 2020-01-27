@@ -216,6 +216,7 @@ var searchTextCharacter: Int?
     
     
     
+    
     func setupFirebaseDatabase(){
         let firebaseDatabase = Database.database().reference()
         

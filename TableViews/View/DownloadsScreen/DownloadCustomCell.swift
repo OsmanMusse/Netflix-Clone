@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
 
 class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    var imageUrls =  [VideoData]()
+    
     
     let innerCellId = "innerCellId"
     let padding: CGFloat = 10
@@ -19,7 +23,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
         layout.scrollDirection = .horizontal
         cv.delegate = self
         cv.dataSource = self
-        cv.backgroundColor = .blue
+        cv.backgroundColor = Colors.settingBg
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -28,17 +32,20 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        innerCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: innerCellId)
+        innerCollectionView.register(InnerCustomCell.self, forCellWithReuseIdentifier: innerCellId)
        
 
-    
+        getFirebaseDatabase()
         setupLayout()
     }
     
 
     
+
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return imageUrls.count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -46,16 +53,48 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath)
-        cell.backgroundColor = .orange
-        return cell
+        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerCustomCell
+        cell?.videoInformation = imageUrls[indexPath.item]
+        return cell!
+    }
+    
+    
+    func getFirebaseDatabase(){
+        
+        
+        let firebaseDatabase = Database.database().reference()
+        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
+            guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
+            guard let firstItem = dictionary["Videocategories"] else {return}
+            guard let videoSection = firstItem[1]["videoData"] else {return}
+            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
+            
+            
+            
+            for item in videoInformation {
+    
+                guard let videoUrl = item["videoUrl"] as? String else {return}
+                
+                let singleVideo = VideoData()
+                singleVideo.videoName = videoUrl
+                self.imageUrls.append(singleVideo)
+     
+                
+            }
+            
+            
+            self.innerCollectionView.reloadData()
+            
+            
+            
+            
+        }
+        
     }
     
     func setupLayout(){
         
-        
-     
-        
+    
         addSubview(innerCollectionView)
         
         NSLayoutConstraint.activate([

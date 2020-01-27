@@ -31,5 +31,3 @@ enum AvailableDownloadedTitles: String {
     
 }
 
-//["Series","Psychological TV Thrillers", "Young Adult Films & Programmes", "Popular on Netflix",
-// "Netflix Originals", "Top Picks for Mascuud", "Because you watched Riverdale", "Teen Programmes", "Thrillers", "TV Suspense Dramas", "Award- winning TV Programmes", "Spanish-Language Crime TV Soaps","Because you watched Shadowhunters: The Mortal Instruments", "New Releases", "Because you watched Messiah", "Because you watched Teen Wolf", "TV Drama Soaps", "Gay TV Dramas", "Because you watched Titans"]

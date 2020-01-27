@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
+
 
 class innerDownloadScreen: UICollectionViewController,UICollectionViewDelegateFlowLayout{
-    
+
     
     let collectionViewCellId = "tableViewCellId"
     let innerHeaderCellId = "innerHeaderCellId"
@@ -19,12 +21,12 @@ class innerDownloadScreen: UICollectionViewController,UICollectionViewDelegateFl
     let padding: CGFloat = 8
     
 
+
     
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-     
+    
         
         view.backgroundColor = Colors.settingBg
         
@@ -83,7 +85,7 @@ class innerDownloadScreen: UICollectionViewController,UICollectionViewDelegateFl
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 19
+        return  19
     }
     
     
@@ -101,14 +103,26 @@ class innerDownloadScreen: UICollectionViewController,UICollectionViewDelegateFl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellId, for: indexPath) as? DownloadCustomCell
         return cell!
     }
+    
+    
+
+    
+
+            
+        
+            
+    
+ 
+
+    
+    
    
     func setupLayout(){
         
      collectionView.register(DownloadCustomCell.self, forCellWithReuseIdentifier: collectionViewCellId)
      collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: innerHeaderCellId)
      collectionView.backgroundColor = Colors.settingBg
-    
-        print("The value is == \(AvailableDownloadedTitles.You_Watched_5.rawValue)")
+                
          
     }
  
