@@ -154,7 +154,6 @@ var searchTextCharacter: Int?
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: searchCellId, for: indexPath) as? SearchViewCell
         
             cell?.videoCollection = filterVideoCollection[indexPath.item]
-
             return cell!
        
         

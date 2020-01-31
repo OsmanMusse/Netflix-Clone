@@ -54,7 +54,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerCustomCell
-        cell?.videoInformation = imageUrls[indexPath.item]
+        cell?.videoInformation = imageUrls[indexPath.row]
         return cell!
     }
     
@@ -79,6 +79,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
                 singleVideo.videoName = videoUrl
                 self.imageUrls.append(singleVideo)
      
+    
                 
             }
             

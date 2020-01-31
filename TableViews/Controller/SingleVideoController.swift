@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 
 class SingleVideoController: UICollectionViewController, UICollectionViewDelegateFlowLayout, SingleVideoHeaderDelegate{
@@ -35,6 +36,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hero.isEnabled = true
         
         // Setting up the data source of the screen
         videoCategory = VideoCategory.getVideoCategory()
@@ -74,7 +77,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         switch section {
-        case 0:  return CGSize(width: self.view.frame.width, height: 700)
+        case 0:  return CGSize(width: self.view.frame.width, height: 660)
         case 1:  return CGSize(width: self.view.frame.width, height: 70)
         default:
              return CGSize(width: self.view.frame.width, height: 700)
@@ -92,6 +95,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             case 0:
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
+                singleHeader?.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 100))]
                 singleHeader?.video = video
                 singleHeader?.delegate = self
                 return singleHeader!
@@ -104,6 +108,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             default:
                 let header2 = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                 episodeHeader?.backgroundColor = .purple
+                episodeHeader?.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 100))]
                 episodeHeader?.singleVideoReference = self
                 return episodeHeader!
                 

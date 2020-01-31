@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 class BaseListViewCell<C: BaseCollectionViewCell>: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -100,16 +101,15 @@ class BaseListViewCell<C: BaseCollectionViewCell>: UITableViewCell, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = customCollectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! BaseCollectionViewCell
         cell.video = videoCategory?.videoData?[indexPath.item]
-        
-
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Item clicked")
+                self.hero.id = "skyWalker"
         if let  video = videoCategory?.videoData?[indexPath.row] {
             
             HomeController?.goToVideoController(video: video)
+            
         }
         
     }
@@ -129,7 +129,7 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     let listImage: UIImageView = {
         let image = UIImageView(image: #imageLiteral(resourceName: "Big-Mouth-Poster"))
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         
         return image
@@ -138,6 +138,8 @@ class BaseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        
+ 
     }
     
     required init?(coder aDecoder: NSCoder) {

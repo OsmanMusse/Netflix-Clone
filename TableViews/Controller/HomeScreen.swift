@@ -18,10 +18,7 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         return titleSearchBar
     }()
     
-   
-    
 
-    
     
     lazy var tableView: UITableView = {
         let view = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.grouped)
@@ -135,14 +132,11 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
 
     func goToVideoController(video: VideoData) {
-        let layout = StretchyHeaderLayout()
+        let layout = UICollectionViewFlowLayout()
         let singleVideoController = SingleVideoController(collectionViewLayout: layout)
          singleVideoController.video = video
-        singleVideoController.modalPresentationStyle = .overCurrentContext
-        singleVideoController.modalTransitionStyle = .coverVertical
-        let navigationController = UINavigationController(rootViewController: singleVideoController)
 
-        self.present(navigationController, animated: true, completion: nil)
+        self.present(singleVideoController, animated: true, completion: nil)
     }
     
   
@@ -247,6 +241,10 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func setupLayout(){
+        
+         // This line enables the Hero Library to work
+        self.hero.isEnabled = true
+        
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
 

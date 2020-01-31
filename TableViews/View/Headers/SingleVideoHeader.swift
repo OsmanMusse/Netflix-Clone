@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Hero
 
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -168,11 +168,13 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
 
     lazy var videoImage: UIImageView = {
         var image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
         image.layer.shadowColor = UIColor.black.cgColor
         image.layer.shadowOpacity = 1
         image.layer.shadowOffset = .zero
-        image.layer.shadowRadius = 10
+        image.layer.shadowRadius = 5
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -339,7 +341,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-       
+        videoImage.hero.isEnabled = true
+        videoImage.hero.modifiers = [.scale(0.5), .translate(CGPoint(x: 0, y: 600)) ]
 
         
 
@@ -464,9 +467,10 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             videoStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             
-            videoImage.bottomAnchor.constraint(equalTo: videoStackView.topAnchor, constant: -50),
+            videoImage.bottomAnchor.constraint(equalTo: videoStackView.topAnchor, constant: -20),
             videoImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            videoImage.heightAnchor.constraint(equalToConstant: 150),
+            videoImage.widthAnchor.constraint(equalToConstant: 180),
+            videoImage.heightAnchor.constraint(equalToConstant: 180),
             
             
             blurEffectView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),

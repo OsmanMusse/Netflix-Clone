@@ -9,30 +9,40 @@
 import UIKit
 import Firebase
 
+   var imageCache = [String: UIImage]()
+
 class InnerCustomCell: UICollectionViewCell {
     
+    
+ 
+  
     var videoInformation: VideoData? {
         didSet{
+            
             guard let imageUrl = videoInformation?.videoName else {return}
-            print("thE IMAGE URL == \(imageUrl)")
             
             guard let url = URL(string: imageUrl) else {return}
             
+            // Caching Code for the images
+            
+            if let cachedImage = imageCache[imageUrl] {
+                self.customImageView.image = cachedImage
+                return
+            }
+          
+         
+            
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let err = error {
-                    print("failled error")
                     return
                 }
                 
                 guard let imageData = data else {return}
                 
-
-                
-                
                 let photoImage = UIImage(data: imageData)
                 
-           
-        
+                imageCache[url.absoluteString] = photoImage
+       
                 
                 DispatchQueue.main.sync {
                     self.customImageView.image = photoImage
@@ -41,6 +51,18 @@ class InnerCustomCell: UICollectionViewCell {
             }.resume()
         }
     }
+    
+    
+    var downloadLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Mascuud"
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .blue
+        
+        return label
+    }()
+    
 
     var customImageView: UIImageView = {
        let image = UIImageView()
@@ -60,6 +82,7 @@ class InnerCustomCell: UICollectionViewCell {
     
     func setupLayout(){
         addSubview(customImageView)
+
         
         NSLayoutConstraint.activate([
             
