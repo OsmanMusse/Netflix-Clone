@@ -8,8 +8,12 @@
 
 import UIKit
 
+import Firebase
+
 
 class MyListViewCell: BaseListViewCell<CustomListCell> {
+    
+       var imageUrls = [VideoData]()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

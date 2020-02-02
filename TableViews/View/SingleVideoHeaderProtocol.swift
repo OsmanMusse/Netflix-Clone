@@ -14,3 +14,4 @@ protocol SingleVideoHeaderDelegate {
     func isTrailerLayout()
     func isMoreLikeThisLayout()
 }
+

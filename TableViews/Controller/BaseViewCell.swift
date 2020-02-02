@@ -1,21 +1,24 @@
 //
-//  DownloadCustomCell.swift
+//  BaseViewCell.swift
 //  TableViews
 //
-//  Created by Mezut on 17/01/2020.
+//  Created by Mezut on 01/02/2020.
 //  Copyright © 2020 Mezut. All rights reserved.
 //
 
 import UIKit
+
+
+import UIKit
 import Firebase
 
-class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var imageUrls =  [VideoData]()
     
     
     
-    var downloadScreen: innerDownloadScreen?
+    var homeScreen: HomeScreen?
     
     let innerCellId = "innerCellId"
     let padding: CGFloat = 10
@@ -23,6 +26,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     lazy var innerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
         layout.scrollDirection = .horizontal
         cv.delegate = self
         cv.dataSource = self
@@ -31,25 +35,22 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
         return cv
     }()
     
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         
-        innerCollectionView.register(InnerCustomCell.self, forCellWithReuseIdentifier: innerCellId)
-       goHome()
+        innerCollectionView.register(InnerBaseViewCell.self, forCellWithReuseIdentifier: innerCellId)
 
+        
         getFirebaseDatabase()
         setupLayout()
     }
     
-    func goHome() {
-       
-    }
     
     
     
-
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageUrls.count
@@ -60,8 +61,8 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
         return CGSize(width: self.frame.width / 4 + padding, height: 150)
     }
     
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerCustomCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerBaseViewCell
         cell?.videoInformation = imageUrls[indexPath.row]
         return cell!
     }
@@ -69,7 +70,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       downloadScreen?.goToVideoController(video: imageUrls[indexPath.item])
+        homeScreen?.goToVideoController(video: imageUrls[indexPath.item])
     }
     
     
@@ -89,14 +90,14 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
             
             
             for item in videoInformation {
-    
+                
                 guard let videoUrl = item["videoUrl"] as? String else {return}
                 
                 let singleVideo = VideoData()
                 singleVideo.videoName = videoUrl
                 self.imageUrls.append(singleVideo)
-     
-    
+                
+                
                 
             }
             
@@ -112,17 +113,17 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
     
     func setupLayout(){
         
-    
+        
         addSubview(innerCollectionView)
         
         NSLayoutConstraint.activate([
             
-             innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-             innerCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
-             innerCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-             innerCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-             
-             
+            innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            innerCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            innerCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            innerCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            
             
             ])
         

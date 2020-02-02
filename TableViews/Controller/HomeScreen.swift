@@ -7,29 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
-class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
+class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
-    var videoCategory: [VideoCategory]?
-    
-    lazy var searchBar: UISearchBar = {
-       let titleSearchBar = UISearchBar()
-        titleSearchBar.delegate = self
-        return titleSearchBar
-    }()
-    
-
-    
-    lazy var tableView: UITableView = {
-        let view = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.grouped)
-        view.delegate = self
-        view.dataSource = self
-        view.separatorStyle = .none
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    
+    var BaseCellID = "BaseCellID"
+    var headerCellId = "headerCellId"
+    var padding: CGFloat = 8
     
     let seriesBtn: UIButton = {
         let button = UIButton(type: .system)
@@ -40,6 +24,7 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }()
     
     let filmsBtn: UIButton = {
+        
         let button = UIButton(type: .system)
         button.setTitle("Films", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -68,26 +53,16 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     let VideoViewCellId = "VideoViewCellId"
     
     override func viewDidLoad() {
-        // intermediate the modal
-        
-        videoCategory = VideoCategory.getVideoCategory()
-        
-        
-        navigationController?.hidesBarsOnSwipe = true
+
+
         view.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
-        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: cellId)
-        tableView.register(MyListViewCell.self, forCellReuseIdentifier: myListCellId)
-        tableView.register(CustomPopularViewCell.self, forCellReuseIdentifier: popularCellId)
-        tableView.register(CustomPreviewsViewCell.self, forCellReuseIdentifier: previewsCellId)
-        tableView.register(RecentlyAddedCell.self, forCellReuseIdentifier: RecentlyAddedCellId)
-        tableView.register(VideoViewCell.self, forCellReuseIdentifier: VideoViewCellId)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
+        navigationController?.hidesBarsOnSwipe = true
         self.tabBarController?.tabBar.barTintColor = .black
         self.tabBarController?.tabBar.isTranslucent = false
         
         setupNavBar()
-        setupLayout()
+        collectionViewConfig()
+    
 
     }
     
@@ -130,6 +105,27 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
     }
     
+    
+    
+    func collectionViewConfig(){
+        
+        collectionView.register(CustomPreviewsViewCell.self, forCellWithReuseIdentifier: previewsCellId)
+        collectionView.register(BaseViewCell.self, forCellWithReuseIdentifier: BaseCellID)
+        collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCellId)
+        collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
+        collectionView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
+        
+        // This line enables the Hero Library to work Creating the Transition between the views
+          collectionView.hero.isEnabled = true
+        
+        
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.sectionInset = UIEdgeInsets(top: padding, left: 0, bottom: 0, right: 0)
+        }
+    }
+
+    
+    
 
     func goToVideoController(video: VideoData) {
         let layout = UICollectionViewFlowLayout()
@@ -139,132 +135,101 @@ class HomeScreen: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.present(singleVideoController, animated: true, completion: nil)
     }
     
-  
     
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var sectionHeader =  ["Previews","My List","Popular on Netflix","Recently Added","Trending Now","Top Picks for You","Section 7","Section 8","Section 9"]
-        
-    
-        let label = UITextView()
-        label.textColor = .white
-        label.font = UIFont(name: "SFUIDisplay-Bold", size: 17)
-        label.backgroundColor =  .clear
-        label.isSelectable = false
-        label.textDragInteraction?.isEnabled = false
-        label.textContainerInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-        tableView.sectionHeaderHeight = 30
-     
-        
-        
-        
-        switch section {
-        case 0: label.text = sectionHeader[0]
-        case 1: label.text = sectionHeader[1]
-        case 2: label.text = sectionHeader[2]
-        case 3: label.text = sectionHeader[3]
-        case 4: label.text = sectionHeader[4]
-        case 5: label.text = sectionHeader[5]
-        case 6: label.text = sectionHeader[6]
-        case 7: label.text = sectionHeader[7]
-        case 8: label.text = sectionHeader[8]
-        case 9: label.text = sectionHeader[9]
-            
-        default: label.text = "Problem with finding tableview title"
-        }
-        
-        return label
-    }
-  
-
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
-
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        switch indexPath.section {
-        case 0 : return 120
-        case 1,2,3: return 150
-        case 4: return 325
-        default: return 350
-        }
-        
-       
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 4
     }
     
-    
-
-    
-     func numberOfSections(in tableView: UITableView) -> Int {
-        return 9
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: previewsCellId, for: indexPath)
-            cell.selectionStyle = .none
-            return cell
-        case 1:  let cell = tableView.dequeueReusableCell(withIdentifier: myListCellId, for: indexPath) as! MyListViewCell
-        cell.videoCategory = videoCategory?[0]
-        cell.HomeController = self
-        cell.selectionStyle = .none
-        return cell
+        case 0:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        header.downloadHeaderTitle.text =  "Previews"
+        return header
             
-        case 2: let cell = tableView.dequeueReusableCell(withIdentifier: popularCellId, for: indexPath)
-            cell.selectionStyle = .none
-            return cell
+        case 1:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        header.downloadHeaderTitle.text =  "US TV Programmes Based on Comics"
+        return header
             
-        case 3: let cell = tableView.dequeueReusableCell(withIdentifier: RecentlyAddedCellId, for: indexPath) as! RecentlyAddedCell
-        cell.videoCategory = videoCategory?[0]
-        cell.selectionStyle = .none
-        return cell
+        case 2:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        header.downloadHeaderTitle.text =  "Trending Now"
+        return header
             
-        case 4: let cell = tableView.dequeueReusableCell(withIdentifier: VideoViewCellId, for: indexPath) as! VideoViewCell
-        cell.selectionStyle = .none
-        return cell
             
+        case 3:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        header.downloadHeaderTitle.text =  "Available Now: Season 2"
+        return header
+            
+        
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-            cell.selectionStyle = .none
-            return cell
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as! InnerDownloadHeader
+            return header
         }
-}
+
+        
+    }
     
     
-    @objc func goToListController(){
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 30)
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        switch indexPath.section {
+           case 0: return CGSize(width: view.frame.width - 2 * padding, height: 125)
+           case 3: return CGSize(width: view.frame.width - 2 * padding, height: 300)
+           default:  return CGSize(width: view.frame.width - 2 * padding, height: 150)
+        }
+
+    }
+    
+    
+  
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        switch indexPath.section {
+        case 0:  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: previewsCellId, for: indexPath) as! CustomPreviewsViewCell
+                 return cell
+            
+        case 3:  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoViewCellId, for: indexPath) as! VideoViewCell
+        return cell
+            
+        default: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseCellID, for: indexPath) as! BaseViewCell
+        cell.homeScreen = self
+                 return cell
+        }
+     
+    }
+    
+   
+
+
+    
+
+    
+     @objc func goToListController(){
         self.navigationController?.pushViewController(MyListController(), animated: true)
     }
-    
-    func setupLayout(){
-        
-         // This line enables the Hero Library to work
-        self.hero.isEnabled = true
-        
-        view.addSubview(tableView)
-        NSLayoutConstraint.activate([
 
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0),
-
-
-            ])
-    }
-    
  
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+   override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
         
     }
+
+
+}
     
     
    
     
     
-}

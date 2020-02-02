@@ -20,7 +20,9 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.tintColor = .white
         
         
-        let appScreenController = HomeScreen()
+        
+        let layout = UICollectionViewFlowLayout()
+        let appScreenController = HomeScreen(collectionViewLayout: layout)
         
         
         appScreenController.tabBarItem.image = #imageLiteral(resourceName: "home")

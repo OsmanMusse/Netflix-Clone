@@ -100,8 +100,18 @@ class innerDownloadScreen: UICollectionViewController,UICollectionViewDelegateFl
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellId, for: indexPath) as? DownloadCustomCell
-        return cell!
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellId, for: indexPath) as! DownloadCustomCell
+        cell.downloadScreen = self
+        return cell
+    }
+    
+    
+    func goToVideoController(video: VideoData) {
+        let layout = StretchyHeaderLayout()
+        let singleVideoController = SingleVideoController(collectionViewLayout: layout)
+        singleVideoController.video = video
+        
+        self.present(singleVideoController, animated: true, completion: nil)
     }
     
     

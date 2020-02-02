@@ -12,6 +12,7 @@ import Hero
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var delegate: SingleVideoHeaderDelegate?
+   
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -78,9 +79,19 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var singleVideoController: SingleVideoController?
     
-    var video: VideoData? {
-        didSet {
-            videoImage.image = video?.videoImage
+    var videoInformation: VideoData? {
+        didSet{
+            guard let videoUrl = videoInformation?.videoName else {return}
+            guard let url = URL(string: videoUrl) else {return}
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                guard let dataImage = data else {return}
+                guard let videoImages = UIImage(data: dataImage) else {return}
+                
+                DispatchQueue.main.sync {
+                    self.videoImage.image = videoImages
+                }
+                
+            }.resume()
         }
     }
     

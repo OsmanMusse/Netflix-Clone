@@ -9,7 +9,7 @@
 import UIKit
 
 
-class CustomPreviewsViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let previousVideos: [VideoData] = {
        var video1 = VideoData()
@@ -62,8 +62,9 @@ class CustomPreviewsViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         cv.dataSource = self
         cv.delegate = self
@@ -71,15 +72,11 @@ class CustomPreviewsViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         return cv
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupLayout()
         customCollectionView.register(CustomPreviewsInnerCell.self, forCellWithReuseIdentifier: cellId)
         
-        if let layout = customCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        }
-       
         
     }
     

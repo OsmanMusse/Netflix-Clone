@@ -1,21 +1,21 @@
 //
-//  InnerCustomCell.swift
+//  InnerBaseViewCell.swift
 //  TableViews
 //
-//  Created by Mezut on 27/01/2020.
+//  Created by Mezut on 01/02/2020.
 //  Copyright © 2020 Mezut. All rights reserved.
 //
 
 import UIKit
+
+
+import UIKit
 import Firebase
 
-   var imageCache = [String: UIImage]()
+var imageCaches = [String: UIImage]()
 
-class InnerCustomCell: UICollectionViewCell {
-    
-    
- 
-  
+class InnerBaseViewCell: UICollectionViewCell {
+   
     var videoInformation: VideoData? {
         didSet{
             
@@ -25,12 +25,12 @@ class InnerCustomCell: UICollectionViewCell {
             
             // Caching Code for the images
             
-            if let cachedImage = imageCache[imageUrl] {
+            if let cachedImage = imageCaches[imageUrl] {
                 self.customImageView.image = cachedImage
                 return
             }
-          
-         
+            
+            
             
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let err = error {
@@ -41,19 +41,19 @@ class InnerCustomCell: UICollectionViewCell {
                 
                 let photoImage = UIImage(data: imageData)
                 
-                imageCache[url.absoluteString] = photoImage
-       
+                imageCaches[url.absoluteString] = photoImage
+                
                 
                 DispatchQueue.main.sync {
                     self.customImageView.image = photoImage
                 }
                 
-            }.resume()
+                }.resume()
         }
     }
     
     
-
+    
     var downloadLabel: UILabel = {
         let label = UILabel()
         label.text = "Mascuud"
@@ -64,26 +64,26 @@ class InnerCustomCell: UICollectionViewCell {
         return label
     }()
     
-
+    
     var customImageView: UIImageView = {
-       let image = UIImageView()
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
         
-        backgroundColor = .orange
+    
     }
     
     
     
     func setupLayout(){
         addSubview(customImageView)
-
+        
         
         NSLayoutConstraint.activate([
             

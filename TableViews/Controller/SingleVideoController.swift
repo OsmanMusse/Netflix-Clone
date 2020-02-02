@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import Firebase
 
 
 class SingleVideoController: UICollectionViewController, UICollectionViewDelegateFlowLayout, SingleVideoHeaderDelegate{
@@ -27,6 +28,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
 
     var videoCategory: [VideoCategory]?
     var video: VideoData?
+    var imageUrls = [VideoData]()
     
     
     
@@ -42,6 +44,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         // Setting up the data source of the screen
         videoCategory = VideoCategory.getVideoCategory()
         
+        getFirebaseDatabase()
+        
         collectionView.backgroundColor = Colors.mainblackColor
         collectionView.register(SingleVideoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.register(EpisodeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId)
@@ -52,7 +56,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         
         guard  let videoName = video?.videoName else {return}
         
-        // Removes the unwanted translcent background color from the navigation bar
+        // Removes the unwanted translucent background color from the navigation bar
         navigationController?.isNavigationBarHidden = true
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor =  Colors.mainblackColor
@@ -67,6 +71,40 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             layout.sectionHeadersPinToVisibleBounds = false
             
         }
+    }
+    
+    func getFirebaseDatabase(){
+        
+        
+        let firebaseDatabase = Database.database().reference()
+        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
+            guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
+            guard let firstItem = dictionary["Videocategories"] else {return}
+            guard let videoSection = firstItem[1]["videoData"] else {return}
+            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
+            
+            
+            
+            for item in videoInformation {
+                
+                guard let videoUrl = item["videoUrl"] as? String else {return}
+                
+                let singleVideo = VideoData()
+                singleVideo.videoName = videoUrl
+                self.imageUrls.append(singleVideo)
+                
+                
+                
+            }
+            
+            
+            self.collectionView.reloadData()
+            
+            
+            
+            
+        }
+        
     }
     
     
@@ -96,7 +134,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
                 singleHeader?.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 100))]
-                singleHeader?.video = video
+                print("MASCUUD HELLO WORLD == \(indexPath.item)")
+//                singleHeader?.videoInformation = imageUrls[indexPath.item]
                 singleHeader?.delegate = self
                 return singleHeader!
             case 1:
@@ -120,7 +159,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             case 0:
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
-                singleHeader?.video = video
+                singleHeader?.videoInformation = imageUrls[indexPath.item]
                 return singleHeader!
             case 1:
                 let trailerHeader = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
@@ -138,7 +177,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         else {
             singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
             singleHeader?.singleVideoController = self
-            singleHeader?.video = video
+            singleHeader?.videoInformation = imageUrls[indexPath.item]
             return singleHeader!
         }
        
@@ -241,13 +280,13 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         if isTrailerGrid {
             switch section {
             case 0:  return 3
-            case 1: return 4
+            case 1: return imageUrls.count
             default: return 6
             }
         }
         
         else {
-            return 0
+            return 1
         }
        
     }

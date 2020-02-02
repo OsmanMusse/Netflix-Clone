@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 
-class VideoViewCell: UITableViewCell {
+class VideoViewCell: UICollectionViewCell {
     
     let padding: CGFloat = 60
     
@@ -116,14 +116,13 @@ class VideoViewCell: UITableViewCell {
     
     var isPlaying = false
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
-         setupVideoControls()
-         setupVideoLauncher()
+        setupVideoControls()
+        setupVideoLauncher()
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
