@@ -27,8 +27,11 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     var isMoreLikeThisGrid: Bool = false
 
     var videoCategory: [VideoCategory]?
-    var video: VideoData?
-    var imageUrls = [VideoData]()
+    var video: VideoData? {
+        didSet{
+            
+        }
+    }
     
     
     
@@ -44,7 +47,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         // Setting up the data source of the screen
         videoCategory = VideoCategory.getVideoCategory()
         
-        getFirebaseDatabase()
         
         collectionView.backgroundColor = Colors.mainblackColor
         collectionView.register(SingleVideoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
@@ -73,39 +75,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         }
     }
     
-    func getFirebaseDatabase(){
-        
-        
-        let firebaseDatabase = Database.database().reference()
-        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
-            guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
-            guard let firstItem = dictionary["Videocategories"] else {return}
-            guard let videoSection = firstItem[1]["videoData"] else {return}
-            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
-            
-            
-            
-            for item in videoInformation {
-                
-                guard let videoUrl = item["videoUrl"] as? String else {return}
-                
-                let singleVideo = VideoData()
-                singleVideo.videoName = videoUrl
-                self.imageUrls.append(singleVideo)
-                
-                
-                
-            }
-            
-            
-            self.collectionView.reloadData()
-            
-            
-            
-            
-        }
-        
-    }
+
     
     
    
@@ -133,21 +103,17 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             case 0:
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
-                singleHeader?.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 100))]
-                print("MASCUUD HELLO WORLD == \(indexPath.item)")
-//                singleHeader?.videoInformation = imageUrls[indexPath.item]
+                singleHeader?.videoInformation = video
                 singleHeader?.delegate = self
                 return singleHeader!
             case 1:
                 episodeHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                 episodeHeader?.singleVideoReference = self
-                
                 return episodeHeader!
                 
             default:
                 let header2 = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                 episodeHeader?.backgroundColor = .purple
-                episodeHeader?.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 100))]
                 episodeHeader?.singleVideoReference = self
                 return episodeHeader!
                 
@@ -159,7 +125,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             case 0:
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
-                singleHeader?.videoInformation = imageUrls[indexPath.item]
                 return singleHeader!
             case 1:
                 let trailerHeader = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
@@ -177,7 +142,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         else {
             singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
             singleHeader?.singleVideoController = self
-            singleHeader?.videoInformation = imageUrls[indexPath.item]
+                  singleHeader?.videoInformation = video
             return singleHeader!
         }
        
@@ -280,7 +245,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         if isTrailerGrid {
             switch section {
             case 0:  return 3
-            case 1: return imageUrls.count
+            case 1: return 1
             default: return 6
             }
         }

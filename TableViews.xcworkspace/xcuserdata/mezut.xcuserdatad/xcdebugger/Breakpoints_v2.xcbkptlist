@@ -295,7 +295,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/DownloadsScreen/InnerCustomCell.swift"
-            timestampString = "602195064.786541"
+            timestampString = "602343579.031576"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
@@ -387,15 +387,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/SingleVideoController.swift"
-            timestampString = "602295946.0936821"
+            filePath = "TableViews/Controller/BaseViewCell.swift"
+            timestampString = "602343579.0317529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "getFirebaseDatabase()"
             landmarkType = "7">
          </BreakpointContent>

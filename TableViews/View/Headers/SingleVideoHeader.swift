@@ -12,6 +12,8 @@ import Hero
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var delegate: SingleVideoHeaderDelegate?
+    
+    var imageUrls = [VideoData]()
    
     
     lazy var scrollView: UIScrollView = {
@@ -81,6 +83,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var videoInformation: VideoData? {
         didSet{
+            
+            print("video url == \(videoInformation?.videoName)")
             guard let videoUrl = videoInformation?.videoName else {return}
             guard let url = URL(string: videoUrl) else {return}
             URLSession.shared.dataTask(with: url) { (data, response, err) in
@@ -362,6 +366,10 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    
+    
+    
 
 
    

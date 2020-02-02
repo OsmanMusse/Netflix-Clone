@@ -6,13 +6,13 @@
 //  Copyright © 2020 Mezut. All rights reserved.
 //
 
-import UIKit
+
 
 
 import UIKit
 import Firebase
-
-var imageCaches = [String: UIImage]()
+import  Hero
+var imageCache2 = [String: UIImage]()
 
 class InnerBaseViewCell: UICollectionViewCell {
    
@@ -25,7 +25,8 @@ class InnerBaseViewCell: UICollectionViewCell {
             
             // Caching Code for the images
             
-            if let cachedImage = imageCaches[imageUrl] {
+            
+            if let cachedImage = imageCache2[imageUrl] {
                 self.customImageView.image = cachedImage
                 return
             }
@@ -41,7 +42,7 @@ class InnerBaseViewCell: UICollectionViewCell {
                 
                 let photoImage = UIImage(data: imageData)
                 
-                imageCaches[url.absoluteString] = photoImage
+                imageCache2[url.absoluteString] = photoImage
                 
                 
                 DispatchQueue.main.sync {
@@ -75,6 +76,7 @@ class InnerBaseViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+    
         
     
     }
@@ -82,6 +84,8 @@ class InnerBaseViewCell: UICollectionViewCell {
     
     
     func setupLayout(){
+        
+    
         addSubview(customImageView)
         
         
