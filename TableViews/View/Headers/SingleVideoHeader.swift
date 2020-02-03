@@ -94,7 +94,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             guard let videoUrl = videoInformation?.videoName else {return}
             
             
-            if let cachedImage = imageCache2[videoUrl] {
+            if let cachedImage = imageCache1[videoUrl] {
                 self.videoImage.image = cachedImage
                 return
             }
@@ -106,7 +106,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
                 guard let dataImage = data else {return}
                 guard let videoImages = UIImage(data: dataImage) else {return}
                 
-                imageCache2[url.absoluteString] = videoImages
+                imageCache1[url.absoluteString] = videoImages
 
                 DispatchQueue.main.sync {
                     self.videoImage.image = videoImages

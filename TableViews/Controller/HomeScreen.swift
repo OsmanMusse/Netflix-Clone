@@ -115,9 +115,6 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         
-        // This line enables the Hero Library to work Creating the Transition between the views
-          collectionView.hero.isEnabled = true
-        
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionInset = UIEdgeInsets(top: padding, left: 0, bottom: padding, right: 0)

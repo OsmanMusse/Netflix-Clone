@@ -14,6 +14,7 @@ import Firebase
 import  Hero
 
 
+var imageCache1 = [String: UIImage]()
 
 class InnerBaseViewCell: UICollectionViewCell {
    
@@ -27,7 +28,7 @@ class InnerBaseViewCell: UICollectionViewCell {
             // Caching Code for the images
 
 
-            if let cachedImage = imageCache[imageUrl] {
+            if let cachedImage = imageCache1[imageUrl] {
                 self.customImageView.image = cachedImage
                 return
             }
@@ -43,7 +44,7 @@ class InnerBaseViewCell: UICollectionViewCell {
 
                 let photoImage = UIImage(data: imageData)
 
-                imageCache[url.absoluteString] = photoImage
+                imageCache1[url.absoluteString] = photoImage
 
 
                 DispatchQueue.main.async {
@@ -67,11 +68,8 @@ class InnerBaseViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        
-    customImageView.hero.id = "skyWalker"
-        
-    customImageView.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
     }
+    
     
     
     
