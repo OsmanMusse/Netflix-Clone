@@ -9,6 +9,9 @@
 import UIKit
 import Hero
 
+
+ var imageCache2 = [String: UIImage]()
+
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var delegate: SingleVideoHeaderDelegate?
@@ -84,17 +87,31 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     var videoInformation: VideoData? {
         didSet{
             
-            print("video url == \(videoInformation?.videoName)")
+        
+
+            
+
             guard let videoUrl = videoInformation?.videoName else {return}
+            
+            
+            if let cachedImage = imageCache2[videoUrl] {
+                self.videoImage.image = cachedImage
+                return
+            }
+            
+            
+            
             guard let url = URL(string: videoUrl) else {return}
             URLSession.shared.dataTask(with: url) { (data, response, err) in
                 guard let dataImage = data else {return}
                 guard let videoImages = UIImage(data: dataImage) else {return}
                 
+                imageCache2[url.absoluteString] = videoImages
+
                 DispatchQueue.main.sync {
                     self.videoImage.image = videoImages
                 }
-                
+
             }.resume()
         }
     }
@@ -356,8 +373,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        videoImage.hero.isEnabled = true
-        videoImage.hero.modifiers = [.scale(0.5), .translate(CGPoint(x: 0, y: 600)) ]
+        videoImage.hero.id = "skyWalker"
+        videoImage.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
 
         
 

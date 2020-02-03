@@ -12,6 +12,8 @@ import UIKit
 import UIKit
 import Firebase
 
+
+
 class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var imageUrls =  [VideoData]()
@@ -64,7 +66,6 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerBaseViewCell
         cell?.videoInformation = imageUrls[indexPath.row]
-        cell?.hero.id = "skyWalker"
         return cell!
     }
     

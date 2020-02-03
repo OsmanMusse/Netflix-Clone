@@ -42,12 +42,11 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hero.isEnabled = true
         
         // Setting up the data source of the screen
         videoCategory = VideoCategory.getVideoCategory()
         
-        
+        self.hero.isEnabled = true
         collectionView.backgroundColor = Colors.mainblackColor
         collectionView.register(SingleVideoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.register(EpisodeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId)
@@ -299,7 +298,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
 
         
         self.isEpisodeGrid = true
-        
         UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()
         }, completion: nil)

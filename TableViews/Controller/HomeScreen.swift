@@ -120,7 +120,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: padding, left: 0, bottom: 0, right: 0)
+            layout.sectionInset = UIEdgeInsets(top: padding, left: 0, bottom: padding, right: 0)
         }
     }
 
@@ -128,7 +128,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
 
     func goToVideoController(video: VideoData) {
-        let layout = UICollectionViewFlowLayout()
+        let layout = StretchyHeaderLayout()
         let singleVideoController = SingleVideoController(collectionViewLayout: layout)
          singleVideoController.video = video
 
@@ -184,7 +184,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch indexPath.section {
-           case 0: return CGSize(width: view.frame.width - 2 * padding, height: 125)
+           case 0: return CGSize(width: view.frame.width - 2 * padding, height: 115)
            case 3: return CGSize(width: view.frame.width - 2 * padding, height: 300)
            default:  return CGSize(width: view.frame.width - 2 * padding, height: 150)
         }
