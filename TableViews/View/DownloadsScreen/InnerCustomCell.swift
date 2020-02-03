@@ -76,7 +76,6 @@ class InnerCustomCell: UICollectionViewCell {
         super.init(frame: frame)
         setupLayout()
         
-        backgroundColor = .orange
     }
     
     

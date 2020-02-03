@@ -43,6 +43,8 @@
 		D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0A56F2333F83F0049ED44 /* MyListController.swift */; };
 		D3B2BF2F2300CE5C00012CA3 /* SingleVideoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B2BF2E2300CE5C00012CA3 /* SingleVideoHeader.swift */; };
 		D3B2BF312301F58500012CA3 /* StretchHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */; };
+		D3B317F823E89400002FDAF8 /* ContinueWatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B317F723E89400002FDAF8 /* ContinueWatchingCell.swift */; };
+		D3B317FA23E8985A002FDAF8 /* InnerWatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B317F923E8985A002FDAF8 /* InnerWatchingCell.swift */; };
 		D3B5159D23135FA900E9222A /* SingleVideoHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */; };
 		D3B5159F2314053C00E9222A /* TrailerCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B5159E2314053C00E9222A /* TrailerCustomView.swift */; };
 		D3B7A97B234D52D60000A7DC /* UserUsageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B7A97A234D52D60000A7DC /* UserUsageCell.swift */; };
@@ -120,6 +122,8 @@
 		D3B0A56F2333F83F0049ED44 /* MyListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListController.swift; sourceTree = "<group>"; };
 		D3B2BF2E2300CE5C00012CA3 /* SingleVideoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleVideoHeader.swift; sourceTree = "<group>"; };
 		D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchHeaderLayout.swift; sourceTree = "<group>"; };
+		D3B317F723E89400002FDAF8 /* ContinueWatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueWatchingCell.swift; sourceTree = "<group>"; };
+		D3B317F923E8985A002FDAF8 /* InnerWatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerWatchingCell.swift; sourceTree = "<group>"; };
 		D3B5159C23135FA900E9222A /* SingleVideoHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleVideoHeaderProtocol.swift; path = TableViews/View/SingleVideoHeaderProtocol.swift; sourceTree = SOURCE_ROOT; };
 		D3B5159E2314053C00E9222A /* TrailerCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCustomView.swift; sourceTree = "<group>"; };
 		D3B7A97A234D52D60000A7DC /* UserUsageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUsageCell.swift; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 				D387975323BFA44300C1DB92 /* RandomControllerViewController.swift */,
 				D36AF3AD23E62ADB004BDCDB /* BaseViewCell.swift */,
 				D36AF3AF23E62B16004BDCDB /* InnerBaseViewCell.swift */,
+				D3B317F723E89400002FDAF8 /* ContinueWatchingCell.swift */,
+				D3B317F923E8985A002FDAF8 /* InnerWatchingCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -559,6 +565,7 @@
 				D3EAE50223DE760E00072F8D /* InnerCustomCell.swift in Sources */,
 				D3B2BF2F2300CE5C00012CA3 /* SingleVideoHeader.swift in Sources */,
 				D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */,
+				D3B317FA23E8985A002FDAF8 /* InnerWatchingCell.swift in Sources */,
 				D3E552C22307956900CF984E /* EpisodeController.swift in Sources */,
 				D3CEFBB222EBD11F00421AC4 /* CustomTabBarController.swift in Sources */,
 				D376C9C72315EAEC00E1755F /* SettingsHeader.swift in Sources */,
@@ -570,6 +577,7 @@
 				D352932623D20118002B4690 /* DownloadHeaderCollectionViewCell.swift in Sources */,
 				D352932823D20BD8002B4690 /* DownloadCustomCell.swift in Sources */,
 				D338C1B922D0289900295657 /* AppDelegate.swift in Sources */,
+				D3B317F823E89400002FDAF8 /* ContinueWatchingCell.swift in Sources */,
 				D301FAED233D4619008BD264 /* DownloadCell.swift in Sources */,
 				D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */,
 				D376C9C42315E63900E1755F /* SettingScreen.swift in Sources */,

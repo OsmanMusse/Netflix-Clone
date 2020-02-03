@@ -12,6 +12,7 @@ import Firebase
 class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
     var BaseCellID = "BaseCellID"
+    var ContinueWatchingCellId =  "ContinueCellId"
     var headerCellId = "headerCellId"
     var padding: CGFloat = 8
     
@@ -111,6 +112,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         collectionView.register(CustomPreviewsViewCell.self, forCellWithReuseIdentifier: previewsCellId)
         collectionView.register(BaseViewCell.self, forCellWithReuseIdentifier: BaseCellID)
+        collectionView.register(ContinueWatchingCell.self, forCellWithReuseIdentifier: ContinueWatchingCellId)
         collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCellId)
         collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
@@ -138,7 +140,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -148,11 +150,11 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         return header
             
         case 1:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "US TV Programmes Based on Comics"
+        header.downloadHeaderTitle.text =  "Continue Watching for Mascuud"
         return header
             
         case 2:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "Trending Now"
+        header.downloadHeaderTitle.text =  "Mystery Programmes"
         return header
             
             
@@ -182,6 +184,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         switch indexPath.section {
            case 0: return CGSize(width: view.frame.width - 2 * padding, height: 115)
+           case 1:  return CGSize(width: view.frame.width - 2 * padding, height: 200)
            case 3: return CGSize(width: view.frame.width - 2 * padding, height: 300)
            default:  return CGSize(width: view.frame.width - 2 * padding, height: 150)
         }
@@ -197,8 +200,12 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         case 0:  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: previewsCellId, for: indexPath) as! CustomPreviewsViewCell
                  return cell
             
+        case 1: let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: ContinueWatchingCellId, for: indexPath) as! ContinueWatchingCell
+            return cell
+            
         case 3:  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoViewCellId, for: indexPath) as! VideoViewCell
         return cell
+            
             
         default: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseCellID, for: indexPath) as! BaseViewCell
         cell.homeScreen = self

@@ -1,20 +1,18 @@
 //
-//  BaseViewCell.swift
+//  ContinueWatchingCell.swift
 //  TableViews
 //
-//  Created by Mezut on 01/02/2020.
+//  Created by Mezut on 03/02/2020.
 //  Copyright © 2020 Mezut. All rights reserved.
 //
-
-
-
 
 import UIKit
 import Firebase
 
 
 
-class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var imageUrls =  [VideoData]()
     
@@ -22,8 +20,8 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     var homeScreen: HomeScreen?
     
-    let innerCellId = "innerCellId"
-    let padding: CGFloat = 10
+    let InnerWatchinCellId = "InnerWatchinCellId"
+    let padding: CGFloat = 18
     
     lazy var innerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -42,8 +40,8 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
         super.init(frame: frame)
         
         
-        innerCollectionView.register(InnerBaseViewCell.self, forCellWithReuseIdentifier: innerCellId)
-
+        innerCollectionView.register(InnerWatchingCell.self, forCellWithReuseIdentifier: InnerWatchinCellId)
+        
         
         getFirebaseDatabase()
         setupLayout()
@@ -60,11 +58,11 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.width / 4 + padding, height: 150)
+        return CGSize(width: self.frame.width / 4 + padding, height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerBaseViewCell
+        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: InnerWatchinCellId, for: indexPath) as? InnerWatchingCell
         cell?.videoInformation = imageUrls[indexPath.row]
         return cell!
     }
