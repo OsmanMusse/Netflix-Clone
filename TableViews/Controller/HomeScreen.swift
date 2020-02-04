@@ -14,12 +14,14 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     var BaseCellID = "BaseCellID"
     var ContinueWatchingCellId =  "ContinueCellId"
     var headerCellId = "headerCellId"
+    var NetflixMainHero = "NetflixMainHero"
     var padding: CGFloat = 8
     
     let seriesBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Series", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -29,6 +31,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let button = UIButton(type: .system)
         button.setTitle("Films", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -38,6 +41,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         button.setTitle("My List", for: .normal)
         button.addTarget(self, action: #selector(goToListController), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -97,10 +101,13 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         navigationItem.hidesBackButton = true
         
         
-        navigationController?.navigationBar.barTintColor = UIColor(red: 40/255, green: 39/255, blue: 39/255, alpha: 1)
+        
+        // Makes the Navigation Bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
         
     
-        navigationController?.navigationBar.isTranslucent = false
         
         
         
@@ -114,8 +121,12 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionView.register(BaseViewCell.self, forCellWithReuseIdentifier: BaseCellID)
         collectionView.register(ContinueWatchingCell.self, forCellWithReuseIdentifier: ContinueWatchingCellId)
         collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCellId)
+        collectionView.register(HomeScreenHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero)
         collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
+        
+        // Will allow the Hero Header to fill the upper part of the navigation bar
+        collectionView.contentInsetAdjustmentBehavior = .never
         
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
@@ -144,21 +155,24 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         switch indexPath.section {
-        case 0:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        case 0: let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
+                return header
+        case 1:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
         header.downloadHeaderTitle.text =  "Previews"
         return header
             
-        case 1:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        case 2:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
         header.downloadHeaderTitle.text =  "Continue Watching for Mascuud"
         return header
             
-        case 2:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        case 3:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
         header.downloadHeaderTitle.text =  "Mystery Programmes"
         return header
             
             
-        case 3:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
+        case 4:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
         header.downloadHeaderTitle.text =  "Available Now: Season 2"
         return header
             
@@ -175,6 +189,10 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0{
+            return CGSize(width: view.frame.width, height: 450)
+        }
+        
         return CGSize(width: view.frame.width, height: 30)
     }
     
@@ -184,7 +202,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         switch indexPath.section {
            case 0: return CGSize(width: view.frame.width - 2 * padding, height: 115)
-           case 1:  return CGSize(width: view.frame.width - 2 * padding, height: 200)
+           case 1:  return CGSize(width: view.frame.width, height: 200)
            case 3: return CGSize(width: view.frame.width - 2 * padding, height: 300)
            default:  return CGSize(width: view.frame.width - 2 * padding, height: 150)
         }

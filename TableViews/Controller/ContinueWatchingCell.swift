@@ -118,9 +118,9 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         
         NSLayoutConstraint.activate([
             
-            innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             innerCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
-            innerCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            innerCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             innerCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             

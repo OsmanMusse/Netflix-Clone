@@ -153,7 +153,7 @@ class VideoViewCell: UICollectionViewCell {
             buttonStackView.bottomAnchor.constraint(equalTo: videoView.bottomAnchor),
             buttonStackView.leadingAnchor.constraint(equalTo: videoView.leadingAnchor, constant: 10),
             buttonStackView.trailingAnchor.constraint(equalTo: videoView.trailingAnchor, constant: -10),
-            buttonStackView.heightAnchor.constraint(equalToConstant:40)
+            buttonStackView.heightAnchor.constraint(equalToConstant:35)
             
             
             ])

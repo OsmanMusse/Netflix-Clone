@@ -21,6 +21,7 @@
 		D338C1C322D0289E00295657 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D338C1C122D0289E00295657 /* LaunchScreen.storyboard */; };
 		D338C1CE22D0289E00295657 /* TableViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338C1CD22D0289E00295657 /* TableViewsTests.swift */; };
 		D338C1D922D0289E00295657 /* TableViewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338C1D822D0289E00295657 /* TableViewsUITests.swift */; };
+		D34174EE23E8FDFF006B7C58 /* HomeScreenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */; };
 		D352932023CD262D002B4690 /* DownloadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352931F23CD262D002B4690 /* DownloadScreen.swift */; };
 		D352932323CE4F15002B4690 /* innerDownloadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352932223CE4F15002B4690 /* innerDownloadScreen.swift */; };
 		D352932623D20118002B4690 /* DownloadHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352932523D20118002B4690 /* DownloadHeaderCollectionViewCell.swift */; };
@@ -100,6 +101,7 @@
 		D338C1D422D0289E00295657 /* TableViewsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableViewsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D338C1D822D0289E00295657 /* TableViewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewsUITests.swift; sourceTree = "<group>"; };
 		D338C1DA22D0289E00295657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeader.swift; sourceTree = "<group>"; };
 		D352931F23CD262D002B4690 /* DownloadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadScreen.swift; sourceTree = "<group>"; };
 		D352932223CE4F15002B4690 /* innerDownloadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innerDownloadScreen.swift; sourceTree = "<group>"; };
 		D352932523D20118002B4690 /* DownloadHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */,
 				D376C9C62315EAEC00E1755F /* SettingsHeader.swift */,
 				D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */,
+				D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				D36AF3AE23E62ADB004BDCDB /* BaseViewCell.swift in Sources */,
 				D32B4A3723DA4F9900313A27 /* CategoryTitles.swift in Sources */,
 				D3CEFBB622EC044600421AC4 /* PopularViewCell.swift in Sources */,
+				D34174EE23E8FDFF006B7C58 /* HomeScreenHeader.swift in Sources */,
 				D3C79D14230B84F200A5748F /* VideoOptionCell.swift in Sources */,
 				D394793D22EE635E0005A790 /* CustomPreviewsViewCell.swift in Sources */,
 				D3B2BF312301F58500012CA3 /* StretchHeaderLayout.swift in Sources */,

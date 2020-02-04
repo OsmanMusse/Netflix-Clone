@@ -25,7 +25,7 @@ class InnerWatchingCell: UICollectionViewCell {
     
     
     var watchinVideoImage: UIImageView = {
-        let image = UIImageView(image: #imageLiteral(resourceName: "van-heisling-2"))
+        let image = UIImageView(image: #imageLiteral(resourceName: "Riverdale-poster"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -45,6 +45,37 @@ class InnerWatchingCell: UICollectionViewCell {
     }()
     
     
+    var moreInfoIcon: UIImageView =  {
+       let image = UIImageView(image: #imageLiteral(resourceName: "info-icon"))
+        image.contentMode = .scaleAspectFit
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    var outerSliderView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(red: 56/255, green: 57/255, blue: 56/255, alpha: 1)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    var innerSliderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
+    
+    var seasonEpiosdeLabel: UILabel = {
+       let label = UILabel()
+        label.text = "S1:E6"
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.textColor = Colors.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
   
     
@@ -63,7 +94,10 @@ class InnerWatchingCell: UICollectionViewCell {
         addSubview(watchinVideoImage)
         addSubview(watchingVideoBtn)
         addSubview(innerBlackView)
-        
+        addSubview(outerSliderView)
+        outerSliderView.addSubview(innerSliderView)
+        innerBlackView.addSubview(seasonEpiosdeLabel)
+        innerBlackView.addSubview(moreInfoIcon)
         
         
         NSLayoutConstraint.activate([
@@ -83,6 +117,28 @@ class InnerWatchingCell: UICollectionViewCell {
                         innerBlackView.leadingAnchor.constraint(equalTo: watchinVideoImage.leadingAnchor),
                         innerBlackView.trailingAnchor.constraint(equalTo: watchinVideoImage.trailingAnchor),
                         innerBlackView.heightAnchor.constraint(equalToConstant: 35),
+                        
+                        outerSliderView.widthAnchor.constraint(equalToConstant: innerBlackView.frame.width),
+                        outerSliderView.heightAnchor.constraint(equalToConstant: 3),
+                        outerSliderView.leadingAnchor.constraint(equalTo: innerBlackView.leadingAnchor),
+                        outerSliderView.trailingAnchor.constraint(equalTo: innerBlackView.trailingAnchor),
+                        outerSliderView.bottomAnchor.constraint(equalTo: innerBlackView.topAnchor),
+                        
+                        innerSliderView.widthAnchor.constraint(equalToConstant: outerSliderView.frame.width),
+                        innerSliderView.heightAnchor.constraint(equalToConstant: 3),
+                        innerSliderView.leadingAnchor.constraint(equalTo: outerSliderView.leadingAnchor),
+                        innerSliderView.trailingAnchor.constraint(equalTo: outerSliderView.trailingAnchor, constant: -20),
+                        innerSliderView.topAnchor.constraint(equalTo: outerSliderView.topAnchor),
+                        
+                        seasonEpiosdeLabel.leadingAnchor.constraint(equalTo: innerBlackView.leadingAnchor, constant: 6),
+                        seasonEpiosdeLabel.centerYAnchor.constraint(equalTo: innerBlackView.centerYAnchor),
+                        
+                        moreInfoIcon.trailingAnchor.constraint(equalTo: innerBlackView.trailingAnchor, constant: -6),
+                        moreInfoIcon.centerYAnchor.constraint(equalTo: innerBlackView.centerYAnchor),
+                        
+                        
+                        
+                        
             
             ])
         
