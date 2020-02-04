@@ -21,7 +21,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let button = UIButton(type: .system)
         button.setTitle("Series", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -31,7 +31,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let button = UIButton(type: .system)
         button.setTitle("Films", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -41,7 +41,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         button.setTitle("My List", for: .normal)
         button.addTarget(self, action: #selector(goToListController), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
