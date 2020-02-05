@@ -60,9 +60,18 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
     
     let headerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    
+    let headerLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Previews"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
     lazy var customCollectionView: UICollectionView = {
@@ -121,6 +130,7 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
     
     func setupLayout(){
         addSubview(headerView)
+        addSubview(headerLabel)
         addSubview(customCollectionView)
         
         NSLayoutConstraint.activate([
@@ -128,6 +138,10 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
             headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
             headerView.heightAnchor.constraint(equalToConstant: 50),
             headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
+            
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0),
             
             customCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             customCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),

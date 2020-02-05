@@ -38,9 +38,17 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     
     let headerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Continue Watching for Mascuud"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -121,6 +129,7 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     func setupLayout(){
         
         addSubview(headerView)
+        addSubview(headerLabel)
         addSubview(innerCollectionView)
         
         NSLayoutConstraint.activate([
@@ -129,6 +138,10 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
             headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
             headerView.heightAnchor.constraint(equalToConstant: 50),
             headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
+            
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5),
             
             
             innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),

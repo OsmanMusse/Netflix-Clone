@@ -23,10 +23,27 @@ class VideoViewCell: UICollectionViewCell {
         return image
     }()
     
+    
+    
     lazy var videoView: UIView = {
        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    let headerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Available Now: Season 1"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
    
@@ -129,11 +146,22 @@ class VideoViewCell: UICollectionViewCell {
     
     
     func setupLayout(){
+        
+        addSubview(headerView)
+        addSubview(headerLabel)
         addSubview(videoView)
         addSubview(containerView)
         addSubview(buttonStackView)
         
         NSLayoutConstraint.activate([
+            
+            headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
+            headerView.heightAnchor.constraint(equalToConstant: 50),
+            headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
+            
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5),
             
             videoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             videoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
