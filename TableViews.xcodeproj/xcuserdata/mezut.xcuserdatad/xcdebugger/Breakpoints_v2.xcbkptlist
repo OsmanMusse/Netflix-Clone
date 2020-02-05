@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/CustomPreviewsViewCell.swift"
-            timestampString = "602295129.948693"
+            timestampString = "602555202.854439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "setupLayout()"
             landmarkType = "7">
          </BreakpointContent>

@@ -37,6 +37,13 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
         return cv
     }()
     
+    let headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -115,10 +122,15 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     func setupLayout(){
         
-        
+        addSubview(headerView)
         addSubview(innerCollectionView)
         
         NSLayoutConstraint.activate([
+            
+            
+            headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
+            headerView.heightAnchor.constraint(equalToConstant: 50),
+            headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
             
             innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             innerCollectionView.topAnchor.constraint(equalTo: self.topAnchor),

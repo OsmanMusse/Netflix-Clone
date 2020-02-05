@@ -36,6 +36,13 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     }()
     
     
+    let headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -113,10 +120,16 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     
     func setupLayout(){
         
-        
+        addSubview(headerView)
         addSubview(innerCollectionView)
         
         NSLayoutConstraint.activate([
+            
+            
+            headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
+            headerView.heightAnchor.constraint(equalToConstant: 50),
+            headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
+            
             
             innerCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             innerCollectionView.topAnchor.constraint(equalTo: self.topAnchor),

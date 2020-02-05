@@ -13,7 +13,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     var BaseCellID = "BaseCellID"
     var ContinueWatchingCellId =  "ContinueCellId"
-    var headerCellId = "headerCellId"
+    var fakeHeaderCellId = "fakeHeaderCellId"
     var NetflixMainHero = "NetflixMainHero"
     var padding: CGFloat = 8
     
@@ -122,7 +122,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionView.register(ContinueWatchingCell.self, forCellWithReuseIdentifier: ContinueWatchingCellId)
         collectionView.register(VideoViewCell.self, forCellWithReuseIdentifier: VideoViewCellId)
         collectionView.register(HomeScreenHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero)
-        collectionView.register(InnerDownloadHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
+        collectionView.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fakeHeaderCellId)
         collectionView.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         
         // Will allow the Hero Header to fill the upper part of the navigation bar
@@ -130,7 +130,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: padding, left: 0, bottom: padding, right: 0)
+            layout.sectionInset = UIEdgeInsets(top: 50, left: 0, bottom: padding, right: 0)
         }
     }
 
@@ -155,45 +155,28 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        switch indexPath.section {
-        case 0: let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
-                return header
-        case 1:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "Previews"
-        return header
+    
+        if indexPath.section == 0 {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
             
-        case 2:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "Continue Watching for Mascuud"
-        return header
-            
-        case 3:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "Mystery Programmes"
-        return header
-            
-            
-        case 4:   let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:       headerCellId, for: indexPath) as! InnerDownloadHeader
-        header.downloadHeaderTitle.text =  "Available Now: Season 2"
-        return header
-            
-        
-        default:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as! InnerDownloadHeader
             return header
         }
-
         
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fakeHeaderCellId, for: indexPath)
+        
+        return header
+    
+     
     }
     
     
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0{
-            return CGSize(width: view.frame.width, height: 450)
+        if section == 0 {
+            return CGSize(width: view.frame.width, height: 500)
         }
-        
-        return CGSize(width: view.frame.width, height: 30)
+            return CGSize(width: view.frame.width, height: 0)
     }
     
     

@@ -57,6 +57,13 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
     
     let cellId = "cellId"
     let padding: CGFloat = 10
+    
+    let headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     lazy var customCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -113,10 +120,14 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
     
     
     func setupLayout(){
-        
+        addSubview(headerView)
         addSubview(customCollectionView)
         
         NSLayoutConstraint.activate([
+            
+            headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
+            headerView.heightAnchor.constraint(equalToConstant: 50),
+            headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
             
             customCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             customCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
