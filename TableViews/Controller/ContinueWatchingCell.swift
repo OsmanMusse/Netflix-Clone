@@ -99,7 +99,7 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
             guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
             guard let firstItem = dictionary["Videocategories"] else {return}
-            guard let videoSection = firstItem[1]["videoData"] else {return}
+            guard let videoSection = firstItem[2]["videoData"] else {return}
             guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
             
             
@@ -111,8 +111,6 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
                 let singleVideo = VideoData()
                 singleVideo.videoName = videoUrl
                 self.imageUrls.append(singleVideo)
-                
-                
                 
             }
             

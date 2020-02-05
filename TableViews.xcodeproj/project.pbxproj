@@ -22,7 +22,6 @@
 		D338C1CE22D0289E00295657 /* TableViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338C1CD22D0289E00295657 /* TableViewsTests.swift */; };
 		D338C1D922D0289E00295657 /* TableViewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338C1D822D0289E00295657 /* TableViewsUITests.swift */; };
 		D34174EE23E8FDFF006B7C58 /* HomeScreenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */; };
-		D34174F023EA3CD1006B7C58 /* TemplateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34174EF23EA3CD1006B7C58 /* TemplateHeader.swift */; };
 		D352932023CD262D002B4690 /* DownloadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352931F23CD262D002B4690 /* DownloadScreen.swift */; };
 		D352932323CE4F15002B4690 /* innerDownloadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352932223CE4F15002B4690 /* innerDownloadScreen.swift */; };
 		D352932623D20118002B4690 /* DownloadHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352932523D20118002B4690 /* DownloadHeaderCollectionViewCell.swift */; };
@@ -103,7 +102,6 @@
 		D338C1D822D0289E00295657 /* TableViewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewsUITests.swift; sourceTree = "<group>"; };
 		D338C1DA22D0289E00295657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeader.swift; sourceTree = "<group>"; };
-		D34174EF23EA3CD1006B7C58 /* TemplateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateHeader.swift; sourceTree = "<group>"; };
 		D352931F23CD262D002B4690 /* DownloadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadScreen.swift; sourceTree = "<group>"; };
 		D352932223CE4F15002B4690 /* innerDownloadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innerDownloadScreen.swift; sourceTree = "<group>"; };
 		D352932523D20118002B4690 /* DownloadHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -356,7 +354,6 @@
 				D376C9C62315EAEC00E1755F /* SettingsHeader.swift */,
 				D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */,
 				D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */,
-				D34174EF23EA3CD1006B7C58 /* TemplateHeader.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -551,7 +548,6 @@
 				D32B4A3B23DCEA7900313A27 /* VideoCell.swift in Sources */,
 				D3CEFBB422EC024000421AC4 /* DataModel.swift in Sources */,
 				D36AF3B023E62B16004BDCDB /* InnerBaseViewCell.swift in Sources */,
-				D34174F023EA3CD1006B7C58 /* TemplateHeader.swift in Sources */,
 				D3B7A97B234D52D60000A7DC /* UserUsageCell.swift in Sources */,
 				D3D816C9231809A900F244E1 /* SearchController.swift in Sources */,
 				D3893A19230316D500685C78 /* Colors.swift in Sources */,

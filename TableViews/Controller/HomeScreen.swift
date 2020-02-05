@@ -130,7 +130,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: 50, left: 0, bottom: padding, right: 0)
+            layout.sectionInset = UIEdgeInsets(top: 35, left: 0, bottom: padding, right: 0)
         }
     }
 
@@ -184,7 +184,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch indexPath.section {
-           case 0: return CGSize(width: view.frame.width - 2 * padding, height: 115)
+           case 0: return CGSize(width: view.frame.width - 2 * padding, height: 135)
            case 1:  return CGSize(width: view.frame.width, height: 200)
            case 3: return CGSize(width: view.frame.width - 2 * padding, height: 300)
            default:  return CGSize(width: view.frame.width - 2 * padding, height: 150)

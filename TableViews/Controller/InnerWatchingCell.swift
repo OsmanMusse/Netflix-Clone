@@ -17,15 +17,34 @@ import  Hero
 
 class InnerWatchingCell: UICollectionViewCell {
     
+    var homeScreenTeller: HomeScreen? {
+        didSet{
+            print("HELLO MASCUUD == \(homeScreenTeller)")
+        }
+    }
+    
     var videoInformation: VideoData? {
         didSet{
             
+            guard let urlString = videoInformation?.videoName else {return}
+            
+            guard let url = URL(string: urlString) else {return}
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard let imageData = data else {return}
+                
+                let constructedImage = UIImage(data: imageData)
+                
+                DispatchQueue.main.async {
+                    self.watchinVideoImage.image = constructedImage
+                }
+                
+            }.resume()
         }
     }
     
     
     var watchinVideoImage: UIImageView = {
-        let image = UIImageView(image: #imageLiteral(resourceName: "Riverdale-poster"))
+        let image = UIImageView(image: #imageLiteral(resourceName: "iron-man"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -45,8 +64,10 @@ class InnerWatchingCell: UICollectionViewCell {
     }()
     
     
-    var moreInfoIcon: UIImageView =  {
+    lazy var moreInfoIcon: UIImageView =  {
        let image = UIImageView(image: #imageLiteral(resourceName: "info-icon"))
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleInfoIcon)))
+        image.isUserInteractionEnabled = true
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -83,9 +104,15 @@ class InnerWatchingCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        
+        
     }
     
     
+    
+    @objc func handleInfoIcon(){
+        print("Info Icon Clicked")
+    }
     
     
     func setupLayout(){

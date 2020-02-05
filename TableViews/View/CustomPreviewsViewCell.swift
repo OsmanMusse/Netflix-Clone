@@ -82,6 +82,7 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
         cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
         cv.dataSource = self
         cv.delegate = self
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -137,7 +138,7 @@ class CustomPreviewsViewCell: UICollectionViewCell, UICollectionViewDelegate, UI
             
             headerView.widthAnchor.constraint(equalToConstant: self.frame.width),
             headerView.heightAnchor.constraint(equalToConstant: 50),
-            headerView.bottomAnchor.constraint(equalTo: self.topAnchor),
+            headerView.bottomAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             
             headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
