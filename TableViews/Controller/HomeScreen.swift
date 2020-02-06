@@ -11,6 +11,8 @@ import Firebase
 
 class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
+    var HeroImageView = [VideoData]()
+    
     var BaseCellID = "BaseCellID"
     var ContinueWatchingCellId =  "ContinueCellId"
     var fakeHeaderCellId = "fakeHeaderCellId"
@@ -67,7 +69,6 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         setupNavBar()
         collectionViewConfig()
-    
 
     }
     
@@ -107,13 +108,9 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         
-    
-        
-        
-        
+
     }
-    
-    
+
     
     func collectionViewConfig(){
         
@@ -134,6 +131,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         }
     }
 
+    
     
     
 
@@ -157,9 +155,10 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    
         if indexPath.section == 0 {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
+
+
             
             return header
         }

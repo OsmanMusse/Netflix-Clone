@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeScreenHeader: UICollectionViewCell {
     
+
     
     var imagePoster: UIImageView = {
-       let image = UIImageView(image: #imageLiteral(resourceName: "The-Stranger-Header"))
+       let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -151,6 +153,37 @@ class HomeScreenHeader: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        setupHeroImage()
+    }
+  
+    
+    func setupHeroImage(){
+        
+        
+        let firebaseDatabase = Database.database().reference()
+        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
+            guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
+            guard let firstItem = dictionary["Videocategories"] else {return}
+            guard let videoSection = firstItem[3]["videoData"] else {return}
+            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
+            guard let videoUrl = videoInformation[0]["videoUrl"] as? String else {return}
+            
+            
+            guard let url = URL(string: videoUrl) else {return}
+                
+                URLSession.shared.dataTask(with: url) { (data, response, error) in
+                    guard let imageData = data else {return}
+                    
+                    let constructedImage = UIImage(data: imageData)
+                    
+                    DispatchQueue.main.async {
+                        self.imagePoster.image = constructedImage
+                    }
+                    
+                    }.resume()
+    }
+        
+        
     }
     
     
