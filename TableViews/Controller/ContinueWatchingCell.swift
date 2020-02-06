@@ -79,13 +79,14 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: InnerWatchinCellId, for: indexPath) as? InnerWatchingCell
         cell?.videoInformation = imageUrls[indexPath.row]
+        cell?.homeScreenTeller = homeScreen
         return cell!
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        homeScreen?.goToVideoController(video: imageUrls[indexPath.item])
+        homeScreen?.goToVideoController(video: imageUrls[indexPath.item], allowScreenTransitionAnimation: false)
     }
     
     

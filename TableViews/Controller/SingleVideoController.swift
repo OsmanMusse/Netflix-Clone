@@ -46,7 +46,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         // Setting up the data source of the screen
         videoCategory = VideoCategory.getVideoCategory()
         
-        self.hero.isEnabled = true
         collectionView.backgroundColor = Colors.mainblackColor
         collectionView.register(SingleVideoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId)
         collectionView.register(EpisodeHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId)

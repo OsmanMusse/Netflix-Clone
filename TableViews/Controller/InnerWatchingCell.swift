@@ -19,7 +19,6 @@ class InnerWatchingCell: UICollectionViewCell {
     
     var homeScreenTeller: HomeScreen? {
         didSet{
-            print("HELLO MASCUUD == \(homeScreenTeller)")
         }
     }
     
@@ -111,7 +110,8 @@ class InnerWatchingCell: UICollectionViewCell {
     
     
     @objc func handleInfoIcon(){
-        print("Info Icon Clicked")
+        guard let unwrappedVideoInformation = videoInformation else {return}
+        homeScreenTeller?.goToVideoController(video: unwrappedVideoInformation, allowScreenTransitionAnimation: false)
     }
     
     

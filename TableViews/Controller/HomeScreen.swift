@@ -137,9 +137,10 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     
 
-    func goToVideoController(video: VideoData) {
+    func goToVideoController(video: VideoData, allowScreenTransitionAnimation: Bool) {
         let layout = StretchyHeaderLayout()
         let singleVideoController = SingleVideoController(collectionViewLayout: layout)
+        singleVideoController.hero.isEnabled = allowScreenTransitionAnimation
          singleVideoController.video = video
 
         self.present(singleVideoController, animated: true, completion: nil)
@@ -202,6 +203,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
                  return cell
             
         case 1: let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: ContinueWatchingCellId, for: indexPath) as! ContinueWatchingCell
+        cell.homeScreen = self
             return cell
             
         case 3:  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoViewCellId, for: indexPath) as! VideoViewCell

@@ -87,7 +87,7 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        homeScreen?.goToVideoController(video: imageUrls[indexPath.item])
+        homeScreen?.goToVideoController(video: imageUrls[indexPath.item], allowScreenTransitionAnimation: true)
     }
     
     
