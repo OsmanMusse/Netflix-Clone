@@ -137,10 +137,11 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     
 
-    func goToVideoController(video: VideoData, allowScreenTransitionAnimation: Bool) {
+    func goToVideoController(video: VideoData, allowScreenTransitionAnimation: Bool, allowCellAnimation: Bool) {
         let layout = StretchyHeaderLayout()
         let singleVideoController = SingleVideoController(collectionViewLayout: layout)
         singleVideoController.hero.isEnabled = allowScreenTransitionAnimation
+        singleVideoController.animateCell = allowCellAnimation
          singleVideoController.video = video
 
         self.present(singleVideoController, animated: true, completion: nil)

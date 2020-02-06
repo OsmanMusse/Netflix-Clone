@@ -374,7 +374,6 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         super.init(frame: frame)
         setupLayout()
         videoImage.hero.id = "skyWalker"
-        videoImage.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
 
         
 

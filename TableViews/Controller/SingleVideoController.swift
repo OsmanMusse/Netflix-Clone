@@ -36,7 +36,11 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     
     
-    
+    var animateCell: Bool?{
+        didSet{
+            
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -101,6 +105,9 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
             case 0:
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
+                if animateCell! == true {
+                       singleHeader!.videoImage.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
+                }
                 singleHeader?.videoInformation = video
                 singleHeader?.delegate = self
                 return singleHeader!

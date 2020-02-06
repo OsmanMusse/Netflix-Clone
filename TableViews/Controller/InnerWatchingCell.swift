@@ -111,7 +111,7 @@ class InnerWatchingCell: UICollectionViewCell {
     
     @objc func handleInfoIcon(){
         guard let unwrappedVideoInformation = videoInformation else {return}
-        homeScreenTeller?.goToVideoController(video: unwrappedVideoInformation, allowScreenTransitionAnimation: false)
+        homeScreenTeller?.goToVideoController(video: unwrappedVideoInformation, allowScreenTransitionAnimation: true, allowCellAnimation: false)
     }
     
     
