@@ -100,8 +100,7 @@ class ContinueWatchingCell: UICollectionViewCell, UICollectionViewDelegate, UICo
             guard let firstItem = dictionary["Videocategories"] else {return}
             guard let videoSection = firstItem[2]["videoData"] else {return}
             guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
-            
-            
+
             
             for item in videoInformation {
                 

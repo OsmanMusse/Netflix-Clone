@@ -101,18 +101,24 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
         firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
             guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
             guard let firstItem = dictionary["Videocategories"] else {return}
-            guard let videoSection = firstItem[1]["videoData"] else {return}
-            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
+            guard let videoSection = firstItem[0] ["videoData"] as? Dictionary<String,Any>  else {return}
+
             
+
             
+      
             
-            for item in videoInformation {
+            for item in videoSection {
                 
-                guard let videoUrl = item["videoUrl"] as? String else {return}
+                guard let castedValue = item.value as? Dictionary<String,AnyObject> else {return}
+                guard let videoURLValue = castedValue["videoURL"] as? String else {return}
                 
-                let singleVideo = VideoData()
-                singleVideo.videoName = videoUrl
-                self.imageUrls.append(singleVideo)
+    
+
+                let myListVideo = VideoData()
+                
+                myListVideo.videoName = videoURLValue
+                self.imageUrls.append(myListVideo)
                 
                 
                 

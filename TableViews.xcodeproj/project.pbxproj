@@ -351,8 +351,8 @@
 				D3B2BF2E2300CE5C00012CA3 /* SingleVideoHeader.swift */,
 				D3B2BF302301F58500012CA3 /* StretchHeaderLayout.swift */,
 				D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */,
-				D376C9C62315EAEC00E1755F /* SettingsHeader.swift */,
 				D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */,
+				D376C9C62315EAEC00E1755F /* SettingsHeader.swift */,
 				D34174ED23E8FDFF006B7C58 /* HomeScreenHeader.swift */,
 			);
 			path = Headers;

@@ -113,7 +113,7 @@ class SettingsHeader: UICollectionViewCell {
     var manageBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "paint-brush").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.setTitle("Manage Profiles", for: .normal)
+        button.setTitle("Manage Profiles", for: .normal) 
         button.setTitleColor(UIColor(red: 132/255, green: 132/255, blue: 132/255, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 27)

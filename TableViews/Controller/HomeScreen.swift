@@ -12,6 +12,7 @@ import Firebase
 class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
     var HeroImageView = [VideoData]()
+    var myListAddedImage = [VideoData]()
     
     var BaseCellID = "BaseCellID"
     var ContinueWatchingCellId =  "ContinueCellId"
@@ -151,14 +152,14 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return 4
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if indexPath.section == 0 {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
 
-
+            header.homeScreen = self
             
             return header
         }
@@ -211,8 +212,8 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
             
         default: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseCellID, for: indexPath) as! BaseViewCell
-        cell.homeScreen = self
-                 return cell
+       cell.homeScreen = self
+        return cell
         }
      
     }

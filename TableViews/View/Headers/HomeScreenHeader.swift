@@ -11,7 +11,10 @@ import Firebase
 
 class HomeScreenHeader: UICollectionViewCell {
     
-
+    var imageUrl =  [VideoData]()
+    
+    var homeScreen: HomeScreen?
+    var baseViewCellHolder: BaseViewCell?
     
     var imagePoster: UIImageView = {
        let image = UIImageView()
@@ -58,16 +61,13 @@ class HomeScreenHeader: UICollectionViewCell {
     
     
     
-    var addIconBtn: UIButton = {
+    lazy var addIconBtn: UIButton = {
        let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
-        
+        button.addTarget(self, action: #selector(handleAddBtn), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-
         
-
-        
-            return button
+        return button
         
     }()
    
@@ -92,8 +92,9 @@ class HomeScreenHeader: UICollectionViewCell {
     }()
     
     
-    var moreInfoBtn: UIButton = {
+    lazy var moreInfoBtn: UIButton = {
         let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(handleInfoBtn), for: .touchUpInside)
         button.setImage(#imageLiteral(resourceName: "info").withRenderingMode(.alwaysOriginal), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -168,6 +169,10 @@ class HomeScreenHeader: UICollectionViewCell {
             guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
             guard let videoUrl = videoInformation[0]["videoUrl"] as? String else {return}
             
+            let singleHeroHeader = VideoData()
+            singleHeroHeader.videoName = videoUrl
+            self.imageUrl.append(singleHeroHeader)
+            
             
             guard let url = URL(string: videoUrl) else {return}
                 
@@ -183,6 +188,46 @@ class HomeScreenHeader: UICollectionViewCell {
                     }.resume()
     }
         
+        
+    }
+    
+    
+    
+    fileprivate func saveHeroImageToDatabase(){
+        let firebaseDatabaseReference = Database.database().reference().child("Videocategories/0/videoData")
+        
+        let ref = firebaseDatabaseReference.childByAutoId()
+        
+        guard let videoUrl = imageUrl[0].videoName else {return}
+        
+        let value =  ["videoURL": "\(videoUrl)"]
+        ref.updateChildValues(value) { (error, ref) in
+            if let  error = error {
+                print("Error Updating the Firebase RealTime Database")
+            }
+            
+            print("Hello World == \(self.imageUrl[0].videoName)")
+            
+        }
+        
+        self.homeScreen?.collectionView.reloadData()
+    }
+    
+    
+    @objc func handleAddBtn(){
+        addIconBtn.setImage(#imageLiteral(resourceName: "tick").withRenderingMode(.alwaysOriginal), for: .normal)
+        
+         
+       
+
+        
+    }
+    
+    
+    
+    @objc func handleInfoBtn(){
+         saveHeroImageToDatabase()
+        homeScreen?.goToVideoController(video: imageUrl[0], allowScreenTransitionAnimation: true, allowCellAnimation: false)
         
     }
     
