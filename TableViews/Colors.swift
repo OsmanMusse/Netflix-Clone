@@ -24,3 +24,23 @@ class Colors {
     static var mainRed: UIColor  = UIColor(red: 229/255, green: 31/255, blue: 19/255, alpha: 1)
     static var darkDarkGray: UIColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1)
 }
+
+
+extension UIViewController{
+    
+    func setupNavigationbar(){
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)], for: .normal)
+    
+        
+        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "netflix (1)"))
+        
+        // Makes the navigation bar transparent and removes the default grey background
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        
+    }
+}
+

@@ -16,7 +16,6 @@
 		9D33B876241AB26900987A87 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B871241AB26900987A87 /* CustomTextField.swift */; };
 		9D33B877241AB26900987A87 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B872241AB26900987A87 /* CustomCollectionViewCell.swift */; };
 		9D33B878241AB26900987A87 /* PopularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B873241AB26900987A87 /* PopularCollectionViewCell.swift */; };
-		9D33B87E241AB3E900987A87 /* Extensionss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B87D241AB3E900987A87 /* Extensionss.swift */; };
 		9D33B880241AB4E200987A87 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B87F241AB4E200987A87 /* ProfileScreen.swift */; };
 		D301FAE6233C212E008BD264 /* AppSettingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAE5233C212E008BD264 /* AppSettingScreen.swift */; };
 		D301FAE8233D2ABC008BD264 /* AppSettingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */; };
@@ -100,7 +99,6 @@
 		9D33B871241AB26900987A87 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9D33B872241AB26900987A87 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		9D33B873241AB26900987A87 /* PopularCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewCell.swift; sourceTree = "<group>"; };
-		9D33B87D241AB3E900987A87 /* Extensionss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensionss.swift; path = "../../Software-Project/NetflixApp/Extensionss.swift"; sourceTree = "<group>"; };
 		9D33B87F241AB4E200987A87 /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		9D34CB101967198B4DF380E8 /* Pods_TableViews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D301FAE5233C212E008BD264 /* AppSettingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingScreen.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 				D338C1C422D0289E00295657 /* Info.plist */,
 				D32B6F5223216CC300501BD5 /* GoogleService-Info.plist */,
 				D3893A18230316D500685C78 /* Colors.swift */,
-				9D33B87D241AB3E900987A87 /* Extensionss.swift */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";
@@ -584,7 +581,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D352932323CE4F15002B4690 /* innerDownloadScreen.swift in Sources */,
-				9D33B87E241AB3E900987A87 /* Extensionss.swift in Sources */,
 				D301FAE6233C212E008BD264 /* AppSettingScreen.swift in Sources */,
 				D387975423BFA44300C1DB92 /* RandomControllerViewController.swift in Sources */,
 				9D33B880241AB4E200987A87 /* ProfileScreen.swift in Sources */,
