@@ -20,4 +20,7 @@ class Colors {
     static var underLineBackgroundColor: UIColor = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1)
     
     static var usedBarBackgroundColor: UIColor = UIColor(red: 73/255, green: 73/255, blue: 73/255, alpha: 1)
+    
+    static var mainRed: UIColor  = UIColor(red: 229/255, green: 31/255, blue: 19/255, alpha: 1)
+    static var darkDarkGray: UIColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1)
 }

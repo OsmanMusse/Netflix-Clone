@@ -22,10 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
-        window?.rootViewController = CustomTabBarController()
+      
+        
+         let navigationController = UINavigationController(rootViewController: initalHomeScreen(collectionViewLayout: layout))
         
         window?.backgroundColor = .white
+        window?.rootViewController = navigationController
         
     
         FirebaseApp.configure()

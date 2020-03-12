@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D33B867241AB1DD00987A87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B866241AB1DD00987A87 /* ViewController.swift */; };
+		9D33B869241AB1F400987A87 /* CarouselData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B868241AB1F400987A87 /* CarouselData.swift */; };
+		9D33B86B241AB23100987A87 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B86A241AB23100987A87 /* SignUpScreen.swift */; };
+		9D33B86D241AB23700987A87 /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B86C241AB23700987A87 /* SignInScreen.swift */; };
+		9D33B874241AB26900987A87 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B86F241AB26900987A87 /* CustomCell.swift */; };
+		9D33B875241AB26900987A87 /* CustomHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B870241AB26900987A87 /* CustomHeaderCell.swift */; };
+		9D33B876241AB26900987A87 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B871241AB26900987A87 /* CustomTextField.swift */; };
+		9D33B877241AB26900987A87 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B872241AB26900987A87 /* CustomCollectionViewCell.swift */; };
+		9D33B878241AB26900987A87 /* PopularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B873241AB26900987A87 /* PopularCollectionViewCell.swift */; };
+		9D33B87E241AB3E900987A87 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B87D241AB3E900987A87 /* Extensions.swift */; };
+		9D33B880241AB4E200987A87 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33B87F241AB4E200987A87 /* ProfileScreen.swift */; };
 		D301FAE6233C212E008BD264 /* AppSettingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAE5233C212E008BD264 /* AppSettingScreen.swift */; };
 		D301FAE8233D2ABC008BD264 /* AppSettingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */; };
 		D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */; };
@@ -80,6 +91,17 @@
 /* Begin PBXFileReference section */
 		494EB55089F4FA301A7DCE6A /* Pods-TableViews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViews.debug.xcconfig"; path = "Target Support Files/Pods-TableViews/Pods-TableViews.debug.xcconfig"; sourceTree = "<group>"; };
 		5D17DC02A0A43F02BCD8E2BE /* Pods-TableViews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViews.release.xcconfig"; path = "Target Support Files/Pods-TableViews/Pods-TableViews.release.xcconfig"; sourceTree = "<group>"; };
+		9D33B866241AB1DD00987A87 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9D33B868241AB1F400987A87 /* CarouselData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselData.swift; sourceTree = "<group>"; };
+		9D33B86A241AB23100987A87 /* SignUpScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		9D33B86C241AB23700987A87 /* SignInScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
+		9D33B86F241AB26900987A87 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		9D33B870241AB26900987A87 /* CustomHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderCell.swift; sourceTree = "<group>"; };
+		9D33B871241AB26900987A87 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		9D33B872241AB26900987A87 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		9D33B873241AB26900987A87 /* PopularCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewCell.swift; sourceTree = "<group>"; };
+		9D33B87D241AB3E900987A87 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "../../Software-Project/NetflixApp/Extensions.swift"; sourceTree = "<group>"; };
+		9D33B87F241AB4E200987A87 /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		9D34CB101967198B4DF380E8 /* Pods_TableViews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D301FAE5233C212E008BD264 /* AppSettingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingScreen.swift; sourceTree = "<group>"; };
 		D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingHeader.swift; sourceTree = "<group>"; };
@@ -165,6 +187,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D33B86E241AB25B00987A87 /* Old-Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D33B86F241AB26900987A87 /* CustomCell.swift */,
+				9D33B872241AB26900987A87 /* CustomCollectionViewCell.swift */,
+				9D33B870241AB26900987A87 /* CustomHeaderCell.swift */,
+				9D33B871241AB26900987A87 /* CustomTextField.swift */,
+				9D33B873241AB26900987A87 /* PopularCollectionViewCell.swift */,
+			);
+			path = "Old-Views";
+			sourceTree = "<group>";
+		};
 		CD38254B5F4827EF60B08539 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +229,7 @@
 		D323F4E122D4B60D007F613A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9D33B868241AB1F400987A87 /* CarouselData.swift */,
 				D3CEFBB322EC024000421AC4 /* DataModel.swift */,
 			);
 			path = Model;
@@ -253,6 +288,7 @@
 				D338C1C422D0289E00295657 /* Info.plist */,
 				D32B6F5223216CC300501BD5 /* GoogleService-Info.plist */,
 				D3893A18230316D500685C78 /* Colors.swift */,
+				9D33B87D241AB3E900987A87 /* Extensions.swift */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";
@@ -278,6 +314,10 @@
 		D338C1E622D029CB00295657 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9D33B87F241AB4E200987A87 /* ProfileScreen.swift */,
+				9D33B86C241AB23700987A87 /* SignInScreen.swift */,
+				9D33B86A241AB23100987A87 /* SignUpScreen.swift */,
+				9D33B866241AB1DD00987A87 /* ViewController.swift */,
 				D338C1BA22D0289900295657 /* HomeScreen.swift */,
 				D3CEFBB122EBD11F00421AC4 /* CustomTabBarController.swift */,
 				D37AC90A22FC767D00CA270C /* SingleVideoController.swift */,
@@ -330,6 +370,7 @@
 		D36DFFE222D3D1AB0044FF05 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D33B86E241AB25B00987A87 /* Old-Views */,
 				D301FAE9233D3CD4008BD264 /* AppSetting */,
 				D356DC03236A4ECC000673CD /* SearchScreen */,
 				D352932123CE4D6E002B4690 /* DownloadsScreen */,
@@ -543,12 +584,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D352932323CE4F15002B4690 /* innerDownloadScreen.swift in Sources */,
+				9D33B87E241AB3E900987A87 /* Extensions.swift in Sources */,
 				D301FAE6233C212E008BD264 /* AppSettingScreen.swift in Sources */,
 				D387975423BFA44300C1DB92 /* RandomControllerViewController.swift in Sources */,
+				9D33B880241AB4E200987A87 /* ProfileScreen.swift in Sources */,
+				9D33B877241AB26900987A87 /* CustomCollectionViewCell.swift in Sources */,
 				D32B4A3B23DCEA7900313A27 /* VideoCell.swift in Sources */,
 				D3CEFBB422EC024000421AC4 /* DataModel.swift in Sources */,
+				9D33B86D241AB23700987A87 /* SignInScreen.swift in Sources */,
 				D36AF3B023E62B16004BDCDB /* InnerBaseViewCell.swift in Sources */,
 				D3B7A97B234D52D60000A7DC /* UserUsageCell.swift in Sources */,
+				9D33B876241AB26900987A87 /* CustomTextField.swift in Sources */,
 				D3D816C9231809A900F244E1 /* SearchController.swift in Sources */,
 				D3893A19230316D500685C78 /* Colors.swift in Sources */,
 				D36DFFE422D3D1CB0044FF05 /* AnswerCell.swift in Sources */,
@@ -560,22 +606,27 @@
 				D34174EE23E8FDFF006B7C58 /* HomeScreenHeader.swift in Sources */,
 				D3C79D14230B84F200A5748F /* VideoOptionCell.swift in Sources */,
 				D394793D22EE635E0005A790 /* CustomPreviewsViewCell.swift in Sources */,
+				9D33B878241AB26900987A87 /* PopularCollectionViewCell.swift in Sources */,
 				D3B2BF312301F58500012CA3 /* StretchHeaderLayout.swift in Sources */,
 				D3B5159D23135FA900E9222A /* SingleVideoHeaderProtocol.swift in Sources */,
 				D338C1BB22D0289900295657 /* HomeScreen.swift in Sources */,
 				D397C2EE22F11C4C0025DF9E /* VideoViewCell.swift in Sources */,
 				D3A81D8F230EE121007852F8 /* EpisodeHeader.swift in Sources */,
 				D3B5159F2314053C00E9222A /* TrailerCustomView.swift in Sources */,
+				9D33B875241AB26900987A87 /* CustomHeaderCell.swift in Sources */,
 				D3EAE50223DE760E00072F8D /* InnerCustomCell.swift in Sources */,
 				D3B2BF2F2300CE5C00012CA3 /* SingleVideoHeader.swift in Sources */,
 				D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */,
 				D3B317FA23E8985A002FDAF8 /* InnerWatchingCell.swift in Sources */,
 				D3E552C22307956900CF984E /* EpisodeController.swift in Sources */,
 				D3CEFBB222EBD11F00421AC4 /* CustomTabBarController.swift in Sources */,
+				9D33B867241AB1DD00987A87 /* ViewController.swift in Sources */,
 				D376C9C72315EAEC00E1755F /* SettingsHeader.swift in Sources */,
 				D352932023CD262D002B4690 /* DownloadScreen.swift in Sources */,
 				D301FAE8233D2ABC008BD264 /* AppSettingHeader.swift in Sources */,
 				D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */,
+				9D33B869241AB1F400987A87 /* CarouselData.swift in Sources */,
+				9D33B86B241AB23100987A87 /* SignUpScreen.swift in Sources */,
 				D3C79D12230AF8B700A5748F /* CollectionRandomCell.swift in Sources */,
 				D3627A6F23D77A83006C6ECA /* InnerDownloadHeader.swift in Sources */,
 				D352932623D20118002B4690 /* DownloadHeaderCollectionViewCell.swift in Sources */,
@@ -585,6 +636,7 @@
 				D301FAED233D4619008BD264 /* DownloadCell.swift in Sources */,
 				D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */,
 				D376C9C42315E63900E1755F /* SettingScreen.swift in Sources */,
+				9D33B874241AB26900987A87 /* CustomCell.swift in Sources */,
 				D37AC90B22FC767D00CA270C /* SingleVideoController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
