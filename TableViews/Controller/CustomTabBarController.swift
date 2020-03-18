@@ -7,12 +7,27 @@
 //
 
 import UIKit
+import Firebase
 
 class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     override func viewDidLoad() {
+        
+        
+        if Firebase.Auth.auth().currentUser == nil {
+            // Show the login screen if not logined in
+            DispatchQueue.main.async {
+                let layout = UICollectionViewFlowLayout()
+                layout.scrollDirection = .horizontal
+                let initialScreen = initalHomeScreen(collectionViewLayout: layout)
+                let navigationController = UINavigationController(rootViewController: initialScreen)
+                self.present(navigationController, animated: true, completion: nil)
+            }
+            return
+        }
         self.navigationController?.hidesBarsOnSwipe = true
+        
         
         self.delegate = self
         // setup the tab bar
@@ -23,10 +38,12 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         let layout = UICollectionViewFlowLayout()
         let appScreenController = HomeScreen(collectionViewLayout: layout)
+        appScreenController.navigationItem.hidesBackButton = true
         
         
         appScreenController.tabBarItem.image = #imageLiteral(resourceName: "home")
         appScreenController.tabBarItem.title = "Home"
+        
         
         let searchLayout = UICollectionViewFlowLayout()
         let searchController = SearchController(collectionViewLayout: searchLayout)
@@ -50,6 +67,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
        
         
         let mainNavigationController = UINavigationController(rootViewController: appScreenController)
+        mainNavigationController.navigationItem.hidesBackButton = true
     
         
         viewControllers  = [mainNavigationController, searchController, downloaderNavigationController, moreNavigationController]

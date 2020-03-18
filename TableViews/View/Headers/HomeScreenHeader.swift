@@ -9,12 +9,20 @@
 import UIKit
 import Firebase
 
+
+
+protocol HomeScreenRefreshDelegate {
+    func didRefreshFirebaseDatabase()
+}
+
 class HomeScreenHeader: UICollectionViewCell {
     
     var imageUrl =  [VideoData]()
     
     var homeScreen: HomeScreen?
     var baseViewCellHolder: BaseViewCell?
+    
+    var delegate: HomeScreenRefreshDelegate?
     
     var imagePoster: UIImageView = {
        let image = UIImageView()
@@ -156,6 +164,8 @@ class HomeScreenHeader: UICollectionViewCell {
         setupLayout()
         setupHeroImage()
     }
+    
+    
   
     
     func setupHeroImage(){
@@ -197,36 +207,31 @@ class HomeScreenHeader: UICollectionViewCell {
         let firebaseDatabaseReference = Database.database().reference().child("Videocategories/0/videoData")
         
         let ref = firebaseDatabaseReference.childByAutoId()
-        
-        guard let videoUrl = imageUrl[0].videoName else {return}
-        
-        let value =  ["videoURL": "\(videoUrl)"]
+    
+        let value =  ["videoURL": "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/The-Stranger-Header.png?alt=media&token=1cf56780-9564-4fc8-b44d-6e45143e9cc0"]
         ref.updateChildValues(value) { (error, ref) in
             if let  error = error {
                 print("Error Updating the Firebase RealTime Database")
             }
             
-            print("Hello World == \(self.imageUrl[0].videoName)")
-            
         }
         
-        self.homeScreen?.collectionView.reloadData()
+          addIconBtn.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
+        
+            delegate?.didRefreshFirebaseDatabase()
+      
     }
     
     
     @objc func handleAddBtn(){
         addIconBtn.setImage(#imageLiteral(resourceName: "tick").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-         
-       
+        saveHeroImageToDatabase()
 
-        
     }
     
     
     
     @objc func handleInfoBtn(){
-         saveHeroImageToDatabase()
         homeScreen?.goToVideoController(video: imageUrl[0], allowScreenTransitionAnimation: true, allowCellAnimation: false)
         
     }
@@ -276,3 +281,4 @@ class HomeScreenHeader: UICollectionViewCell {
     
     
 }
+

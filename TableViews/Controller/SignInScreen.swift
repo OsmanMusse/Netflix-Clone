@@ -225,8 +225,9 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
             }
             
             print("SucessFully Login In with user: ", dataResult?.user.uid)
-            let layout = UICollectionViewFlowLayout()
-            self.navigationController?.pushViewController(HomeScreen(collectionViewLayout: layout), animated: true)
+           
+
+            self.navigationController?.present(CustomTabBarController(), animated: true)
         }
     }
     

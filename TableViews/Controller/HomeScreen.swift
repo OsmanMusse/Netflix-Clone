@@ -9,7 +9,19 @@
 import UIKit
 import Firebase
 
-class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeScreenRefreshDelegate{
+    
+    
+    var isAddBtnActive = false
+    
+    func didRefreshFirebaseDatabase() {
+        isAddBtnActive = true
+        collectionView.reloadData()
+        
+    }
+    
+    
+    var navList = [String]()
     
     var HeroImageView = [VideoData]()
     var myListAddedImage = [VideoData]()
@@ -20,16 +32,17 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     var NetflixMainHero = "NetflixMainHero"
     var padding: CGFloat = 8
     
-    let seriesBtn: UIButton = {
+    lazy var seriesBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Series", for: .normal)
+        button.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    let filmsBtn: UIButton = {
+     let filmsBtn: UIButton = {
         
         let button = UIButton(type: .system)
         button.setTitle("Films", for: .normal)
@@ -70,10 +83,20 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         setupNavBar()
         collectionViewConfig()
+        
+        
+
+        
+        
+        
+
 
     }
     
   
+    
+    
+
     
 
     
@@ -111,7 +134,9 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
 
     }
-
+    
+    
+    
     
     func collectionViewConfig(){
         
@@ -160,6 +185,8 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: NetflixMainHero, for: indexPath) as!  HomeScreenHeader
 
             header.homeScreen = self
+            header.delegate = self
+  
             
             return header
         }
@@ -171,6 +198,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
      
     }
     
+   
     
     
     
@@ -212,7 +240,14 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
             
         default: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseCellID, for: indexPath) as! BaseViewCell
+        
+        if isAddBtnActive == true {
+            cell.getFirebaseDatabase()
+        }
+        
+        
        cell.homeScreen = self
+    
         return cell
         }
      
@@ -220,6 +255,10 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
    
 
+    
+    @objc func handleRefresh(){
+        collectionView.reloadData()
+    }
 
     
 

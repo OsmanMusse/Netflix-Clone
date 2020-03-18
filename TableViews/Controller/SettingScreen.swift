@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
@@ -97,7 +98,44 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         return cell!
     }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // The Sign Out Button
+        if indexPath.item == 4 {
+        
+        
+                let signOutController = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
+                let signOutNoAlert = UIAlertAction(title: "No", style: .default, handler: nil)
+                
+                let signOutYesAlert = UIAlertAction(title: "Yes", style: .default) { (action) in
+                    do {
+                        try Firebase.Auth.auth().signOut()
+                        let layout = UICollectionViewFlowLayout()
+                        layout.scrollDirection = .horizontal
+                        let initialScreen = initalHomeScreen(collectionViewLayout: layout)
+                        let navigationController = UINavigationController(rootViewController: initialScreen)
+                        self.present(navigationController, animated: true, completion: nil)
+                    } catch let signOutError {
+                        print("Error == \(signOutError)")
+                    }
+            
+                }
+            
+            signOutController.addAction(signOutNoAlert)
+            signOutController.addAction(signOutYesAlert)
+            
+            present(signOutController, animated: true, completion: nil)
+                
+            
+            
 
+        }
+    }
+
+    
+ 
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent

@@ -45,6 +45,7 @@
 		D376C9C42315E63900E1755F /* SettingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D376C9C32315E63900E1755F /* SettingScreen.swift */; };
 		D376C9C72315EAEC00E1755F /* SettingsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D376C9C62315EAEC00E1755F /* SettingsHeader.swift */; };
 		D37AC90B22FC767D00CA270C /* SingleVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37AC90A22FC767D00CA270C /* SingleVideoController.swift */; };
+		D383E9922421972B0066790A /* ProfileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D383E9912421972B0066790A /* ProfileSelector.swift */; };
 		D387975423BFA44300C1DB92 /* RandomControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D387975323BFA44300C1DB92 /* RandomControllerViewController.swift */; };
 		D3893A19230316D500685C78 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3893A18230316D500685C78 /* Colors.swift */; };
 		D394793D22EE635E0005A790 /* CustomPreviewsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D394793C22EE635E0005A790 /* CustomPreviewsViewCell.swift */; };
@@ -135,6 +136,7 @@
 		D376C9C32315E63900E1755F /* SettingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScreen.swift; sourceTree = "<group>"; };
 		D376C9C62315EAEC00E1755F /* SettingsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeader.swift; sourceTree = "<group>"; };
 		D37AC90A22FC767D00CA270C /* SingleVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleVideoController.swift; sourceTree = "<group>"; };
+		D383E9912421972B0066790A /* ProfileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelector.swift; sourceTree = "<group>"; };
 		D387975323BFA44300C1DB92 /* RandomControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomControllerViewController.swift; sourceTree = "<group>"; };
 		D3893A18230316D500685C78 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D394793C22EE635E0005A790 /* CustomPreviewsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPreviewsViewCell.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		D338C1E622D029CB00295657 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D383E9912421972B0066790A /* ProfileSelector.swift */,
 				9D33B87F241AB4E200987A87 /* ProfileScreen.swift */,
 				9D33B86C241AB23700987A87 /* SignInScreen.swift */,
 				9D33B86A241AB23100987A87 /* SignUpScreen.swift */,
@@ -610,6 +613,7 @@
 				D3A81D8F230EE121007852F8 /* EpisodeHeader.swift in Sources */,
 				D3B5159F2314053C00E9222A /* TrailerCustomView.swift in Sources */,
 				9D33B875241AB26900987A87 /* CustomHeaderCell.swift in Sources */,
+				D383E9922421972B0066790A /* ProfileSelector.swift in Sources */,
 				D3EAE50223DE760E00072F8D /* InnerCustomCell.swift in Sources */,
 				D3B2BF2F2300CE5C00012CA3 /* SingleVideoHeader.swift in Sources */,
 				D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */,

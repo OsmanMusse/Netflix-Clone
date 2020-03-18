@@ -55,12 +55,12 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        print("testing my list controller")
+        getFirebaseDatabase()
         
         innerCollectionView.register(InnerBaseViewCell.self, forCellWithReuseIdentifier: innerCellId)
 
         
-        getFirebaseDatabase()
         setupLayout()
     }
     
@@ -80,7 +80,7 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as? InnerBaseViewCell
-        cell?.videoInformation = imageUrls[indexPath.row]
+        cell?.videoInformation = imageUrls[indexPath.item]
         return cell!
     }
     
@@ -96,12 +96,13 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     func getFirebaseDatabase(){
         
-        
+        print("Running")
+         imageUrls =  [VideoData]()
         let firebaseDatabase = Database.database().reference()
         firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
             guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
             guard let firstItem = dictionary["Videocategories"] else {return}
-            guard let videoSection = firstItem[0] ["videoData"] as? Dictionary<String,Any>  else {return}
+            guard let videoSection = firstItem[0]["videoData"] as? Dictionary<String,Any>  else {return}
 
             
 
@@ -120,12 +121,17 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
                 myListVideo.videoName = videoURLValue
                 self.imageUrls.append(myListVideo)
                 
+                print("There are == \(self.imageUrls.count) amount of videos in firebase")
                 
                 
             }
             
             
-            self.innerCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.innerCollectionView.reloadData()
+            }
+            
+  
             
             
             

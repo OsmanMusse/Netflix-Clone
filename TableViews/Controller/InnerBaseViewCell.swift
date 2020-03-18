@@ -52,6 +52,8 @@ class InnerBaseViewCell: UICollectionViewCell {
                 }
 
                 }.resume()
+            
+            
         }
     }
     
