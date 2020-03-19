@@ -112,8 +112,11 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
                 
                 let signOutYesAlert = UIAlertAction(title: "Yes", style: .default) { (action) in
                     SVProgressHUD.show()
+                    SVProgressHUD.setDefaultMaskType(.black)
                     SVProgressHUD.setDefaultAnimationType(.native)
-                    SVProgressHUD.setDefaultMaskType(.custom)
+                    SVProgressHUD.setForegroundColor(.white)
+                    SVProgressHUD.setBackgroundColor(.clear)
+                    
                     do {
              
                         try Firebase.Auth.auth().signOut()

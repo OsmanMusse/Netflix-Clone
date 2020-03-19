@@ -211,8 +211,10 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         SVProgressHUD.show()
-        SVProgressHUD.setDefaultMaskType(.custom)
+        SVProgressHUD.setDefaultMaskType(.black)
         SVProgressHUD.setDefaultAnimationType(.native)
+        SVProgressHUD.setForegroundColor(.white)
+        SVProgressHUD.setBackgroundColor(.clear)
         Firebase.Auth.auth().signIn(withEmail: email, password: password) { (dataResult, err) in
 
             
