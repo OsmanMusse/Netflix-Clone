@@ -88,6 +88,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - SVProgressHUD (2.2.5)
   - XLPagerTabStrip (8.1.0)
 
 DEPENDENCIES:
@@ -96,6 +97,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Hero
+  - SVProgressHUD
   - XLPagerTabStrip
 
 SPEC REPOS:
@@ -120,6 +122,7 @@ SPEC REPOS:
     - XLPagerTabStrip
   trunk:
     - Hero
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   Firebase: a2b5951f30ff38fd3b3bdae9c7d340f940fd3c51
@@ -140,8 +143,9 @@ SPEC CHECKSUMS:
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 679c2abf96976da1a2c2c957098230f1a6a8a325
+PODFILE CHECKSUM: 44091e211d758c25f8b27f1a2810440a06fe8d4c
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

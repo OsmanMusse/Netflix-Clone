@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class SignInScreen: UIViewController, UITextFieldDelegate{
     
@@ -209,8 +210,16 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
     @objc func handleSignIn(){
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
+        SVProgressHUD.show()
+        SVProgressHUD.setDefaultMaskType(.custom)
+        SVProgressHUD.setDefaultAnimationType(.native)
         Firebase.Auth.auth().signIn(withEmail: email, password: password) { (dataResult, err) in
+
+            
             if let error = err {
+                
+                SVProgressHUD.dismiss()
+                
                   let alertController = UIAlertController(title: "Sign in", message: "Sorry, we can't find an account with this email address. Please try again or create a new account.", preferredStyle: .alert)
                       let tryAgainAction  =  UIAlertAction(title: "Try Again", style: .default, handler: { (alertAction) in
                           

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
@@ -104,29 +105,45 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         // The Sign Out Button
         if indexPath.item == 4 {
-        
+      
         
                 let signOutController = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
                 let signOutNoAlert = UIAlertAction(title: "No", style: .default, handler: nil)
                 
                 let signOutYesAlert = UIAlertAction(title: "Yes", style: .default) { (action) in
+                    SVProgressHUD.show()
+                    SVProgressHUD.setDefaultAnimationType(.native)
+                    SVProgressHUD.setDefaultMaskType(.custom)
                     do {
+             
                         try Firebase.Auth.auth().signOut()
+                        
                         let layout = UICollectionViewFlowLayout()
                         layout.scrollDirection = .horizontal
                         let initialScreen = initalHomeScreen(collectionViewLayout: layout)
                         let navigationController = UINavigationController(rootViewController: initialScreen)
-                        self.present(navigationController, animated: true, completion: nil)
+                        
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            // Show the inital screen 1 seconds later 
+                            self.present(navigationController, animated: true, completion: nil)
+                        }
+    
                     } catch let signOutError {
                         print("Error == \(signOutError)")
                     }
             
                 }
             
+ 
+            
             signOutController.addAction(signOutNoAlert)
             signOutController.addAction(signOutYesAlert)
+    
             
             present(signOutController, animated: true, completion: nil)
+            
+           
                 
             
             

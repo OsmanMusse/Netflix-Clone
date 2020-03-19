@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class SignUpScreen: UIViewController, UITextFieldDelegate{
     
@@ -197,9 +198,17 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
     @objc func handleSignUp(){
         guard let email = emailTextField.text, email.characters.count > 0  else {return}
         guard let password = passwordTextField.text, password.characters.count > 0 else {return}
+        
+        // Code for the Activity Indicator
+        SVProgressHUD.show()
+        SVProgressHUD.setDefaultMaskType(.custom)
+        SVProgressHUD.setDefaultAnimationType(.native)
+        
         Firebase.Auth.auth().createUser(withEmail: email, password: password) { (user, err) in
+            
             if let error = err {
-                print("Failed to create useer:", err)
+                SVProgressHUD.dismiss()
+                print("Failed to create useer:", error)
                 return
             }
             
