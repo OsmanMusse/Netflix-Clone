@@ -212,9 +212,9 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
                 return
             }
             
-            let layout = UICollectionViewFlowLayout()
+            
             // Go to the profile selector to select the your profile
-            self.present(ProfileSelector(collectionViewLayout: layout), animated: true, completion: nil)
+            self.present(ProfileSelector(), animated: true, completion: nil)
             print("Successfully Added User",user?.user.uid)
         }
     }

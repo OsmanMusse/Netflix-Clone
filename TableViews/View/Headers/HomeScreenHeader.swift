@@ -71,7 +71,7 @@ class HomeScreenHeader: UICollectionViewCell {
     
     lazy var addIconBtn: UIButton = {
        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "close").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleAddBtn), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         

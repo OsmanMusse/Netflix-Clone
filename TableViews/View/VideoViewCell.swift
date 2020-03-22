@@ -98,7 +98,7 @@ class VideoViewCell: UICollectionViewCell {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFUIDisplay-Bold", size: 16.5)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "close").withRenderingMode(.alwaysOriginal), for: .normal)
         button.backgroundColor = UIColor(red: 87/255, green: 87/255, blue: 87/255, alpha: 1)
         button.layer.cornerRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false

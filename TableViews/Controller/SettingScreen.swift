@@ -127,8 +127,9 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
                         let navigationController = UINavigationController(rootViewController: initialScreen)
                         
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            // Show the inital screen 1 seconds later 
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
+                            // Show the inital screen 1 seconds later
+                            SVProgressHUD.dismiss()
                             self.present(navigationController, animated: true, completion: nil)
                         }
     

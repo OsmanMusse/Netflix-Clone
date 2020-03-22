@@ -230,15 +230,17 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
     
                       
                   
-                      alertController.addAction(tryAgainAction)
+              alertController.addAction(tryAgainAction)
                 self.present(alertController, animated: true, completion: nil)
                 return
             }
             
             print("SucessFully Login In with user: ", dataResult?.user.uid)
            
-
-            self.navigationController?.present(CustomTabBarController(), animated: true)
+            let profileSelectorController = ProfileSelector()
+            let navigationController = UINavigationController(rootViewController: profileSelectorController)
+            SVProgressHUD.dismiss()
+            self.present(navigationController, animated: false, completion: nil)
         }
     }
     
