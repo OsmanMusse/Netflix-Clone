@@ -13,11 +13,6 @@ class EditProfileController: UIViewController {
     lazy var profileImage: UIImageView = {
       let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-2"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        
-        image.addSubview(changeProfileBtn)
-        
-        changeProfileBtn.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 7).isActive = true
-        changeProfileBtn.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
         return image
     }()
     
@@ -37,23 +32,11 @@ class EditProfileController: UIViewController {
         tf.layer.borderWidth = 1.2
         tf.textColor = .white
         tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.widthAnchor.constraint(equalToConstant: 240).isActive = true
-        tf.heightAnchor.constraint(equalToConstant: 45).isActive = true
         
         return tf
     }()
     
-    lazy var editStackView: UIStackView = {
-       let stackView = UIStackView(arrangedSubviews: [profileImage, textFieldInput])
-        profileImage.widthAnchor.constraint(equalToConstant: 110).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 110).isActive = true
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 50
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+
     
     var ratingLabel: UIView = {
         
@@ -86,10 +69,11 @@ class EditProfileController: UIViewController {
     
     var warningTitle: UITextView = {
        let label = UITextView()
-        var labelText = "Show titles of all maturity ratings for this profile"
+        var labelText = "Show titles of all maturity ratings for this profile."
         let fullString = NSMutableAttributedString(string: labelText, attributes: [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 15)])
         fullString.addAttributes([NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 15)], range: NSRange(location: 14, length: 22))
         label.attributedText = fullString
+        label.isEditable = false
         label.backgroundColor = .clear
         label.textColor = .white
         label.textAlignment = .center
@@ -98,32 +82,22 @@ class EditProfileController: UIViewController {
         return label
     }()
     
+
     
     var accountSettingWarningLabel: UITextView = {
         let label = UITextView()
-        label.text = "Visit Account Settings on the web to edit viewing restrictions"
-        label.backgroundColor = .clear
+        label.text = "Visit Account Settings on the web to edit viewing restrictions."
         label.textColor = Colors.btnLightGray
         label.textAlignment = .center
+        label.isEditable = false
+        label.backgroundColor = .clear
+        label.font = UIFont(name: "Helvetica", size: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    lazy var profileInfoStackView: UIStackView = {
-       let stackView = UIStackView(arrangedSubviews: [ratingLabel, warningTitle])
-        warningTitle.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-        warningTitle.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
- 
 
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 15
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
     
     
     lazy var editBtn1: UIButton = {
@@ -183,7 +157,25 @@ class EditProfileController: UIViewController {
     
   
     func setupNavBar(){
-        navigationController?.navigationBar.isHidden = false
+        navigationItem.title = "Edit Profile"
+          navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
+        
+        navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleBackBtn))
+        
+        let rightBarItem =  UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSavingMode))
+        rightBarItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 15)], for: .normal)
+        rightBarItem.tintColor = .white
+        
+        
+        let leftBarItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleBackBtn))
+        leftBarItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 15)], for: .normal)
+        leftBarItem.tintColor = .white
+        
+        
+        
+        self.navigationItem.setLeftBarButton(leftBarItem, animated: true)
+        self.navigationItem.setRightBarButton(rightBarItem, animated: true)
+
         
         navigationController?.navigationBar.shadowImage =  UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -191,19 +183,46 @@ class EditProfileController: UIViewController {
     }
     
     func setupLayout(){
-        view.addSubview(editStackView)
-        view.addSubview(profileInfoStackView)
+        view.addSubview(profileImage)
+        view.addSubview(changeProfileBtn)
+        view.addSubview(textFieldInput)
+        view.addSubview(ratingLabel)
+        view.addSubview(warningTitle)
+        view.addSubview(accountSettingWarningLabel)
         
         
         NSLayoutConstraint.activate([
             
-            editStackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            editStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            profileImage.widthAnchor.constraint(equalToConstant: 110),
+            profileImage.heightAnchor.constraint(equalToConstant: 110),
+            profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130),
+            profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            profileInfoStackView.topAnchor.constraint(equalTo: editStackView.bottomAnchor, constant: 25),
-            profileInfoStackView.centerXAnchor.constraint(equalTo: editStackView.centerXAnchor),
-            profileInfoStackView.widthAnchor.constraint(equalTo: editStackView.widthAnchor, constant: 40),
-            profileInfoStackView.heightAnchor.constraint(equalToConstant: 100),
+            
+            changeProfileBtn.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 7),
+            changeProfileBtn.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor),
+       
+            textFieldInput.widthAnchor.constraint(equalToConstant: 240),
+            textFieldInput.heightAnchor.constraint(equalToConstant: 45),
+            textFieldInput.topAnchor.constraint(equalTo: changeProfileBtn.bottomAnchor, constant: 20),
+            textFieldInput.centerXAnchor.constraint(equalTo: changeProfileBtn.centerXAnchor),
+            
+            
+            
+            ratingLabel.topAnchor.constraint(equalTo: textFieldInput.bottomAnchor, constant: 30),
+            ratingLabel.centerXAnchor.constraint(equalTo: textFieldInput.centerXAnchor),
+            
+            warningTitle.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 15),
+            warningTitle.centerXAnchor.constraint(equalTo: ratingLabel.centerXAnchor),
+            warningTitle.widthAnchor.constraint(equalTo: textFieldInput.widthAnchor, constant: 30),
+            warningTitle.heightAnchor.constraint(equalToConstant: 45),
+            
+            accountSettingWarningLabel.topAnchor.constraint(equalTo: warningTitle.bottomAnchor, constant: 0),
+            accountSettingWarningLabel.centerXAnchor.constraint(equalTo: warningTitle.centerXAnchor),
+            
+            accountSettingWarningLabel.widthAnchor.constraint(equalTo: textFieldInput.widthAnchor, constant: 40),
+            accountSettingWarningLabel.heightAnchor.constraint(equalToConstant: 50)
+    
             
      
             
@@ -219,13 +238,14 @@ class EditProfileController: UIViewController {
     }
     
     @objc func handleCancelMode(){
-   
         
     self.dismiss(animated: false, completion: nil)
+    
+    }
+    
+    @objc func handleBackBtn(){
         
-        
-
- 
+        self.dismiss(animated: false, completion: nil)
     }
     
    

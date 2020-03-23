@@ -182,7 +182,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         // Preventing single de-selecting of cells
          if doneStack.isHidden == false {
-        self.present(EditProfileController(), animated: false, completion: nil)
+            let navigationController = UINavigationController(rootViewController: EditProfileController())
+        self.present(navigationController, animated: false, completion: nil)
             editStack.isHidden == true
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false
