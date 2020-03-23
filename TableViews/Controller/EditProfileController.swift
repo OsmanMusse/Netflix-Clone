@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileController: UIViewController {
+class EditProfileController: UIViewController{
     
     lazy var profileImage: UIImageView = {
       let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-2"))
@@ -26,13 +26,42 @@ class EditProfileController: UIViewController {
         return button
     }()
     
-    var textFieldInput: CustomTextField = {
+   
+    lazy var doneBtn: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setTitle("Done", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
+        button.addTarget(self, action: #selector(handleDoneBtn), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var returnAccessoryView: UIView = {
+        let blueView = UIView()
+        blueView.backgroundColor = .lightGray
+        blueView.autoresizingMask = .flexibleHeight
+        blueView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50)
+        
+        blueView.addSubview(doneBtn)
+        
+        doneBtn.centerYAnchor.constraint(equalTo: blueView.centerYAnchor).isActive = true
+        doneBtn.trailingAnchor.constraint(equalTo: blueView.trailingAnchor, constant: -10).isActive = true
+        
+    
+        return blueView
+    }()
+    
+    
+    lazy var textFieldInput: CustomTextField = {
         let tf = CustomTextField()
+        tf.addTarget(self, action: #selector(handleTextField), for: .editingChanged)
         tf.layer.borderColor = UIColor.white.cgColor
         tf.layer.borderWidth = 1.2
         tf.textColor = .white
+        tf.autocorrectionType = .no
+        tf.inputAccessoryView = returnAccessoryView
         tf.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         return tf
     }()
     
@@ -146,21 +175,30 @@ class EditProfileController: UIViewController {
     
     var profileScreen: ProfileSelector?
     
+    var profileImgCenterYAnchor: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupNavBar()
+        setupKeyboard()
         setupLayout()
+    
+
         
         profileScreen = ProfileSelector()
     }
     
-  
+    
+    
+
     func setupNavBar(){
         navigationItem.title = "Edit Profile"
           navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
         
         navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleBackBtn))
+        
+    
         
         let rightBarItem =  UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSavingMode))
         rightBarItem.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 15)], for: .normal)
@@ -182,6 +220,25 @@ class EditProfileController: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
     }
     
+    
+    func setupKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+    }
+    
+    @objc func handleKeyboardShow(){
+        guard let profileImgConstraint =  profileImgCenterYAnchor?.constant else {return}
+         profileImgCenterYAnchor?.constant = profileImgConstraint - 60
+        
+        ratingLabel.alpha = 0
+        warningTitle.alpha = 0
+        accountSettingWarningLabel.alpha = 0
+        
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
     func setupLayout(){
         view.addSubview(profileImage)
         view.addSubview(changeProfileBtn)
@@ -190,12 +247,14 @@ class EditProfileController: UIViewController {
         view.addSubview(warningTitle)
         view.addSubview(accountSettingWarningLabel)
         
+        profileImgCenterYAnchor =  profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130)
+        profileImgCenterYAnchor?.isActive = true
+        
         
         NSLayoutConstraint.activate([
             
             profileImage.widthAnchor.constraint(equalToConstant: 110),
             profileImage.heightAnchor.constraint(equalToConstant: 110),
-            profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130),
             profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             
@@ -231,10 +290,21 @@ class EditProfileController: UIViewController {
     }
     
     
-    
+    @objc func handleTextField(){
+        let validTextField = textFieldInput.text?.characters.count ?? 0 > 0
+        
+        
+        if (validTextField) {
+            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem?.tintColor = Colors.btnLightGray
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+    }
     
     @objc func handleSavingMode(){
-        
+        print("Save Btn Clicked")
     }
     
     @objc func handleCancelMode(){
@@ -246,6 +316,23 @@ class EditProfileController: UIViewController {
     @objc func handleBackBtn(){
         
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    @objc func handleDoneBtn(){
+        print("HANDLE DONE BTN")
+        
+        textFieldInput.resignFirstResponder()
+        guard let profileImgConstraint =  profileImgCenterYAnchor?.constant else {return}
+        profileImgCenterYAnchor?.constant = profileImgConstraint + 60
+   
+        // Remove the opacity from the items after keyboard pops down
+        ratingLabel.alpha = 1.0
+        warningTitle.alpha = 1.0
+        accountSettingWarningLabel.alpha = 1.0
+        
+        UIView.animate(withDuration: 0.1) {
+            self.view.layoutIfNeeded()
+        }
     }
     
    
