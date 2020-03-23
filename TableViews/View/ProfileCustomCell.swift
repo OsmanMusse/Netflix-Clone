@@ -103,7 +103,6 @@ class ProfileCustomCell: UICollectionViewCell {
             
             if isSelected == false && profileSelectorScreen?.editStack.isHidden == false {
                  print("is not selected 1")
-                profileSelectorScreen?.editStack.isHidden = false
                 
                 print("profile Edit Btn == \(profileSelectorScreen?.editStack.isHidden)")
                 editIcon.isHidden = true

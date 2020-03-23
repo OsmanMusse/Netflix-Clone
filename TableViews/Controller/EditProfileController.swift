@@ -83,6 +83,10 @@ class EditProfileController: UIViewController {
         setupLayout()
          navigationController?.navigationBar.isHidden = false
         
+        navigationController?.navigationBar.shadowImage =  UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        
         profileScreen = ProfileSelector()
     }
     
@@ -110,8 +114,11 @@ class EditProfileController: UIViewController {
     }
     
     @objc func handleCancelMode(){
-
-    self.navigationController?.popToRootViewController(animated: true)
+   
+        
+    self.dismiss(animated: false, completion: nil)
+        
+        
 
  
     }

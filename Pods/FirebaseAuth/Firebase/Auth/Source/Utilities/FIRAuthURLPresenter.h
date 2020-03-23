@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#include <TargetConditionals.h>
+#if !TARGET_OS_OSX && !TARGET_OS_TV
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -36,7 +39,7 @@ typedef void (^FIRAuthURLPresentationCompletion)(NSURL *_Nullable callbackURL,
 typedef BOOL (^FIRAuthURLCallbackMatcher)(NSURL * _Nullable callbackURL);
 
 /** @class FIRAuthURLPresenter
-    @brief A Class responsible for presenting URL via SFSafariViewController or UIWebView.
+    @brief A Class responsible for presenting URL via SFSafariViewController or WKWebView.
  */
 @interface FIRAuthURLPresenter : NSObject
 
@@ -62,3 +65,5 @@ typedef BOOL (^FIRAuthURLCallbackMatcher)(NSURL * _Nullable callbackURL);
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

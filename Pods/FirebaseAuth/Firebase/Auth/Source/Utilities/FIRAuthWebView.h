@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
+#include <TargetConditionals.h>
+#if !TARGET_OS_OSX && !TARGET_OS_TV
+
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /** @class FIRAuthWebView
-    @brief A class reponsible for creating a UIWebview for use within Firebase Auth.
+    @brief A class reponsible for creating a WKWebView for use within Firebase Auth.
  */
 @interface FIRAuthWebView : UIView
 
 /** @property webView
  *  @brief The web view.
  */
-@property(nonatomic, weak) UIWebView *webView;
+@property(nonatomic, weak) WKWebView *webView;
 
 /** @property spinner
  *  @brief The spinner that indicates web view loading.
@@ -36,3 +40,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

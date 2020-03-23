@@ -87,10 +87,33 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         view.backgroundColor = .black
           customCollectionViews.register(ProfileCustomCell.self, forCellWithReuseIdentifier: profileCellID)
  navigationController?.navigationBar.isHidden = false
+        setupNavBar()
         setupCollectionView()
         setupLayout()
     }
     
+    
+    func setupNavBar(){
+        navigationItem.title = "Who's Watching?"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
+        
+        
+        
+        let customView = UIBarButtonItem(customView: editStack)
+        
+        navigationItem.rightBarButtonItems = [customView]
+        
+        
+        
+        let customView2 = UIBarButtonItem(customView: doneStack)
+        
+        navigationItem.leftBarButtonItems  =  [customView2]
+        
+        // Remove the unneeded transparent backgroundColor for the navigationBar
+        navigationController?.navigationBar.shadowImage =  UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+    }
     
     
     
@@ -159,7 +182,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         // Preventing single de-selecting of cells
          if doneStack.isHidden == false {
-        self.navigationController?.pushViewController(EditProfileController(), animated: false)
+        self.present(EditProfileController(), animated: false, completion: nil)
+            editStack.isHidden == true
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false
         }
@@ -215,6 +239,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     @objc func handleFinishMode(){
+        
+        navigationItem.title = "Who's Watching?"
     
         editStack.isHidden = false
         doneStack.isHidden = true
@@ -227,52 +253,9 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "Who's Watching?"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
-        
-        
-        
-        let customView = UIBarButtonItem(customView: editStack)
-        
-        navigationItem.rightBarButtonItems = [customView]
-        
-        
-        
-        let customView2 = UIBarButtonItem(customView: doneStack)
-        
-        navigationItem.leftBarButtonItems  =  [customView2]
-        
-        // Remove the unneeded transparent backgroundColor for the navigationBar
-        navigationController?.navigationBar.shadowImage =  UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.isTranslucent = true
-    }
+ 
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationItem.title = "mASCUUD?"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
-        
-        
-        
-        let customView = UIBarButtonItem(customView: editStack)
-        
-        editStack.isHidden = false
-        
-        navigationItem.rightBarButtonItems = [customView]
-        
-        
-        
-        let customView2 = UIBarButtonItem(customView: doneStack)
-        
-        navigationItem.leftBarButtonItems  =  [customView2]
-        
-        // Remove the unneeded transparent backgroundColor for the navigationBar
-        navigationController?.navigationBar.shadowImage =  UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.isTranslucent = true
 
-    }
     
 }
