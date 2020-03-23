@@ -231,7 +231,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         navigationItem.title = "Manage Profiles"
         
         for section in 0..<customCollectionViews.numberOfSections {
-            for item in 0..<customCollectionViews.numberOfItems(inSection: section) {
+            // Looping through entire cells except the last one 
+            for item in 0..<customCollectionViews.numberOfItems(inSection: section) - 1 {
                 customCollectionViews.selectItem(at: IndexPath(item: item, section: section), animated: false, scrollPosition: .top)
             }
         }
