@@ -11,7 +11,7 @@ import UIKit
 class EditProfileController: UIViewController{
     
     lazy var profileImage: UIImageView = {
-      let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-2"))
+      let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()

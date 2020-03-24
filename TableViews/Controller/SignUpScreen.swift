@@ -16,7 +16,6 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
     
     lazy var emailTextField: CustomTextField = {
        let textField = CustomTextField()
-        print("Hello Woflc")
         textField.delegate = self
         textField.attributedPlaceholder = NSAttributedString(string: "Email or phone number", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)])
         textField.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
@@ -213,9 +212,21 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
             }
             
             
+            guard let userId = user?.user.uid else {return}
+            guard let userEmail = user?.user.email else {return}
+            let profilesDictionary = ["ProfileName": "Mascuud", "ProfileURL": "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile-2.pdf?alt=media&token=9a50a5de-e75f-40ad-8abd-dce46610d1bc"]
+            let infoDictionary = ["userID": userId, "Email": userEmail, "Profiles":[profilesDictionary]] as [String : Any]
+            
+        
+            let values = [userId: infoDictionary]
+            Firebase.Database.database().reference().child("Users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+                if let err = err {
+                    print("Could not update the users", err)
+                }
+                
+            })
             // Go to the profile selector to select the your profile
             self.present(ProfileSelector(), animated: true, completion: nil)
-            print("Successfully Added User",user?.user.uid)
         }
     }
     

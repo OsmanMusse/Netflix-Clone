@@ -20,6 +20,7 @@
 		D301FAE8233D2ABC008BD264 /* AppSettingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */; };
 		D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */; };
 		D301FAED233D4619008BD264 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAEC233D4619008BD264 /* DownloadCell.swift */; };
+		D30B5FC82429844100629C3E /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B5FC72429844100629C3E /* ProfileModel.swift */; };
 		D32B4A3723DA4F9900313A27 /* CategoryTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B4A3623DA4F9900313A27 /* CategoryTitles.swift */; };
 		D32B4A3B23DCEA7900313A27 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B4A3A23DCEA7900313A27 /* VideoCell.swift */; };
 		D32B6F5323216CC300501BD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D32B6F5223216CC300501BD5 /* GoogleService-Info.plist */; };
@@ -106,6 +107,7 @@
 		D301FAE7233D2ABC008BD264 /* AppSettingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingHeader.swift; sourceTree = "<group>"; };
 		D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayBackCell.swift; sourceTree = "<group>"; };
 		D301FAEC233D4619008BD264 /* DownloadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCell.swift; sourceTree = "<group>"; };
+		D30B5FC72429844100629C3E /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		D32B4A3623DA4F9900313A27 /* CategoryTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTitles.swift; sourceTree = "<group>"; };
 		D32B4A3A23DCEA7900313A27 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		D32B6F5223216CC300501BD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				9D33B868241AB1F400987A87 /* CarouselData.swift */,
 				D3CEFBB322EC024000421AC4 /* DataModel.swift */,
+				D30B5FC72429844100629C3E /* ProfileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				D352932023CD262D002B4690 /* DownloadScreen.swift in Sources */,
 				D301FAE8233D2ABC008BD264 /* AppSettingHeader.swift in Sources */,
 				D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */,
+				D30B5FC82429844100629C3E /* ProfileModel.swift in Sources */,
 				9D33B869241AB1F400987A87 /* CarouselData.swift in Sources */,
 				9D33B86B241AB23100987A87 /* SignUpScreen.swift in Sources */,
 				D3C79D12230AF8B700A5748F /* CollectionRandomCell.swift in Sources */,

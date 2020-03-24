@@ -12,8 +12,39 @@ class ProfileCustomCell: UICollectionViewCell {
     
     var profileSelectorScreen: ProfileSelector?
     
+    var profileInformation: ProfileModel? {
+        didSet{
+            guard let avatorImage = profileInformation?.profileImage else {return}
+            
+            guard let url = URL(string: avatorImage) else {return}
+            
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                if let err = err {
+                    print("ISSUE WITH NETWORK", err)
+                }
+                
+                
+                
+                guard let imageData = data else {return}
+                
+                guard let imageConstruction = UIImage(data: imageData) else {return}
+                
+                print("image name == \(imageData)")
+                print("image construct == \(imageConstruction)")
+                
+                
+                DispatchQueue.main.async {
+                    self.profileImage.image = imageConstruction
+                }
+                
+            }.resume()
+            profileName.text = profileInformation?.profileName
+        }
+    }
+    
+    
     var profileImage: UIImageView = {
-       let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
+       let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()

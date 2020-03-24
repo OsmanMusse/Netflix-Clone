@@ -57,7 +57,7 @@ class SettingsHeader: UICollectionViewCell {
     }()
     
     lazy var secondAccount: UIImageView = {
-        let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-2"))
+        let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         
