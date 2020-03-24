@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+var profileCachedImages =  [String: UIImage]()
+
 class ProfileCustomCell: UICollectionViewCell {
     
     var profileSelectorScreen: ProfileSelector?
@@ -15,6 +18,8 @@ class ProfileCustomCell: UICollectionViewCell {
     var profileInformation: ProfileModel? {
         didSet{
             guard let avatorImage = profileInformation?.profileImage else {return}
+            
+    
             
             guard let url = URL(string: avatorImage) else {return}
             
@@ -29,8 +34,8 @@ class ProfileCustomCell: UICollectionViewCell {
                 
                 guard let imageConstruction = UIImage(data: imageData) else {return}
                 
-                print("image name == \(imageData)")
-                print("image construct == \(imageConstruction)")
+                profileCachedImages[url.absoluteString] = imageConstruction
+            
                 
                 
                 DispatchQueue.main.async {

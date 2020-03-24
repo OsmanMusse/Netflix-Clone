@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Hero
 
 class EditProfileController: UIViewController{
     
     lazy var profileImage: UIImageView = {
-      let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
+      let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -171,6 +172,7 @@ class EditProfileController: UIViewController{
         return buttonView
     }()
     
+    var textFieldText: String?
   
     
     var profileScreen: ProfileSelector?
@@ -184,7 +186,9 @@ class EditProfileController: UIViewController{
         setupKeyboard()
         setupLayout()
     
-
+        textFieldInput.text = textFieldText
+        self.hero.isEnabled = true
+        self.profileImage.hero.id = "skyWalker"
         
         profileScreen = ProfileSelector()
     }
@@ -220,6 +224,12 @@ class EditProfileController: UIViewController{
         navigationController?.navigationBar.isTranslucent = true
     }
     
+    
+    func setupProfileImage(profilePicture: String){
+        
+        profileImage.image = profileCachedImages[profilePicture]
+        
+    }
     
     func setupKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)

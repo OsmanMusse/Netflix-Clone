@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Hero
 
 
 
@@ -121,7 +122,6 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     
     func getFirebaseDatabase(){
-       
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
         Firebase.Database.database().reference().child("Users").child(userID).observe(.value) { (snapShot) in
@@ -213,7 +213,15 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         // Preventing single de-selecting of cells
          if doneStack.isHidden == false {
-            let navigationController = UINavigationController(rootViewController: EditProfileController())
+            let editController = EditProfileController()
+            let cellImageString = profileData[indexPath.item].profileImage
+            editController.setupProfileImage(profilePicture: cellImageString)
+            editController.textFieldText = profileData[indexPath.item].profileName
+            editController.hero.isEnabled = true
+            editController.profileImage.hero.id = "skyWalker"
+            editController.profileImage.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
+            let navigationController = UINavigationController(rootViewController: editController)
+            
         self.present(navigationController, animated: false, completion: nil)
             editStack.isHidden == true
             cell.shadowView.isHidden = false
