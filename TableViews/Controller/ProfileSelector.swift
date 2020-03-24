@@ -171,13 +171,14 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         let isLastItem = indexPath.item + 1 == collectionView.numberOfItems(inSection: 0)
         if isLastItem == false {
                 cell.profileInformation = profileData[indexPath.item]
+               cell.hero.id = "skyWalker"
         }
 
         cell.profileSelectorScreen = self
         
         // Check for the last item in the collectionview
         if indexPath.item + 1 == collectionView.numberOfItems(inSection: 0) {
-        
+        cell.profileImage.hero.id = "skyWalker"
             cell.profileName.text = "Add Profile"
             cell.profileImage.isHidden = false
             cell.profileAddIcon.isHidden = false
@@ -217,12 +218,10 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             let cellImageString = profileData[indexPath.item].profileImage
             editController.setupProfileImage(profilePicture: cellImageString)
             editController.textFieldText = profileData[indexPath.item].profileName
-            editController.hero.isEnabled = true
-            editController.profileImage.hero.id = "skyWalker"
-            editController.profileImage.hero.modifiers = [.fade, .translate(CGPoint(x: 0, y: 600))]
             let navigationController = UINavigationController(rootViewController: editController)
+            navigationController.hero.isEnabled = true
             
-        self.present(navigationController, animated: false, completion: nil)
+        self.present(navigationController, animated: true, completion: nil)
             editStack.isHidden == true
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false

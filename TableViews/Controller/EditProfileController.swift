@@ -189,6 +189,7 @@ class EditProfileController: UIViewController{
         textFieldInput.text = textFieldText
         self.hero.isEnabled = true
         self.profileImage.hero.id = "skyWalker"
+        self.profileImage.hero.modifiers = [HeroModifier.arc(intensity: -1)]
         
         profileScreen = ProfileSelector()
     }
