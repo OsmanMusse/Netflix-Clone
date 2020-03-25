@@ -16,7 +16,7 @@ class CreateProfileController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Save", for: .normal)
         button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 15)
-        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(Colors.btnLightGray, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -64,7 +64,6 @@ class CreateProfileController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("CHANGE", for: .normal)
         button.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
-//        button.addTarget(self, action: #selector(handleChangeOfImage), for: .touchUpInside)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -96,7 +95,7 @@ class CreateProfileController: UIViewController {
     
     lazy var textFieldInput: CustomTextField = {
         let tf = CustomTextField()
-//        tf.addTarget(self, action: #selector(handleTextField), for: .editingChanged)
+        tf.addTarget(self, action: #selector(handleTextField), for: .editingChanged)
         tf.layer.borderColor = UIColor.white.cgColor
         tf.layer.borderWidth = 1.2
         tf.textColor = .white
@@ -106,9 +105,10 @@ class CreateProfileController: UIViewController {
         return tf
     }()
     
-    var childrenBtnLabel: UIButton = {
+    lazy var childrenBtnLabel: UIButton = {
        let button = UIButton()
         button.setTitle("FOR CHILDREN", for: .normal)
+        button.addTarget(self, action: #selector(handleToggleBtn), for: .touchUpInside)
         button.alpha = 0
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
@@ -119,8 +119,8 @@ class CreateProfileController: UIViewController {
     lazy var childrenSlider: UISwitch =  {
        let btnSwitch = UISwitch()
         btnSwitch.alpha = 0
-        btnSwitch.addTarget(self, action: #selector(handleSlider), for: .touchUpInside)
-        btnSwitch.onTintColor = UIColor.blue
+        btnSwitch.addTarget(self, action: #selector(handleSlider), for: UIControl.Event.touchDownRepeat)
+        btnSwitch.onTintColor = Colors.switchColor
         btnSwitch.translatesAutoresizingMaskIntoConstraints = false
         return btnSwitch
     }()
@@ -254,30 +254,53 @@ class CreateProfileController: UIViewController {
         textFieldInput.resignFirstResponder()
     }
     
+    @objc func handleTextField(){
+        let validCharacterCount = textFieldInput.text?.characters.count ?? 0 > 0
+        
+        if (validCharacterCount) {
+            saveBtn.setTitleColor(UIColor.white, for: .normal)
+            saveBtn.isEnabled = true
+            
+        } else {
+            saveBtn.setTitleColor(Colors.btnLightGray, for: .normal)
+            saveBtn.isEnabled = false
+        }
+    }
+    
     @objc func handleSlider(myswitch: UISwitch){
         if myswitch.isOn == true {
             print("Slider is on")
         } else {
-            let attributedMessage = NSAttributedString(string: "This Profile will now allow access to TV programmes and films of all maturity levels.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 16)])
-            let attributedActionTitle = NSAttributedString(string: "OK", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 16)])
+            let attributedMessage = NSAttributedString(string: "This Profile will now allow access to TV programmes and films of all maturity levels.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 17)])
+
             let alertController = UIAlertController(title: nil, message:"", preferredStyle: .alert)
-            
-            
+       
             alertController.setValue(attributedMessage, forKey: "attributedMessage")
             
             let alertActions = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-
-
-
-
-
             
             alertController.addAction(alertActions)
-            
-
-            
+          
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    
+    @objc func handleToggleBtn(button: UIButton, event: UIEvent){
+        
+        if childrenSlider.isSelected == true {
+            self.childrenSlider.setOn(false, animated: true)
+            handleSlider(myswitch: childrenSlider)
+            childrenSlider.isSelected = false
+        } else {
+            self.childrenSlider.setOn(true, animated: true)
+            handleSlider(myswitch: childrenSlider)
+            childrenSlider.isSelected = true
+        }
+  
+        
+    
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
