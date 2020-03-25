@@ -131,16 +131,16 @@ class ProfileCustomCell: UICollectionViewCell {
 
         
         didSet{
-            if isSelected == true && profileSelectorScreen?.doneStack.isHidden == false {
+            if isSelected == true && profileSelectorScreen?.doneStack.isHidden == false && profileName.text != "Add Profile" {
                 print("is selected")
                 editIcon.isHidden = false
                 shadowView.isHidden = false
             }
             
-            if isSelected == false && profileSelectorScreen?.editStack.isHidden == false {
+            
+            
+            if isSelected == false && profileSelectorScreen?.editStack.isHidden == false && profileName.text != "Add Profile" {
                  print("is not selected 1")
-                
-                print("profile Edit Btn == \(profileSelectorScreen?.editStack.isHidden)")
                 editIcon.isHidden = true
                 shadowView.isHidden = true
             }

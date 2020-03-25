@@ -100,7 +100,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     func setupNavBar(){
         navigationItem.title = "Who's Watching?"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)!]
         
         
         
@@ -195,8 +195,16 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        
         
         let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
+        
+        // If the add profile cell is selected
+        if cell.profileName.text == "Add Profile" {
+            let navigationController = UINavigationController(rootViewController: CreateProfileController())
+            self.present(navigationController, animated: false, completion: nil)
+        }
         
         // Preventing single selection of cells
         if cell.isSelected == true && editStack.isHidden == false {
@@ -205,15 +213,39 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             cell.shadowView.isHidden = true
             cell.editIcon.isHidden = true
         }
+        
+        if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
+            let editController = EditProfileController()
+            let cellImageString = profileData[indexPath.item].profileImage
+            editController.setupProfileImage(profilePicture: cellImageString)
+            editController.textFieldText = profileData[indexPath.item].profileName
+            let navigationController = UINavigationController(rootViewController: editController)
+            navigationController.hero.isEnabled = true
+            cell.isSelected = false
+            
+            self.present(navigationController, animated: true, completion: nil)
+            cell.shadowView.isHidden = false
+            cell.editIcon.isHidden = false
+        }
 
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
+
+        
         let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
         
+        // If the add profile cell is selected
+        if cell.profileName.text == "Add Profile" {
+            let navigationController = UINavigationController(rootViewController: CreateProfileController())
+            self.present(navigationController, animated: false, completion: nil)
+            
+        }
+          
+        
         // Preventing single de-selecting of cells
-         if doneStack.isHidden == false {
+         if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
             let editController = EditProfileController()
             let cellImageString = profileData[indexPath.item].profileImage
             editController.setupProfileImage(profilePicture: cellImageString)
@@ -221,8 +253,9 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             let navigationController = UINavigationController(rootViewController: editController)
             navigationController.hero.isEnabled = true
             
+
         self.present(navigationController, animated: true, completion: nil)
-            editStack.isHidden == true
+
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false
         }
@@ -287,6 +320,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         for section in 0..<customCollectionViews.numberOfSections {
             for item in 0..<customCollectionViews.numberOfItems(inSection: section) {
+                // Makes all the items remove themselves from  selected and non selected editing stage
+                customCollectionViews.selectItem(at: IndexPath(item: item, section: section), animated: false, scrollPosition: .top)
                 customCollectionViews.deselectItem(at: IndexPath(item: item, section: section), animated: false)
             }
         }

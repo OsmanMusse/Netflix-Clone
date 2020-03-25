@@ -62,7 +62,6 @@ class EditProfileController: UIViewController{
         tf.autocorrectionType = .no
         tf.inputAccessoryView = returnAccessoryView
         tf.translatesAutoresizingMaskIntoConstraints = false
-    
         return tf
     }()
     
@@ -273,7 +272,7 @@ class EditProfileController: UIViewController{
             changeProfileBtn.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor),
        
             textFieldInput.widthAnchor.constraint(equalToConstant: 240),
-            textFieldInput.heightAnchor.constraint(equalToConstant: 45),
+            textFieldInput.heightAnchor.constraint(equalToConstant: 50),
             textFieldInput.topAnchor.constraint(equalTo: changeProfileBtn.bottomAnchor, constant: 20),
             textFieldInput.centerXAnchor.constraint(equalTo: changeProfileBtn.centerXAnchor),
             
