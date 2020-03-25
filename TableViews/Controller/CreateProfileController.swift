@@ -119,16 +119,13 @@ class CreateProfileController: UIViewController {
     lazy var childrenSlider: UISwitch =  {
        let btnSwitch = UISwitch()
         btnSwitch.alpha = 0
-        btnSwitch.addTarget(self, action: #selector(handleSlider), for: UIControl.Event.touchDownRepeat)
+        btnSwitch.addTarget(self, action: #selector(handleSlider), for: .touchUpInside)
         btnSwitch.onTintColor = Colors.switchColor
         btnSwitch.translatesAutoresizingMaskIntoConstraints = false
         return btnSwitch
     }()
     
-    var titleColors: String = {
-       let string = "adassadsa"
-        return string
-    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -272,15 +269,15 @@ class CreateProfileController: UIViewController {
             print("Slider is on")
         } else {
             let attributedMessage = NSAttributedString(string: "This Profile will now allow access to TV programmes and films of all maturity levels.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 17)])
-
+            
             let alertController = UIAlertController(title: nil, message:"", preferredStyle: .alert)
-       
+            
             alertController.setValue(attributedMessage, forKey: "attributedMessage")
             
             let alertActions = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
             alertController.addAction(alertActions)
-          
+            
             self.present(alertController, animated: true, completion: nil)
         }
     }
@@ -292,17 +289,18 @@ class CreateProfileController: UIViewController {
             self.childrenSlider.setOn(false, animated: true)
             handleSlider(myswitch: childrenSlider)
             childrenSlider.isSelected = false
+            
+            
         } else {
             self.childrenSlider.setOn(true, animated: true)
             handleSlider(myswitch: childrenSlider)
             childrenSlider.isSelected = true
         }
-  
         
-    
+        
+        
         
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         textFieldInput.becomeFirstResponder()
 
