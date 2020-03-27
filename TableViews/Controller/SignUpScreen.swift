@@ -146,7 +146,6 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
         
         if let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIApplication.keyboardFrameBeginUserInfoKey] as? NSValue {
             let cgRect = keyboardFrame.cgRectValue
-            print(cgRect.size.width)
             
             stackViewCenterYAnchor?.constant = -30
 
@@ -158,7 +157,6 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
     }
     
     @objc func handleKeyboardHide(){
-         print("Hello")
     }
     
     @objc func handleBackBtn(){

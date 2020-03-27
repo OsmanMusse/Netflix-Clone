@@ -124,6 +124,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     func getFirebaseDatabase(){
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
+        
         Firebase.Database.database().reference().child("Users").child(userID).observe(.value) { (snapShot) in
 
             guard let firebaseDict = snapShot.value as? [String:Any] else {return}

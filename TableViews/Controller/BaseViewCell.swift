@@ -95,8 +95,7 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     
     
     func getFirebaseDatabase(){
-        
-        print("Running")
+
          imageUrls =  [VideoData]()
         let firebaseDatabase = Database.database().reference()
         firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in

@@ -7,16 +7,25 @@
 //
 
 import UIKit
+import Firebase
+
+enum NetworkError: Error {
+    case ProfileError
+}
 
 class CreateProfileController: UIViewController {
     
     var textFieldCenterYAnchor: NSLayoutConstraint?
     
+    
     lazy var saveBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Save", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 15)
+        button.isMultipleTouchEnabled = false
         button.setTitleColor(Colors.btnLightGray, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 15)
+        button.addTarget(self, action: #selector(handleSaveBtn), for: .touchUpInside)
+        button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -265,9 +274,8 @@ class CreateProfileController: UIViewController {
     }
     
     @objc func handleSlider(myswitch: UISwitch){
-        if myswitch.isOn == true {
-            print("Slider is on")
-        } else {
+        
+        if myswitch.isOn == false {
             let attributedMessage = NSAttributedString(string: "This Profile will now allow access to TV programmes and films of all maturity levels.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 17)])
             
             let alertController = UIAlertController(title: nil, message:"", preferredStyle: .alert)
@@ -297,10 +305,58 @@ class CreateProfileController: UIViewController {
             childrenSlider.isSelected = true
         }
         
-        
-        
-        
     }
+    
+    
+    @objc func handleSaveBtn(button: UIButton, event: UIEvent){
+        
+        guard let tapCounts = event.allTouches?.first else {return}
+        
+        // This prevents the Save Btn from being clicked more then once preventing duplicated data being sent to the database
+        if tapCounts.tapCount == 1{
+
+        if saveBtn.isEnabled == true {
+            guard let currentUserID = Firebase.Auth.auth().currentUser?.uid else {return}
+            let randomImageString = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
+            
+            guard let textfieldText = textFieldInput.text else {return}
+            let isChildToggled = childrenSlider.isOn
+            
+    
+            let profileDictionary:[String : Any] =  ["ProfileName" : textfieldText, "ProfileURL": randomImageString, "isChildEnabled": isChildToggled]
+            let randomProfileIdentifier = UUID().uuidString
+            let profieInfo = [randomProfileIdentifier: profileDictionary]
+//             self.saveBtn.isUserInteractionEnabled = false
+            
+            Firebase.Database.database().reference().child("Users").child(currentUserID).child("Profiles").updateChildValues(profieInfo) { (err, ref) in
+            
+                if let err = err {
+                    print("ERROR HAPPENED", err)
+                   let alertController = UIAlertController(title: "\(NetworkError.ProfileError)", message: "Profile operation failed. Please try again later", preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    
+                    self.present(alertController, animated: false, completion: nil)
+                }
+                
+               
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+           
+         }
+            
+      }
+        
+        else {
+            print("error")
+        }
+
+    }
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         textFieldInput.becomeFirstResponder()
 
