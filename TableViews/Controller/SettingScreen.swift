@@ -116,6 +116,7 @@ class SettingScreen: UICollectionViewController, UICollectionViewDelegateFlowLay
                     SVProgressHUD.setDefaultAnimationType(.native)
                     SVProgressHUD.setForegroundColor(.white)
                     SVProgressHUD.setBackgroundColor(.clear)
+        
                     
                     do {
              

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 enum NetworkError: Error {
     case ProfileError
@@ -222,7 +223,7 @@ class CreateProfileController: UIViewController {
         
         // Animate the textfield alongside the keyboard (alongside apples default animation duration)
         UIView.animate(withDuration: keyboardDuration) {
-            self.textFieldCenterYAnchor?.constant = keyboardInfo.height - 370
+            self.textFieldCenterYAnchor?.constant = keyboardInfo.height - 390
             self.childrenBtnLabel.alpha = 0
             self.childrenSlider.alpha = 0
             self.view.layoutIfNeeded()
@@ -251,6 +252,7 @@ class CreateProfileController: UIViewController {
    
 
     @objc func handleFinishMode(){
+        textFieldInput.resignFirstResponder()
        self.dismiss(animated: false, completion: nil)
     }
     
@@ -326,22 +328,26 @@ class CreateProfileController: UIViewController {
             let profileDictionary:[String : Any] =  ["ProfileName" : textfieldText, "ProfileURL": randomImageString, "isChildEnabled": isChildToggled]
             let randomProfileIdentifier = UUID().uuidString
             let profieInfo = [randomProfileIdentifier: profileDictionary]
-//             self.saveBtn.isUserInteractionEnabled = false
+             self.saveBtn.isUserInteractionEnabled = false
             
+            SVProgressHUD.show()
+            SVProgressHUD.setDefaultMaskType(.custom)
+            SVProgressHUD.setDefaultAnimationType(.native)
+            SVProgressHUD.setBackgroundLayerColor(.red)
+    
             Firebase.Database.database().reference().child("Users").child(currentUserID).child("Profiles").updateChildValues(profieInfo) { (err, ref) in
             
-                if let err = err {
-                    print("ERROR HAPPENED", err)
-                   let alertController = UIAlertController(title: "\(NetworkError.ProfileError)", message: "Profile operation failed. Please try again later", preferredStyle: .alert)
-                    
-                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    
-                    self.present(alertController, animated: false, completion: nil)
+                   if let error = err {
+                    print("ERROR HAPPENED", error)
                 }
                 
-               
-                
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40, execute: {
+                    self.textFieldInput.resignFirstResponder()
+                    self.dismiss(animated: false, completion: {
+                        SVProgressHUD.dismiss()
+                })
+              
+                })
             }
             
            
@@ -362,5 +368,6 @@ class CreateProfileController: UIViewController {
 
     }
     
+
     
 }
