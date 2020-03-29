@@ -212,7 +212,7 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
             
             guard let userId = user?.user.uid else {return}
             guard let userEmail = user?.user.email else {return}
-            let profilesDictionary = ["ProfileName": "Mascuud", "ProfileURL": "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile-2.pdf?alt=media&token=9a50a5de-e75f-40ad-8abd-dce46610d1bc"]
+            let profilesDictionary = ["ProfileName": "Mascuud", "ProfileURL": "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"]
             let infoDictionary = ["userID": userId, "Email": userEmail, "Profiles":[profilesDictionary]] as [String : Any]
             
         

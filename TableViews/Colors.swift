@@ -42,5 +42,23 @@ extension UIViewController{
         self.navigationController?.navigationBar.isTranslucent = true
         
     }
+ 
 }
+
+class CustomButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+
+    override var intrinsicContentSize: CGSize {
+            let s = super.intrinsicContentSize
+        return CGSize(width: s.width + self.titleEdgeInsets.left + self.titleEdgeInsets.right, height: s.height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom)
+    }
+}
+
 

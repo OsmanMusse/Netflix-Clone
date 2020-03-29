@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Firebase
 import Hero
 
 class EditProfileController: UIViewController{
     
     lazy var profileImage: UIImageView = {
       let image = UIImageView()
+        image.layer.cornerRadius = 4.5
+        image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -171,11 +174,23 @@ class EditProfileController: UIViewController{
         return buttonView
     }()
     
+    
+    
+     lazy var rubbishBin: CustomButton = {
+       let button = CustomButton(type: .system)
+        button.setTitle("DELETE", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Rubbish").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleRemovingProfile), for: .touchUpInside)
+        button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 16)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     var textFieldText: String?
-  
-    
+    var holdUserIDRecognizer: String?
     var profileScreen: ProfileSelector?
-    
     var profileImgCenterYAnchor: NSLayoutConstraint?
     
     override func viewDidLoad() {
@@ -256,6 +271,7 @@ class EditProfileController: UIViewController{
         view.addSubview(ratingLabel)
         view.addSubview(warningTitle)
         view.addSubview(accountSettingWarningLabel)
+        view.addSubview(rubbishBin)
         
         profileImgCenterYAnchor =  profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130)
         profileImgCenterYAnchor?.isActive = true
@@ -290,8 +306,10 @@ class EditProfileController: UIViewController{
             accountSettingWarningLabel.centerXAnchor.constraint(equalTo: warningTitle.centerXAnchor),
             
             accountSettingWarningLabel.widthAnchor.constraint(equalTo: textFieldInput.widthAnchor, constant: 40),
-            accountSettingWarningLabel.heightAnchor.constraint(equalToConstant: 50)
-    
+            accountSettingWarningLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            rubbishBin.centerXAnchor.constraint(equalTo: textFieldInput.centerXAnchor),
+            rubbishBin.topAnchor.constraint(equalTo: accountSettingWarningLabel.bottomAnchor, constant: 20)
             
      
             
@@ -345,6 +363,28 @@ class EditProfileController: UIViewController{
         }
     }
     
+    @objc func handleRemovingProfile(){
+    
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        guard let userIDRecognizer = self.holdUserIDRecognizer else {return}
+        print("REMOVED ITEM USER ID  == \(self.holdUserIDRecognizer!)")
+        
+        
+        
+        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).removeValue { (err, ref) in
+
+            if let err = err {
+                print("Error item removed")
+            }
+            
+            
+            
+            
+        }
+ 
+    }
+    
    
     
 }
+

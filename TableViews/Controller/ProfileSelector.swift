@@ -17,6 +17,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     let profileCellID = "profileCellID"
     
+    var userProfileIdRecogizer: [String] = []
+    var userProfileIndexPath: Int?
     var profileData = [ProfileModel]()
     
     
@@ -87,14 +89,19 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         return buttonView
     }()
     
+    
+    
+
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         view.backgroundColor = .black
-        print("YES")
           customCollectionViews.register(ProfileCustomCell.self, forCellWithReuseIdentifier: profileCellID)
          navigationController?.navigationBar.isHidden = false
         setupNavBar()
-        getFirebaseDatabase()
+        getFirebaseChildremoved()
+        getFirebaseChildAdded()
         setupLayout()
         
         
@@ -105,13 +112,10 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         navigationItem.title = "Who's Watching?"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont(name: "Helvetica", size: 18)!]
         
-        
-        
+    
         let customView = UIBarButtonItem(customView: editStack)
         
         navigationItem.rightBarButtonItems = [customView]
-        
-        
         
         let customView2 = UIBarButtonItem(customView: doneStack)
         
@@ -126,20 +130,25 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
    
  
-    func getFirebaseDatabase(){
+    func getFirebaseChildAdded(){
         
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
         Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childAdded, with: { (snapShot) in
+            print("CHILD ADDED")
             print(snapShot.key, snapShot.value)
             
+            let userRecognizerID = snapShot.key
             guard let dictionary = snapShot.value as? [String: Any] else {return}
             guard let profileName =  dictionary["ProfileName"] as? String else {return}
             guard let profileURL =  dictionary["ProfileURL"] as? String else {return}
             
             let createUserProfile = ProfileModel(profileName: profileName, profileImage: profileURL)
             
+            self.userProfileIdRecogizer.append(userRecognizerID)
+            
             self.profileData.append(createUserProfile)
+            
             
             self.customCollectionViews.reloadData()
             
@@ -148,6 +157,31 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         }
     }
     
+    
+    func getFirebaseChildremoved(){
+        
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childRemoved, with: { (snapShot) in
+        
+            guard let dictionary = snapShot.value as? [String: Any] else {return}
+            guard let profileName =  dictionary["ProfileName"] as? String else {return}
+            guard let profileURL =  dictionary["ProfileURL"] as? String else {return}
+            
+            let createUserProfile = ProfileModel(profileName: profileName, profileImage: profileURL)
+            
+            guard let userIndexPath = self.userProfileIndexPath else {return}
+            
+            self.profileData.remove(at: userIndexPath)
+            
+            self.userProfileIndexPath = nil
+            
+            self.customCollectionViews.reloadData()
+            
+            
+        }) { (err) in
+            print("There an error with the child being removed == \(err)")
+        }
+    }
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return profileData.count + 1
@@ -166,7 +200,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 70, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -179,19 +213,21 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         let isLastItem = indexPath.item + 1 == collectionView.numberOfItems(inSection: 0)
         
         if isLastItem == false {
-            
-            // This means the cell is a profile
             cell.profileInformation = profileData[indexPath.item]
             cell.hero.id = "skyWalker"
-            cell.profileAddIcon.isHidden = true
-            cell.profileImage.layer.cornerRadius = 4.5
-            cell.profileImage.layer.masksToBounds = true
+            cell.setupDefaultCell()
         }
 
   
         // Check for the last item in the collectionview
         if isfirstItem == false && isLastItem == true  {
             cell.setupProfileCell()
+        }
+        
+        let isEvenIndexPath = indexPath.item % 2 == 0
+    
+        if isfirstItem == false && isLastItem == true && isEvenIndexPath == true{
+            cell.frame.origin.x = cell.frame.origin.x - 15
         }
         
         return cell
@@ -222,10 +258,12 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         }
         
         if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
-            let editController = EditProfileController()
+            userProfileIndexPath = indexPath.item
+            let editController = EditProfileController() 
             let cellImageString = profileData[indexPath.item].profileImage
             editController.setupProfileImage(profilePicture: cellImageString)
             editController.textFieldText = profileData[indexPath.item].profileName
+            editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
             let navigationController = UINavigationController(rootViewController: editController)
             navigationController.hero.isEnabled = true
             cell.isSelected = false
@@ -246,16 +284,18 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         if cell.profileName.text == "Add Profile" {
             let navigationController = UINavigationController(rootViewController: CreateProfileController())
             self.present(navigationController, animated: false, completion: nil)
-            
+
         }
           
         
         // Preventing single de-selecting of cells
          if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
+            userProfileIndexPath = indexPath.item
             let editController = EditProfileController()
             let cellImageString = profileData[indexPath.item].profileImage
             editController.setupProfileImage(profilePicture: cellImageString)
             editController.textFieldText = profileData[indexPath.item].profileName
+            editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
             let navigationController = UINavigationController(rootViewController: editController)
             navigationController.hero.isEnabled = true
             

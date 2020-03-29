@@ -334,8 +334,10 @@ class CreateProfileController: UIViewController {
             SVProgressHUD.show()
             SVProgressHUD.setDefaultMaskType(.custom)
             SVProgressHUD.setDefaultAnimationType(.native)
-            SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.3))
-    
+            SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
+            
+       
+
             Firebase.Database.database().reference().child("Users").child(currentUserID).child("Profiles").updateChildValues(profieInfo) { (err, ref) in
             
                    if let error = err {

@@ -101,10 +101,23 @@ class ProfileCustomCell: UICollectionViewCell {
     }
     
     
+    func setupDefaultCell(){
+        self.profileImage.isHidden = false
+        self.profileAddIcon.isHidden = true
+        self.profileImage.layer.cornerRadius = 4.5
+        self.profileImage.layer.masksToBounds = true
+        self.profileNameBottomConstraint?.constant = 10
+        self.backgroundColor = UIColor.clear
+        self.layer.borderColor =  UIColor.clear.cgColor
+        self.layer.cornerRadius = 4.5
+    }
+    
     func setupProfileCell(){
         self.profileImage.hero.id = "skyWalker"
         self.profileName.text = "Add Profile"
-        self.profileImage.isHidden = false
+        self.profileImage.isHidden = true
+        self.editIcon.isHidden = true
+        self.shadowView.isHidden = true
         self.profileAddIcon.isHidden = false
         self.profileNameBottomConstraint?.constant = 19
         
@@ -113,9 +126,9 @@ class ProfileCustomCell: UICollectionViewCell {
         self.layer.borderColor =  UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1).cgColor
         self.layer.borderWidth = 2
         self.layer.cornerRadius = 4.5
-    
-        
     }
+    
+    
     
     func setupLayout(){
         addSubview(profileImage)
