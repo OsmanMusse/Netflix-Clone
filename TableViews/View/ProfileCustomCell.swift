@@ -8,15 +8,18 @@
 
 import UIKit
 
-
+// Hold Reference to the cached images that are already in the app for reuse
 var profileCachedImages =  [String: UIImage]()
 
 class ProfileCustomCell: UICollectionViewCell {
+    
+    var profileNameBottomConstraint: NSLayoutConstraint?
     
     var profileSelectorScreen: ProfileSelector?
     
     var profileInformation: ProfileModel? {
         didSet{
+            
             guard let avatorImage = profileInformation?.profileImage else {return}
             
     
@@ -28,7 +31,9 @@ class ProfileCustomCell: UICollectionViewCell {
                     print("ISSUE WITH NETWORK", err)
                 }
                 
-                
+//                if url.absoluteString != self.profileInformation?.profileImage{
+//                    return
+//                }
                 
                 guard let imageData = data else {return}
                 
@@ -88,12 +93,28 @@ class ProfileCustomCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .orange
         setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func setupProfileCell(){
+        self.profileImage.hero.id = "skyWalker"
+        self.profileName.text = "Add Profile"
+        self.profileImage.isHidden = false
+        self.profileAddIcon.isHidden = false
+        self.profileNameBottomConstraint?.constant = 19
+        
+        self.frame.origin.x = self.frame.origin.x + 22
+        self.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
+        self.layer.borderColor =  UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1).cgColor
+        self.layer.borderWidth = 2
+        self.layer.cornerRadius = 4.5
+    
+        
     }
     
     func setupLayout(){
@@ -102,6 +123,9 @@ class ProfileCustomCell: UICollectionViewCell {
         addSubview(profileName)
         addSubview(shadowView)
         addSubview(editIcon)
+        
+        profileNameBottomConstraint =  profileName.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10)
+        profileNameBottomConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
               profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -112,7 +136,7 @@ class ProfileCustomCell: UICollectionViewCell {
               profileAddIcon.centerXAnchor.constraint(equalTo: self.centerXAnchor),
               profileAddIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
               
-              profileName.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10),
+              
               profileName.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor),
               
               shadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -124,6 +148,7 @@ class ProfileCustomCell: UICollectionViewCell {
             editIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
             ])
+        
     }
     
     

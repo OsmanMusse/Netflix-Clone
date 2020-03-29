@@ -314,7 +314,7 @@ class EditProfileController: UIViewController{
     }
     
     @objc func handleSavingMode(){
-        print("Save Btn Clicked")
+     
     }
     
     @objc func handleCancelMode(){
@@ -329,7 +329,7 @@ class EditProfileController: UIViewController{
     }
     
     @objc func handleDoneBtn(){
-        print("HANDLE DONE BTN")
+        
         
         textFieldInput.resignFirstResponder()
         guard let profileImgConstraint =  profileImgCenterYAnchor?.constant else {return}

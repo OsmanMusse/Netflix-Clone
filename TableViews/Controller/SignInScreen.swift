@@ -108,9 +108,7 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "arrow-point-to-right").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBackBtn))
         
         setupViews()
-        
-        
-        
+  
         // Setting up the notification to be observed
         
         setupNotification()

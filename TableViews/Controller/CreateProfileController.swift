@@ -330,10 +330,11 @@ class CreateProfileController: UIViewController {
             let profieInfo = [randomProfileIdentifier: profileDictionary]
              self.saveBtn.isUserInteractionEnabled = false
             
+            
             SVProgressHUD.show()
             SVProgressHUD.setDefaultMaskType(.custom)
             SVProgressHUD.setDefaultAnimationType(.native)
-            SVProgressHUD.setBackgroundLayerColor(.red)
+            SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.3))
     
             Firebase.Database.database().reference().child("Users").child(currentUserID).child("Profiles").updateChildValues(profieInfo) { (err, ref) in
             

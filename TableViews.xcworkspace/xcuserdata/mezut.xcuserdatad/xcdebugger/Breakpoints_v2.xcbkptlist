@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TableViews/Controller/ProfileSelector.swift"
+            timestampString = "607147705.031512"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "ProfileSelector"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TableViews.ProfileSelector.profileData.getter : Swift.Array&lt;TableViews.ProfileModel&gt;"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileSelector.swift"
+                  timestampString = "607127692.150647"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "114">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TableViews.ProfileSelector.profileData.setter : Swift.Array&lt;TableViews.ProfileModel&gt;"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileSelector.swift"
+                  timestampString = "607127692.152825"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TableViews.ProfileSelector.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TableViews.ProfileSelector"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileSelector.swift"
+                  timestampString = "607127692.155157"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "131">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TableViews.ProfileSelector.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TableViews.ProfileSelector&gt;"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileSelector.swift"
+                  timestampString = "607127692.157331"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "106">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

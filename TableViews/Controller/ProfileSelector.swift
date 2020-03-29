@@ -90,11 +90,14 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        print("YES")
           customCollectionViews.register(ProfileCustomCell.self, forCellWithReuseIdentifier: profileCellID)
- navigationController?.navigationBar.isHidden = false
+         navigationController?.navigationBar.isHidden = false
         setupNavBar()
         getFirebaseDatabase()
         setupLayout()
+        
+        
     }
     
     
@@ -121,33 +124,30 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     
+   
+ 
     func getFirebaseDatabase(){
+        
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
-        
-        Firebase.Database.database().reference().child("Users").child(userID).observe(.value) { (snapShot) in
-
-            guard let firebaseDict = snapShot.value as? [String:Any] else {return}
-            guard let userProfiles = firebaseDict["Profiles"] as? [Dictionary<String, Any>] else {return}
+        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childAdded, with: { (snapShot) in
+            print(snapShot.key, snapShot.value)
             
-            for item in userProfiles {
-                guard let profileName = item["ProfileName"] as? String else {return}
-                guard let profileURL = item["ProfileURL"] as? String else {return}
-                
-                let UserProfile = ProfileModel(profileName: profileName, profileImage: profileURL)
-                
-                self.profileData.append(UserProfile)
-            }
+            guard let dictionary = snapShot.value as? [String: Any] else {return}
+            guard let profileName =  dictionary["ProfileName"] as? String else {return}
+            guard let profileURL =  dictionary["ProfileURL"] as? String else {return}
             
-            DispatchQueue.main.async {
-                self.customCollectionViews.reloadData()
-            }
-
+            let createUserProfile = ProfileModel(profileName: profileName, profileImage: profileURL)
+            
+            self.profileData.append(createUserProfile)
+            
+            self.customCollectionViews.reloadData()
+            
+        }) { (err) in
+            print("ERR == \(err)")
         }
-        
     }
     
- 
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return profileData.count + 1
@@ -165,27 +165,33 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         return 50
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
    
         let cell = customCollectionViews.dequeueReusableCell(withReuseIdentifier: profileCellID, for: indexPath) as! ProfileCustomCell
         
+        cell.profileSelectorScreen = self
+    
+        let isfirstItem = indexPath.item == 0
         let isLastItem = indexPath.item + 1 == collectionView.numberOfItems(inSection: 0)
+        
         if isLastItem == false {
-                cell.profileInformation = profileData[indexPath.item]
-               cell.hero.id = "skyWalker"
+            
+            // This means the cell is a profile
+            cell.profileInformation = profileData[indexPath.item]
+            cell.hero.id = "skyWalker"
+            cell.profileAddIcon.isHidden = true
+            cell.profileImage.layer.cornerRadius = 4.5
+            cell.profileImage.layer.masksToBounds = true
         }
 
-        cell.profileSelectorScreen = self
-        
+  
         // Check for the last item in the collectionview
-        if indexPath.item + 1 == collectionView.numberOfItems(inSection: 0) {
-        cell.profileImage.hero.id = "skyWalker"
-            cell.profileName.text = "Add Profile"
-            cell.profileImage.isHidden = false
-            cell.profileAddIcon.isHidden = false
-            cell.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
-            cell.layer.cornerRadius = 45
-
+        if isfirstItem == false && isLastItem == true  {
+            cell.setupProfileCell()
         }
         
         return cell
@@ -233,7 +239,6 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 
-
         
         let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
         
@@ -264,12 +269,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     
        
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-    }
-    
+
     func setupLayout(){
         view.addSubview(customCollectionViews)
         view.addSubview(shadowView)
