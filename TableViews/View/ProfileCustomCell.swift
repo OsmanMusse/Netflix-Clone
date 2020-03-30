@@ -20,9 +20,14 @@ class ProfileCustomCell: UICollectionViewCell {
     var profileInformation: ProfileModel? {
         didSet{
             
+          profileName.text = profileInformation?.profileName
+            
             guard let avatorImage = profileInformation?.profileImage else {return}
             
-    
+            if let cachedImage = profileCachedImages[avatorImage] {
+                self.profileImage.image = cachedImage
+                return
+            }
             
             guard let url = URL(string: avatorImage) else {return}
             
@@ -31,9 +36,9 @@ class ProfileCustomCell: UICollectionViewCell {
                     print("ISSUE WITH NETWORK", err)
                 }
                 
-//                if url.absoluteString != self.profileInformation?.profileImage{
-//                    return
-//                }
+                if url.absoluteString != self.profileInformation?.profileImage{
+                    return
+                }
                 
                 guard let imageData = data else {return}
                 
@@ -48,7 +53,6 @@ class ProfileCustomCell: UICollectionViewCell {
                 }
                 
             }.resume()
-            profileName.text = profileInformation?.profileName
         }
     }
     
@@ -102,6 +106,8 @@ class ProfileCustomCell: UICollectionViewCell {
     
     
     func setupDefaultCell(){
+   
+        
         self.profileImage.isHidden = false
         self.profileAddIcon.isHidden = true
         self.profileImage.layer.cornerRadius = 4.5

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileSelector.swift"
-            timestampString = "607215594.8030879"
+            timestampString = "607296088.497813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/EditProfileController.swift"
-            timestampString = "607215594.8033"
+            timestampString = "607296088.498396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
             landmarkName = "handleRemovingProfile()"
             landmarkType = "7">
          </BreakpointContent>
@@ -104,28 +104,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/EditProfileController.swift"
-            timestampString = "607215594.803748"
+            timestampString = "607296088.499245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "handleRemovingProfile()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileSelector.swift"
-            timestampString = "607215594.804177"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "getFirebaseChildremoved()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

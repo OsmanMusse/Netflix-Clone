@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Hero
+import SVProgressHUD
 
 class EditProfileController: UIViewController{
     
@@ -332,7 +333,27 @@ class EditProfileController: UIViewController{
     }
     
     @objc func handleSavingMode(){
-     
+        
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        guard let userIDRecognizer = self.holdUserIDRecognizer else {return}
+        guard let textfieldUserText = self.textFieldInput.text else {return}
+        
+        // Use this image url untill you create the gallery controller
+        let imageURL = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
+
+        guard let updateValues = ["ProfileName": textfieldUserText, "ProfileURL":imageURL] as? [String : Any] else {return}
+        
+        SVProgressHUD.show()
+        SVProgressHUD.setDefaultMaskType(.custom)
+        SVProgressHUD.setDefaultAnimationType(.native)
+        SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
+        
+             Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).updateChildValues(updateValues)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
+            SVProgressHUD.dismiss()
+            self.dismiss(animated: false, completion: nil)
+        }
     }
     
     @objc func handleCancelMode(){
@@ -367,20 +388,27 @@ class EditProfileController: UIViewController{
     
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         guard let userIDRecognizer = self.holdUserIDRecognizer else {return}
-        print("REMOVED ITEM USER ID  == \(self.holdUserIDRecognizer!)")
         
+        SVProgressHUD.show()
+        SVProgressHUD.setDefaultMaskType(.custom)
+        SVProgressHUD.setDefaultAnimationType(.native)
+        SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
         
         
         Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).removeValue { (err, ref) in
-
+            
             if let err = err {
                 print("Error item removed")
             }
-            
-            
-            
-            
+           
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
+            SVProgressHUD.dismiss()
+               self.dismiss(animated: false, completion: nil)
+        }
+        
+      
  
     }
     
