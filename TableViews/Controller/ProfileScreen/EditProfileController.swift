@@ -25,7 +25,7 @@ class EditProfileController: UIViewController{
        let button = UIButton(type: .system)
         button.setTitle("CHANGE", for: .normal)
         button.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
-        button.addTarget(self, action: #selector(handleCancelMode), for: .touchUpInside)
+        button.addTarget(self, action: #selector(goToImageSelector), for: .touchUpInside)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -212,10 +212,11 @@ class EditProfileController: UIViewController{
         self.profileImage.hero.modifiers = [HeroModifier.arc(intensity: -1)]
         
         profileScreen = ProfileSelector()
+
     }
     
     
-    
+
 
     func setupNavBar(){
         navigationItem.title = "Edit Profile"
@@ -358,9 +359,17 @@ class EditProfileController: UIViewController{
         }
     }
     
-    @objc func handleCancelMode(){
+    @objc func goToImageSelector(){
+        // Got to the Image Selector Screen to select the image for your profile
         
-    self.dismiss(animated: false, completion: nil)
+        let layout = UICollectionViewFlowLayout()
+        
+        let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
+        
+        let navigationController = CustomNavigationController(rootViewController: imageSelectorScreen)
+      
+        self.present(navigationController, animated: false, completion: nil)
+        
     
     }
     

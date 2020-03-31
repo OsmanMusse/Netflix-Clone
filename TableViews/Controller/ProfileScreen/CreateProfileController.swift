@@ -75,6 +75,7 @@ class CreateProfileController: UIViewController {
     lazy var changeProfileBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("CHANGE", for: .normal)
+        button.addTarget(self, action: #selector(goToImageSelector), for: .touchUpInside)
         button.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -312,6 +313,16 @@ class CreateProfileController: UIViewController {
     }
     
     
+    @objc func goToImageSelector(){
+        // Got to the Image Selector Screen to select the image for your profile
+        
+        let layout = UICollectionViewFlowLayout()
+        
+        let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
+        
+        let navigationController = CustomNavigationController(rootViewController: imageSelectorScreen)        
+        self.present(navigationController, animated: false, completion: nil)
+    }
     @objc func handleSaveBtn(button: UIButton, event: UIEvent){
         
         guard let tapCounts = event.allTouches?.first else {return}
