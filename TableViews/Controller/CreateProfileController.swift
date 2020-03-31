@@ -66,6 +66,8 @@ class CreateProfileController: UIViewController {
     
     lazy var profileImage: UIImageView = {
         let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
+        image.layer.cornerRadius = 4.5
+        image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()

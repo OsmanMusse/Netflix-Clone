@@ -107,6 +107,9 @@ class EditProfileController: UIViewController{
         fullString.addAttributes([NSAttributedString.Key.font: UIFont(name: "Helvetica-Bold", size: 15)], range: NSRange(location: 14, length: 22))
         label.attributedText = fullString
         label.isEditable = false
+        label.isScrollEnabled = false
+        label.isUserInteractionEnabled = false
+        label.allowsEditingTextAttributes = false
         label.backgroundColor = .clear
         label.textColor = .white
         label.textAlignment = .center
@@ -123,6 +126,8 @@ class EditProfileController: UIViewController{
         label.textColor = Colors.btnLightGray
         label.textAlignment = .center
         label.isEditable = false
+        label.isScrollEnabled = false
+        label.isUserInteractionEnabled = false
         label.backgroundColor = .clear
         label.font = UIFont(name: "Helvetica", size: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -301,13 +306,13 @@ class EditProfileController: UIViewController{
             warningTitle.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 15),
             warningTitle.centerXAnchor.constraint(equalTo: ratingLabel.centerXAnchor),
             warningTitle.widthAnchor.constraint(equalTo: textFieldInput.widthAnchor, constant: 30),
-            warningTitle.heightAnchor.constraint(equalToConstant: 45),
+            warningTitle.heightAnchor.constraint(equalToConstant: 55),
             
             accountSettingWarningLabel.topAnchor.constraint(equalTo: warningTitle.bottomAnchor, constant: 0),
             accountSettingWarningLabel.centerXAnchor.constraint(equalTo: warningTitle.centerXAnchor),
             
             accountSettingWarningLabel.widthAnchor.constraint(equalTo: textFieldInput.widthAnchor, constant: 40),
-            accountSettingWarningLabel.heightAnchor.constraint(equalToConstant: 50),
+            accountSettingWarningLabel.heightAnchor.constraint(equalToConstant: 55),
             
             rubbishBin.centerXAnchor.constraint(equalTo: textFieldInput.centerXAnchor),
             rubbishBin.topAnchor.constraint(equalTo: accountSettingWarningLabel.bottomAnchor, constant: 20)
@@ -343,10 +348,7 @@ class EditProfileController: UIViewController{
 
         guard let updateValues = ["ProfileName": textfieldUserText, "ProfileURL":imageURL] as? [String : Any] else {return}
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultMaskType(.custom)
-        SVProgressHUD.setDefaultAnimationType(.native)
-        SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
+        showActivityIndicator()
         
              Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).updateChildValues(updateValues)
         
@@ -388,28 +390,41 @@ class EditProfileController: UIViewController{
     
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         guard let userIDRecognizer = self.holdUserIDRecognizer else {return}
+
         
+        
+        let alertController = UIAlertController(title: "Delete Profile", message: "Are you sure you want to delete this profile?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        let acceptAction = UIAlertAction(title: "Yes", style: .default) { (alert) in
+            
+            self.showActivityIndicator()
+            
+            Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).removeValue { (err, ref) in
+                
+                if let err = err {
+                    print("Error item removed")
+                }
+                
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
+                SVProgressHUD.dismiss()
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(acceptAction)
+        self.present(alertController, animated: true, completion: nil)
+        
+      
+    }
+    
+    func showActivityIndicator(){
         SVProgressHUD.show()
         SVProgressHUD.setDefaultMaskType(.custom)
         SVProgressHUD.setDefaultAnimationType(.native)
         SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
-        
-        
-        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).removeValue { (err, ref) in
-            
-            if let err = err {
-                print("Error item removed")
-            }
-           
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
-            SVProgressHUD.dismiss()
-               self.dismiss(animated: false, completion: nil)
-        }
-        
-      
- 
     }
     
    
