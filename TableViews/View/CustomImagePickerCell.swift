@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CustomImagePickerCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
    
@@ -39,14 +40,15 @@ class CustomImagePickerCell: UICollectionViewCell, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 135, height: 135)
+        return CGSize(width: 125, height: 125)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imagePickerCollectionView.dequeueReusableCell(withReuseIdentifier: imageCellID, for: indexPath)
         cell.backgroundColor = UIColor.orange
         return cell
     }
-    
+
+
     
     
     override init(frame: CGRect) {
@@ -54,6 +56,8 @@ class CustomImagePickerCell: UICollectionViewCell, UICollectionViewDataSource, U
         setupCollectionView()
         setupLayout()
     }
+    
+
     
     func setupCollectionView(){
         imagePickerCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: imageCellID)

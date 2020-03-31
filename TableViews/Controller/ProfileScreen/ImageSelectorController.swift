@@ -34,12 +34,10 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     
     override func viewDidLoad() {
         setupNavBar()
+        getFirebaseDatabase()
         setupCollectionView()
         setupLayout()
         
-        
-        FfF
-
     }
     
     func setupNavBar(){
@@ -60,6 +58,24 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     
     
     
+    func getFirebaseDatabase(){
+        Firebase.Database.database().reference().child("ProfileImagePicker").observeSingleEvent(of: .value, with: { (snaptShot) in
+            
+            print(snaptShot)
+            
+            guard let imagePickerTitles = snaptShot.value as? [String: Any] else {return}
+            print("IMAGE TITLES == \(imagePickerTitles)")
+            
+            for (key,value) in imagePickerTitles {
+                print("THE KEY == \(key)")
+            }
+            
+        }) { (err) in
+            print("ERR occured while getting the images from the database")
+        }
+    }
+    
+    
     
     func setupCollectionView(){
         collectionView.backgroundColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
@@ -71,7 +87,7 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 225)
+        return CGSize(width: self.view.frame.width, height: 200)
     }
     
     
