@@ -22,6 +22,7 @@
 		D301FAEB233D3CFA008BD264 /* VideoPlayBackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */; };
 		D301FAED233D4619008BD264 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D301FAEC233D4619008BD264 /* DownloadCell.swift */; };
 		D30B5FC82429844100629C3E /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B5FC72429844100629C3E /* ProfileModel.swift */; };
+		D310EF0C243520E10036FCEC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310EF0B243520E10036FCEC /* ImagePicker.swift */; };
 		D3135DA8243384B900AEAE19 /* ImageSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3135DA7243384B900AEAE19 /* ImageSelectorController.swift */; };
 		D32B4A3723DA4F9900313A27 /* CategoryTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B4A3623DA4F9900313A27 /* CategoryTitles.swift */; };
 		D32B4A3B23DCEA7900313A27 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B4A3A23DCEA7900313A27 /* VideoCell.swift */; };
@@ -110,6 +111,7 @@
 		D301FAEA233D3CFA008BD264 /* VideoPlayBackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayBackCell.swift; sourceTree = "<group>"; };
 		D301FAEC233D4619008BD264 /* DownloadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCell.swift; sourceTree = "<group>"; };
 		D30B5FC72429844100629C3E /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		D310EF0B243520E10036FCEC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		D3135DA7243384B900AEAE19 /* ImageSelectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorController.swift; sourceTree = "<group>"; };
 		D32B4A3623DA4F9900313A27 /* CategoryTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTitles.swift; sourceTree = "<group>"; };
 		D32B4A3A23DCEA7900313A27 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				9D33B868241AB1F400987A87 /* CarouselData.swift */,
 				D3CEFBB322EC024000421AC4 /* DataModel.swift */,
 				D30B5FC72429844100629C3E /* ProfileModel.swift */,
+				D310EF0B243520E10036FCEC /* ImagePicker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */,
 				D30B5FC82429844100629C3E /* ProfileModel.swift in Sources */,
 				9D33B869241AB1F400987A87 /* CarouselData.swift in Sources */,
+				D310EF0C243520E10036FCEC /* ImagePicker.swift in Sources */,
 				9D33B86B241AB23100987A87 /* SignUpScreen.swift in Sources */,
 				D3C79D12230AF8B700A5748F /* CollectionRandomCell.swift in Sources */,
 				D3627A6F23D77A83006C6ECA /* InnerDownloadHeader.swift in Sources */,

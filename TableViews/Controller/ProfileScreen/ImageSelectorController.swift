@@ -30,6 +30,7 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     }()
     
 
+    var imagePickerData: [ImagePicker] = []
     
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
         getFirebaseDatabase()
         setupCollectionView()
         setupLayout()
+        
         
     }
     
@@ -59,21 +61,33 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     
     
     func getFirebaseDatabase(){
-        Firebase.Database.database().reference().child("ProfileImagePicker").observeSingleEvent(of: .value, with: { (snaptShot) in
-            
-            print(snaptShot)
-            
-            guard let imagePickerTitles = snaptShot.value as? [String: Any] else {return}
-            print("IMAGE TITLES == \(imagePickerTitles)")
-            
-            for (key,value) in imagePickerTitles {
-                print("THE KEY == \(key)")
+        
+        Firebase.Database.database().reference().child("ProfileImagePicker").observeSingleEvent(of: .value) { (snapShot) in
+ 
+
+            guard let dictionary = snapShot.value as? [String: [String: String]] else {return}
+            for (key,value) in dictionary {
+                
+                let imagePickerCategory = key
+                
+                guard let imatePickerImages =  value as? [String: String] else {return}
+                
+                let finalDictionary = [imagePickerCategory: imatePickerImages]
+                
+                let createImagePicker =  ImagePicker(dictionary: finalDictionary)
+                self.imagePickerData.append(createImagePicker)
+
+                self.collectionView.reloadData()
+
+         
             }
-            
-        }) { (err) in
-            print("ERR occured while getting the images from the database")
         }
+ 
+        
     }
+    
+    
+    
     
     
     
@@ -83,18 +97,18 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return imagePickerData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 200)
+        return CGSize(width: self.view.frame.width, height: 185)
     }
     
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageSelectorCellId, for: indexPath)
-
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageSelectorCellId, for: indexPath) as! CustomImagePickerCell
+        cell.imagePickerInformation = imagePickerData[indexPath.item]
         return cell
     }
     
@@ -115,7 +129,6 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
             blackView.heightAnchor.constraint(equalToConstant: 90),
             
 
-            
 
             
             ])

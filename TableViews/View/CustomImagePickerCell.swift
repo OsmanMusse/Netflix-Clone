@@ -9,13 +9,21 @@
 import UIKit
 import Firebase
 
-class CustomImagePickerCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+class CustomImagePickerCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout{
+    
+    var imagePickerInformation: ImagePicker?  {
+        didSet{
+            ImageTitleLabel.text = imagePickerInformation?.categoryTitle
+    
+        }
+    }
    
     private let imageCellID = "IMAGECELLID"
 
     let ImageTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "The Classics"
+        label.text = ""
         label.font = UIFont(name: "Helvetica", size: 18)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
