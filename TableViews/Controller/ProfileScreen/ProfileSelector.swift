@@ -135,6 +135,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
  
     func getFirebaseChildAdded(){
         
+
+        
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
         Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childAdded, with: { (snapShot) in
@@ -151,6 +153,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             self.profileData.append(createUserProfile)
             
             self.customCollectionViews.reloadData()
+        
             
         }) { (err) in
             print("ERR == \(err)")
@@ -158,30 +161,29 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func getFirebaseChildEdited(){
+        
+
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
-        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observeSingleEvent(of: .childChanged) { (snapShot) in
-            
+        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childChanged) { (snapShot) in
             guard let dictionary = snapShot.value as? [String: Any] else {return}
             guard let profileName =  dictionary["ProfileName"] as? String else {return}
             guard let profileURL =  dictionary["ProfileURL"] as? String else {return}
             guard let userIndexPath = self.userProfileIndexPath else {return}
             
-            
             let createUserProfile = ProfileModel(profileName: profileName, profileImage: profileURL)
-    
+            
             self.profileData.remove(at: userIndexPath)
+            
             self.profileData.insert(createUserProfile, at: userIndexPath)
             
             self.customCollectionViews.reloadData()
-            
             
         }
     }
     
     
     func getFirebaseChildremoved(){
-
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childRemoved, with: { (snapShot) in
         
@@ -199,6 +201,7 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             self.userProfileIndexPath = nil
             
             self.customCollectionViews.reloadData()
+          
             
             
         }) { (err) in
@@ -227,8 +230,12 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        
    
         let cell = customCollectionViews.dequeueReusableCell(withReuseIdentifier: profileCellID, for: indexPath) as! ProfileCustomCell
+        
+       
         
         cell.profileSelectorScreen = self
     
@@ -240,8 +247,11 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         
         if isLastItem == false  {
+            let indexo = profileData[indexPath.item]
             cell.profileInformation = profileData[indexPath.item]
             cell.hero.id = "skyWalker"
+            cell.hero.modifiers = [HeroModifier.cascade()]
+            cell.profileImage.hero.modifiers = [.useNormalSnapshot]
             cell.setupDefaultCell()
             return cell
         }
@@ -254,12 +264,12 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         if indexPath.item > 0 && isLastItem == true   {
 
 
+
             
             if isfirstItem == false && isLastItem == true && isEvenIndexPath == true{
                 cell.frame.origin.x = cell.frame.origin.x - 13
             }
             
-
             reloadEditMode()
             cell.setupProfileCell()
             
@@ -276,6 +286,16 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+      // Shows the activity indicator meaning where loging into a profile
+      showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: .custom)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+            let appTabBarController = CustomTabBarController()
+            self.present(appTabBarController, animated: false, completion: nil)
+        }
+        
+
+        
         let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
         
         // If the add profile cell is selected
@@ -296,7 +316,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             userProfileIndexPath = indexPath.item
             let editController = EditProfileController() 
             let cellImageString = profileData[indexPath.item].profileImage
-            editController.setupProfileImage(profilePicture: cellImageString)
+            editController.profileImage.image = profileCachedImages[cellImageString]
+            editController.oldProfileURL = cellImageString
             editController.textFieldText = profileData[indexPath.item].profileName
             editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
             let navigationController = UINavigationController(rootViewController: editController)
@@ -328,7 +349,8 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             userProfileIndexPath = indexPath.item
             let editController = EditProfileController()
             let cellImageString = profileData[indexPath.item].profileImage
-            editController.setupProfileImage(profilePicture: cellImageString)
+            editController.profileImage.image = profileCachedImages[cellImageString]
+            editController.oldProfileURL = cellImageString
             editController.textFieldText = profileData[indexPath.item].profileName
             editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
             let navigationController = UINavigationController(rootViewController: editController)

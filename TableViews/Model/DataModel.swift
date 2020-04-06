@@ -105,12 +105,7 @@ class VideoCategory {
 
         
         filmCatergory.videoData = filmVideos
-        
-        
-        
-        
-        
-        
+     
         return [myListCategory, filmCatergory]
         
     }

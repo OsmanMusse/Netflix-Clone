@@ -65,7 +65,7 @@ class CreateProfileController: UIViewController {
     }()
     
     lazy var profileImage: UIImageView = {
-        let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
+        let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-3"))
         image.layer.cornerRadius = 4.5
         image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -138,7 +138,8 @@ class CreateProfileController: UIViewController {
         return btnSwitch
     }()
     
-
+    var profileImageURL: String?
+    var defaultProfileImageURL = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,6 +155,7 @@ class CreateProfileController: UIViewController {
         NotificationApp.addObserver(self, selector: #selector(handleKeyboardShowing), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationApp.addObserver(self, selector: #selector(handleKeyboardDismiss), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         
         
     }
@@ -181,6 +183,11 @@ class CreateProfileController: UIViewController {
         navigationController?.navigationBar.shadowImage =  UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    func setupProfileImage(profilePicture: String){
+        profileImage.image = profileCachedImages[profilePicture]
+
     }
     
     func setupLayout(){
@@ -316,12 +323,14 @@ class CreateProfileController: UIViewController {
     @objc func goToImageSelector(){
         // Got to the Image Selector Screen to select the image for your profile
         
+        showActivityIndicator(color: Colors.settingBg.withAlphaComponent(0.4), maskType: .clear)
+        
         let layout = UICollectionViewFlowLayout()
         
         let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
+    
+        self.navigationController?.pushViewController(imageSelectorScreen, animated: false)
         
-        let navigationController = CustomNavigationController(rootViewController: imageSelectorScreen)        
-        self.present(navigationController, animated: false, completion: nil)
     }
     @objc func handleSaveBtn(button: UIButton, event: UIEvent){
         
@@ -337,10 +346,15 @@ class CreateProfileController: UIViewController {
             guard let textfieldText = textFieldInput.text else {return}
             let isChildToggled = childrenSlider.isOn
             
-    
-            let profileDictionary:[String : Any] =  ["ProfileName" : textfieldText, "ProfileURL": randomImageString, "isChildEnabled": isChildToggled]
+            var updateValues:[String: Any] = [:]
+            if profileImageURL == nil {
+                updateValues = ["ProfileName": textfieldText, "ProfileURL":defaultProfileImageURL, "isChildEnabled": isChildToggled]
+            } else {
+                updateValues = ["ProfileName": textfieldText, "ProfileURL":profileImageURL!, "isChildEnabled": isChildToggled]
+            }
+            
             let randomProfileIdentifier = UUID().uuidString
-            let profieInfo = [randomProfileIdentifier: profileDictionary]
+            let profieInfo = [randomProfileIdentifier: updateValues]
              self.saveBtn.isUserInteractionEnabled = false
             
             

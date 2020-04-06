@@ -17,7 +17,7 @@ class MyListController: UIViewController {
     
     
     var delegate: SettingScreenDelegate?
-    var settingScreen: SettingScreen?
+    var settingScreen: SettingScreenController?
     
     let blackTopView: UIView = {
        let view = UIView()

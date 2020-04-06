@@ -57,6 +57,7 @@ class EditProfileController: UIViewController{
     }()
     
     
+    
     lazy var textFieldInput: CustomTextField = {
         let tf = CustomTextField()
         tf.addTarget(self, action: #selector(handleTextField), for: .editingChanged)
@@ -198,6 +199,9 @@ class EditProfileController: UIViewController{
     var holdUserIDRecognizer: String?
     var profileScreen: ProfileSelector?
     var profileImgCenterYAnchor: NSLayoutConstraint?
+    var profileImageURL: String?
+    var oldProfileURL: String?
+    var imageSelectorData: [ImagePicker] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -209,14 +213,11 @@ class EditProfileController: UIViewController{
         textFieldInput.text = textFieldText
         self.hero.isEnabled = true
         self.profileImage.hero.id = "skyWalker"
-        self.profileImage.hero.modifiers = [HeroModifier.arc(intensity: -1)]
-        
         profileScreen = ProfileSelector()
 
     }
     
-    
-
+   
 
     func setupNavBar(){
         navigationItem.title = "Edit Profile"
@@ -246,13 +247,7 @@ class EditProfileController: UIViewController{
         navigationController?.navigationBar.isTranslucent = true
     }
     
-    
-    func setupProfileImage(profilePicture: String){
-        
-        profileImage.image = profileCachedImages[profilePicture]
-        
-    }
-    
+  
     func setupKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     }
@@ -339,37 +334,54 @@ class EditProfileController: UIViewController{
     }
     
     @objc func handleSavingMode(){
-        
+  
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         guard let userIDRecognizer = self.holdUserIDRecognizer else {return}
         guard let textfieldUserText = self.textFieldInput.text else {return}
+
+        
+        showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: .custom)
         
         // Use this image url untill you create the gallery controller
-        let imageURL = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
+  
+        
+        var updateValues:[String: Any] = [:]
+        if profileImageURL == nil {
+             updateValues = ["ProfileName": textfieldUserText, "ProfileURL":oldProfileURL!]
+        } else {
+             updateValues = ["ProfileName": textfieldUserText, "ProfileURL":profileImageURL!]
+        }
 
-        guard let updateValues = ["ProfileName": textfieldUserText, "ProfileURL":imageURL] as? [String : Any] else {return}
+      
         
-        showActivityIndicator()
         
-             Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).updateChildValues(updateValues)
+    Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).updateChildValues(updateValues)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
             SVProgressHUD.dismiss()
-            self.dismiss(animated: false, completion: nil)
+           self.dismiss(animated: false, completion: nil)
         }
     }
     
     @objc func goToImageSelector(){
         // Got to the Image Selector Screen to select the image for your profile
+        if imageSelectorData.count == 0 {
+            showActivityIndicator(color: Colors.settingBg, maskType: .clear)
+            let layout = UICollectionViewFlowLayout()
+            
+            let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
+            
+            self.navigationController?.pushViewController(imageSelectorScreen, animated: false)
+        } else {
+            let layout = UICollectionViewFlowLayout()
+            
+            let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
+            imageSelectorScreen.imagePickerData = imageSelectorData
+            
+            self.navigationController?.pushViewController(imageSelectorScreen, animated: false)
+        }
         
-        let layout = UICollectionViewFlowLayout()
-        
-        let imageSelectorScreen = ImageSelectorController(collectionViewLayout: layout)
-        
-        let navigationController = CustomNavigationController(rootViewController: imageSelectorScreen)
-      
-        self.present(navigationController, animated: false, completion: nil)
-        
+       
     
     }
     
@@ -406,7 +418,7 @@ class EditProfileController: UIViewController{
         let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
         let acceptAction = UIAlertAction(title: "Yes", style: .default) { (alert) in
             
-            self.showActivityIndicator()
+            self.showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: SVProgressHUDMaskType.custom)
             
             Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIDRecognizer).removeValue { (err, ref) in
                 
@@ -428,13 +440,7 @@ class EditProfileController: UIViewController{
         
       
     }
-    
-    func showActivityIndicator(){
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultMaskType(.custom)
-        SVProgressHUD.setDefaultAnimationType(.native)
-        SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
-    }
+
     
    
     

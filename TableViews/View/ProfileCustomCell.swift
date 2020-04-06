@@ -20,11 +20,12 @@ class ProfileCustomCell: UICollectionViewCell {
     var profileInformation: ProfileModel? {
         didSet{
             
-          profileName.text = profileInformation?.profileName
+         
             
             guard let avatorImage = profileInformation?.profileImage else {return}
             
             if let cachedImage = profileCachedImages[avatorImage] {
+                self.profileName.text = self.profileInformation?.profileName
                 self.profileImage.image = cachedImage
                 return
             }
@@ -49,6 +50,7 @@ class ProfileCustomCell: UICollectionViewCell {
                 
                 
                 DispatchQueue.main.async {
+                    self.profileName.text = self.profileInformation?.profileName
                     self.profileImage.image = imageConstruction
                 }
                 
@@ -72,7 +74,6 @@ class ProfileCustomCell: UICollectionViewCell {
     
     var profileName: UILabel = {
        let label = UILabel()
-        label.text = "Ok"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

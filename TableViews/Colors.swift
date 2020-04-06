@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class Colors {
     static var mainblackColor: UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
@@ -18,6 +19,7 @@ class Colors {
     static var settingBg: UIColor =  UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
     static var switchColor: UIColor = UIColor(red: 54/255, green: 122/255, blue: 253/100, alpha: 1)
     static var underLineBackgroundColor: UIColor = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1)
+    static var chicagoColor: UIColor = UIColor(red: 40/255, green: 40/255, blue: 40/255, alpha: 1)
     
     static var usedBarBackgroundColor: UIColor = UIColor(red: 73/255, green: 73/255, blue: 73/255, alpha: 1)
     
@@ -28,20 +30,37 @@ class Colors {
 
 extension UIViewController{
     
-    func setupNavigationbar(){
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: nil, action: nil)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)], for: .normal)
-    
-        
-        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "netflix (1)"))
+    func setNavigationTransparent(){
         
         // Makes the navigation bar transparent and removes the default grey background
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-        
     }
+    
+    
+    func setupNavigationbar(){
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)], for: .normal)
+
+        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "netflix (1)"))
+        
+        setNavigationTransparent()
+    }
+    
+    
+   
+    
+    
+    func showActivityIndicator(color: UIColor, maskType: SVProgressHUDMaskType){
+        SVProgressHUD.show()
+        SVProgressHUD.setDefaultMaskType(maskType)
+        SVProgressHUD.setDefaultAnimationType(.native)
+        SVProgressHUD.setBackgroundLayerColor(color)
+    }
+    
+    
  
 }
 
@@ -60,5 +79,6 @@ class CustomButton: UIButton {
         return CGSize(width: s.width + self.titleEdgeInsets.left + self.titleEdgeInsets.right, height: s.height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom)
     }
 }
+
 
 

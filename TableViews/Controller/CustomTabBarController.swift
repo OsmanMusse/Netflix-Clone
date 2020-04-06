@@ -58,8 +58,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         let downloaderNavigationController = UINavigationController(rootViewController: downloaderController)
         
         
-        let moreControllerlayout = UICollectionViewFlowLayout()
-        let moreController = SettingScreen(collectionViewLayout: moreControllerlayout)
+        let moreController = SettingScreenController()
         moreController.tabBarItem.image = #imageLiteral(resourceName: "menu (2)")
         moreController.tabBarItem.title = "More"
         
