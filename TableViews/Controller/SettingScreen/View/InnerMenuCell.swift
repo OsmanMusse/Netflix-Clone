@@ -10,8 +10,61 @@ import UIKit
 
 class InnerMenuCell: UICollectionViewCell {
     
-    let profileImage: UIImageView = {
-       let image = UIImageView(image: #imageLiteral(resourceName: "netflix-profile-1"))
+    
+    var profileInformation: ProfileModel? {
+        didSet{
+           
+            
+            guard let imageURL = profileInformation?.profileImage else {return}
+            
+                 self.profileName.setTitle(self.profileInformation?.profileName, for: .normal)
+            
+            // indicates which user is profile with a white border color
+            if self.profileInformation?.isActive == true {
+               self.profileImage.layer.borderColor = UIColor.white.cgColor
+               self.profileImage.layer.borderWidth = 2
+               self.profileImage.layer.masksToBounds = true
+            } else {
+                self.profileImage.layer.borderColor = UIColor.clear.cgColor
+            }
+            
+            if let cachedImage = profileCachedImages[imageURL]{
+                self.profileImage.image = cachedImage
+                return
+            }
+            
+           
+            
+            guard let url = URL(string: imageURL) else {return}
+            
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+             
+                if let err = err {
+                    print("ISSUE WITH NETWORK", err)
+                }
+                
+                
+                if url.absoluteString != self.profileInformation?.profileImage {
+                    return
+                }
+                
+                guard let imageData = data else {return}
+                guard let constructedImage = UIImage(data: imageData) else {return}
+
+                
+                DispatchQueue.main.async {
+                    self.profileImage.image = constructedImage
+                }
+                
+            }.resume()
+        }
+    }
+    
+    
+   
+    
+     var profileImage: UIImageView = {
+       let image = UIImageView()
         image.layer.cornerRadius = 4.5
         image.clipsToBounds = true
         image.layer.masksToBounds = true
@@ -26,11 +79,9 @@ class InnerMenuCell: UICollectionViewCell {
         return image
     }()
     
-    let profileName: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Ranso", for: .normal)
+     var profileName: UIButton = {
+        let button = UIButton(type: .custom)
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byTruncatingTail
-        button.isUserInteractionEnabled = false
         button.setTitleColor(Colors.btnGray, for: .normal)
         button.titleLabel?.font =  UIFont(name: "Helvetica", size: 15)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -38,13 +89,10 @@ class InnerMenuCell: UICollectionViewCell {
     }()
     
     
-    
-    
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        
-
     
     }
     
@@ -58,6 +106,10 @@ class InnerMenuCell: UICollectionViewCell {
       self.layer.cornerRadius = 4.5
       
     }
+    
+    
+    
+    
  
     
     func setupLayout(){

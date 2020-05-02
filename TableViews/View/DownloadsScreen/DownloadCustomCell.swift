@@ -93,7 +93,7 @@ class DownloadCustomCell: UICollectionViewCell, UICollectionViewDelegate, UIColl
                 guard let videoUrl = item["videoUrl"] as? String else {return}
                 
                 let singleVideo = VideoData()
-                singleVideo.videoName = videoUrl
+                singleVideo.videoTitle = videoUrl
                 self.imageUrls.append(singleVideo)
      
     

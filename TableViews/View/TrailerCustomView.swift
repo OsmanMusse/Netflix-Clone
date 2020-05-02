@@ -7,32 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class TrailerCustomView: UICollectionViewCell {
     
  
+    var videoController: SingleVideoController?
     
-    
-    var videoCategory: VideoCategory? {
+    var videoInformation: VideoTrailer? {
         didSet {
-            if let trailerImage = videoCategory?.videoData?[0].videoTrailer?[0].videoName {
-                videoImage.image = trailerImage
-            }
             
-            if let trailerTitle = videoCategory?.videoData?[0].videoTrailer?[0].videoTitle {
-                videoTitle.text = trailerTitle
+            if let videoTrailerText = videoInformation?.videoTitle, let videoURL = videoInformation?.videoURL {
+                self.videoTitle.text = videoTrailerText
+                self.videoImage.loadImage(urlString: videoURL)
             }
         }
     }
     
-    var videoImage: UIImageView  = {
-        var image = UIImageView(image: #imageLiteral(resourceName: "suits"))
+    var videoImage: CustomImageView  = {
+        var image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    var videoPlayBtn: UIImageView = {
+    lazy var videoPlayBtn: UIImageView = {
        let image = UIImageView(image: #imageLiteral(resourceName: "PlayBtn"))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleVideoPlay))
+        image.isUserInteractionEnabled = true
+        image.addGestureRecognizer(tapGesture)
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -46,9 +48,15 @@ class TrailerCustomView: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setupLayout()
-   
+    }
+    
+    
+     @objc private func handleVideoPlay(){
+        let videoLauncher = VideoLauncher()
+        videoLauncher.launchVideoPlayer(videoInformation: nil, videoTrailer:videoInformation)
+        let rotateRight = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(rotateRight, forKey: "orientation")
         
     }
     
@@ -59,10 +67,10 @@ class TrailerCustomView: UICollectionViewCell {
         addSubview(videoTitle)
         
         NSLayoutConstraint.activate([
-            videoImage.topAnchor.constraint(equalTo: self.topAnchor),
+            videoImage.topAnchor.constraint(equalTo: self.topAnchor,constant: 20),
             videoImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             videoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            videoImage.heightAnchor.constraint(equalToConstant: 200),
+            videoImage.heightAnchor.constraint(equalToConstant: 260),
             
             videoPlayBtn.centerXAnchor.constraint(equalTo: videoImage.centerXAnchor),
             videoPlayBtn.centerYAnchor.constraint(equalTo: videoImage.centerYAnchor),

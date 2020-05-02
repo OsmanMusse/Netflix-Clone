@@ -14,10 +14,12 @@ enum NetworkError: Error {
     case ProfileError
 }
 
+
+
 class CreateProfileController: UIViewController {
     
     var textFieldCenterYAnchor: NSLayoutConstraint?
-    
+    var pushFromSuperView: Bool?
     
     lazy var saveBtn: UIButton = {
         let button = UIButton(type: .system)
@@ -138,8 +140,10 @@ class CreateProfileController: UIViewController {
         return btnSwitch
     }()
     
+    var profileData = [ProfileModel]()
     var profileImageURL: String?
     var defaultProfileImageURL = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,6 +152,7 @@ class CreateProfileController: UIViewController {
         // Do any additional setup after loading the view.
         setupNavBar()
         setupLayout()
+        helperMethod()
 
         // holding reference to the Notification center of the app
         let NotificationApp = NotificationCenter.default
@@ -262,8 +267,23 @@ class CreateProfileController: UIViewController {
    
 
     @objc func handleFinishMode(){
+        
+        if pushFromSuperView == false {
+            let tabBarController = CustomTabBarController()
+            tabBarController.selectedIndex = 3
+            tabBarController.tabBar.barTintColor = UIColor.black
+            self.tabBarController?.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.setViewControllers([tabBarController], animated: false)
+            tabBarController.navigationController?.isNavigationBarHidden = true
+            self.tabBarController?.navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
         textFieldInput.resignFirstResponder()
        self.dismiss(animated: false, completion: nil)
+        
+        
+      
     }
     
     
@@ -333,35 +353,62 @@ class CreateProfileController: UIViewController {
         
     }
     @objc func handleSaveBtn(button: UIButton, event: UIEvent){
+      
+        
+        if pushFromSuperView == false {
+            let tabBarController = CustomTabBarController()
+            tabBarController.selectedIndex = 3
+            tabBarController.tabBar.barTintColor = UIColor.black
+            self.tabBarController?.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.setViewControllers([tabBarController], animated: false)
+            tabBarController.navigationController?.isNavigationBarHidden = true
+            self.tabBarController?.navigationController?.popToRootViewController(animated: true)
+            return
+        }
         
         guard let tapCounts = event.allTouches?.first else {return}
         
         // This prevents the Save Btn from being clicked more then once preventing duplicated data being sent to the database
         if tapCounts.tapCount == 1{
+            
+
+            guard let savedProfileName = self.textFieldInput.text else {return}
+            var activeProfileArray =  [ProfileModel]()
+            
+             activeProfileArray = self.profileData.enumerated().filter {
+                $0.element.profileName == savedProfileName
+                 }.map{$0.element}
+            
+            if activeProfileArray.count > 0 {
+                // Profile Name already Exists
+                let cancelAlertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                let alertController = self.createAlertController(title: AlertMessage.ProfileError.title, message: AlertMessage.ProfileError.message, alertAction: cancelAlertAction)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
 
         if saveBtn.isEnabled == true {
             guard let currentUserID = Firebase.Auth.auth().currentUser?.uid else {return}
-            let randomImageString = "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/netflix-profile.png?alt=media&token=1b419e09-86b4-40c8-b819-4eb96976dc63"
-            
+           
             guard let textfieldText = textFieldInput.text else {return}
             let isChildToggled = childrenSlider.isOn
+            let timeStamp: NSNumber = NSNumber(value: Int(NSDate().timeIntervalSince1970))
+            
             
             var updateValues:[String: Any] = [:]
             if profileImageURL == nil {
-                updateValues = ["ProfileName": textfieldText, "ProfileURL":defaultProfileImageURL, "isChildEnabled": isChildToggled]
+                updateValues = ["ProfileName": textfieldText, "ProfileURL":defaultProfileImageURL, "isChildEnabled": isChildToggled ,"isActive": false, "createdDate": timeStamp]
             } else {
-                updateValues = ["ProfileName": textfieldText, "ProfileURL":profileImageURL!, "isChildEnabled": isChildToggled]
+                updateValues = ["ProfileName": textfieldText, "ProfileURL":profileImageURL!, "isChildEnabled": isChildToggled, "isActive": false, "createdDate": timeStamp]
             }
             
             let randomProfileIdentifier = UUID().uuidString
             let profieInfo = [randomProfileIdentifier: updateValues]
-             self.saveBtn.isUserInteractionEnabled = false
+            
+            self.saveBtn.isUserInteractionEnabled = false
             
             
-            SVProgressHUD.show()
-            SVProgressHUD.setDefaultMaskType(.custom)
-            SVProgressHUD.setDefaultAnimationType(.native)
-            SVProgressHUD.setBackgroundLayerColor(Colors.btnLightGray.withAlphaComponent(0.4))
+            self.showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: .custom)
             
             Firebase.Database.database().reference().child("Users").child(currentUserID).child("Profiles").updateChildValues(profieInfo) { (err, ref) in
             
@@ -371,9 +418,8 @@ class CreateProfileController: UIViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40, execute: {
                     self.textFieldInput.resignFirstResponder()
-                    self.dismiss(animated: false, completion: {
-                        SVProgressHUD.dismiss()
-                })
+                    SVProgressHUD.dismiss()
+                    self.navigationController?.dismiss(animated: false, completion: nil)
               
                 })
             }
@@ -396,6 +442,13 @@ class CreateProfileController: UIViewController {
 
     }
     
+    
+    func helperMethod(){
+             if #available(iOS 13.0, *) {
+                 self.isModalInPresentation = true
+             }
+         }
+         
 
     
 }

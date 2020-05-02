@@ -7,25 +7,16 @@
 //
 
 import UIKit
+import SwiftUI
 import Firebase
 
 class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
-    
-    
+ 
+
     override func viewDidLoad() {
-        
-        
-        if Firebase.Auth.auth().currentUser == nil {
-            // Show the login screen if not logined in
-            DispatchQueue.main.async {
-                let layout = UICollectionViewFlowLayout()
-                layout.scrollDirection = .horizontal
-                let initialScreen = initalHomeScreen(collectionViewLayout: layout)
-                let navigationController = UINavigationController(rootViewController: initialScreen)
-                self.present(navigationController, animated: true, completion: nil)
-            }
-            return
-        }
+   
+    
+    
         self.navigationController?.hidesBarsOnSwipe = true
         
         
@@ -33,6 +24,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         // setup the tab bar
         
         tabBar.tintColor = .white
+        self.tabBarController?.tabBar.isTranslucent = false
         
         
         
@@ -63,7 +55,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         moreController.tabBarItem.title = "More"
         
         let moreNavigationController = UINavigationController(rootViewController: moreController)
-       
+        moreNavigationController.modalPresentationStyle = .fullScreen
         
         let mainNavigationController = UINavigationController(rootViewController: appScreenController)
         mainNavigationController.navigationItem.hidesBackButton = true
@@ -115,3 +107,4 @@ public class TabBarAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
 }
     
 }
+

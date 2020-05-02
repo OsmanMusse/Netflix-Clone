@@ -12,7 +12,6 @@ class SearchViewCell: UICollectionViewCell {
     
     var videoCollection: VideoData? {
         didSet{
-            listImage.image = videoCollection?.videoImage
         }
     }
     

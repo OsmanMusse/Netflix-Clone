@@ -36,6 +36,7 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     
 
     var imagePickerData: [ImagePicker] = []
+    var blackViewHeightConstraint: NSLayoutConstraint?
     
     
     override func viewDidLoad() {
@@ -160,20 +161,30 @@ class ImageSelectorController: UICollectionViewController, UICollectionViewDeleg
     
     func setupLayout(){
         view.addSubview(blackView)
+        blackViewHeightConstraint = blackView.heightAnchor.constraint(equalToConstant: 90)
+        blackViewHeightConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
-            
+    
             blackView.topAnchor.constraint(equalTo: self.view.topAnchor),
             blackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             blackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            blackView.widthAnchor.constraint(equalToConstant: 100),
-            blackView.heightAnchor.constraint(equalToConstant: 90),
-            
-
-
+            blackView.widthAnchor.constraint(equalToConstant: 100)
             
             ])
     }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if ((self.navigationController?.viewControllers[0] as? EditProfileController) != nil), modalPresentationStyle == .pageSheet {
+             blackViewHeightConstraint?.constant = 55
+        }
+        else if ((self.navigationController?.viewControllers[0] as? CreateProfileController) != nil), modalPresentationStyle == .pageSheet {
+             blackViewHeightConstraint?.constant = 55
+        }
+}
+    
 }
 
 
@@ -190,3 +201,4 @@ extension ImageSelectorController: CustomImageCellDelegate {
     
     
 }
+

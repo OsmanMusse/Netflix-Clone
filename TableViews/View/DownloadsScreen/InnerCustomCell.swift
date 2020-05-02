@@ -19,7 +19,7 @@ class InnerCustomCell: UICollectionViewCell {
     var videoInformation: VideoData? {
         didSet{
             
-            guard let imageUrl = videoInformation?.videoName else {return}
+            guard let imageUrl = videoInformation?.videoTitle else {return}
             
             guard let url = URL(string: imageUrl) else {return}
             

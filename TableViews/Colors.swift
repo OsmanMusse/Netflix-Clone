@@ -25,6 +25,11 @@ class Colors {
     
     static var mainRed: UIColor  = UIColor(red: 229/255, green: 31/255, blue: 19/255, alpha: 1)
     static var darkDarkGray: UIColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1)
+    
+    static var lightGraylighter = UIColor(red: 215/255, green: 215/255, blue: 215/255, alpha: 1)
+    static var whiteGray = UIColor(red: 165/255, green: 165/255, blue: 165/255, alpha: 1)
+    
+    
 }
 
 
@@ -50,6 +55,18 @@ extension UIViewController{
     }
     
     
+
+    func createAlertController (title: String, message: String, alertAction: UIAlertAction) -> UIAlertController{
+        let alertController = UIAlertController(title:title, message: message, preferredStyle: .alert)
+        
+        let alertAction = alertAction
+        
+        alertController.addAction(alertAction)
+        
+        return alertController
+        
+    }
+
    
     
     

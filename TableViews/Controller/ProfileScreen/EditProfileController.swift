@@ -202,6 +202,7 @@ class EditProfileController: UIViewController{
     var profileImageURL: String?
     var oldProfileURL: String?
     var imageSelectorData: [ImagePicker] = []
+    var activeUser: ProfileModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -209,12 +210,14 @@ class EditProfileController: UIViewController{
         setupNavBar()
         setupKeyboard()
         setupLayout()
+        helperMethod()
     
         textFieldInput.text = textFieldText
         self.hero.isEnabled = true
         self.profileImage.hero.id = "skyWalker"
         profileScreen = ProfileSelector()
-
+        
+       
     }
     
    
@@ -275,7 +278,7 @@ class EditProfileController: UIViewController{
         view.addSubview(accountSettingWarningLabel)
         view.addSubview(rubbishBin)
         
-        profileImgCenterYAnchor =  profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130)
+        profileImgCenterYAnchor =  profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160)
         profileImgCenterYAnchor?.isActive = true
         
         
@@ -386,8 +389,7 @@ class EditProfileController: UIViewController{
     }
     
     @objc func handleBackBtn(){
-        
-        self.dismiss(animated: false, completion: nil)
+        self.navigationController?.dismiss(animated: false, completion: nil)
     }
     
     @objc func handleDoneBtn(){
@@ -430,7 +432,7 @@ class EditProfileController: UIViewController{
 
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.40) {
                 SVProgressHUD.dismiss()
-                self.dismiss(animated: false, completion: nil)
+                self.navigationController?.dismiss(animated: false, completion: nil)
             }
         }
         
@@ -440,9 +442,15 @@ class EditProfileController: UIViewController{
         
       
     }
-
     
-   
-    
+    func helperMethod(){
+             if #available(iOS 13.0, *) {
+                 self.isModalInPresentation = true
+             }
+         }
+         
 }
+
+
+
 

@@ -24,7 +24,7 @@ class SignOutCell: UICollectionViewCell {
     let appVersionLabel: UILabel = {
        let label = UILabel()
         label.text = "Version: 12.23.0 (3020)"
-        label.textColor = Colors.btnGray
+        label.textColor = Colors.btnLightGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,8 +33,10 @@ class SignOutCell: UICollectionViewCell {
        let stack = UIStackView(arrangedSubviews: [signOutBtn, appVersionLabel])
         stack.axis = .vertical
         stack.distribution = .fillProportionally
-        stack.spacing = -15
+        stack.spacing = -10
         stack.alignment = .center
+        stack.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         return stack
@@ -56,7 +58,7 @@ class SignOutCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             
-            stackView.heightAnchor.constraint(equalToConstant: 60),
+            stackView.heightAnchor.constraint(equalToConstant: 65),
             stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             

@@ -9,17 +9,24 @@
 import UIKit
 import Firebase
 import Hero
+import SVProgressHUD
 
 
 
+protocol ProfileSelectorDelegate {
+    func didTapProfile(profileName: String)
+}
 
 class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    var profileDelegate: ProfileSelectorDelegate!
     
     let profileCellID = "profileCellID"
     
     var userProfileIdRecogizer: [String] = []
     var userProfileIndexPath: Int?
     var profileData = [ProfileModel]()
+    var pushFromSuperView: Bool?
     
     
     lazy var customCollectionViews: UICollectionView = {
@@ -89,27 +96,26 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         return buttonView
     }()
     
+    var activeProfile: ProfileModel?
     
-    
-
-    
+        
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        
+     
         view.backgroundColor = .black
-        customCollectionViews.register(ProfileCustomCell.self, forCellWithReuseIdentifier: profileCellID)
         navigationController?.navigationBar.isHidden = false
+        customCollectionViews.register(ProfileCustomCell.self, forCellWithReuseIdentifier: profileCellID)
+        
         setupNavBar()
         getFirebaseChildremoved()
         getFirebaseChildAdded()
         getFirebaseChildEdited()
         setupLayout()
-        
-        
+        helperMethod()
+
     }
-    
+   
     
     func setupNavBar(){
         navigationItem.title = "Who's Watching?"
@@ -135,11 +141,9 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
  
     func getFirebaseChildAdded(){
         
-
-        
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         
-        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childAdded, with: { (snapShot) in
+        Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").queryOrdered(byChild: "createdDate").observe(.childAdded, with: { (snapShot) in
 
             let userRecognizerID = snapShot.key
             guard let dictionary = snapShot.value as? [String: Any] else {return}
@@ -187,10 +191,6 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
         Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").observe(.childRemoved, with: { (snapShot) in
         
-            guard let dictionary = snapShot.value as? [String: Any] else {return}
-            guard let profileName =  dictionary["ProfileName"] as? String else {return}
-            guard let profileURL =  dictionary["ProfileURL"] as? String else {return}
-            
             guard let userIndexPath = self.userProfileIndexPath else {return}
             
             
@@ -210,7 +210,11 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return profileData.count + 1
+           if profileData.count <= 6 {
+                return profileData.count + 1
+             }
+             
+             return profileData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
@@ -230,24 +234,14 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        
-   
+     
         let cell = customCollectionViews.dequeueReusableCell(withReuseIdentifier: profileCellID, for: indexPath) as! ProfileCustomCell
-        
-       
-        
+     
         cell.profileSelectorScreen = self
     
-        let isfirstItem = indexPath.item == 0
-        let isfifthItem = indexPath.item == 5
         let isLastItem = indexPath.item + 1 == collectionView.numberOfItems(inSection: 0)
 
-     
-        
-        
         if isLastItem == false  {
-            let indexo = profileData[indexPath.item]
             cell.profileInformation = profileData[indexPath.item]
             cell.hero.id = "skyWalker"
             cell.hero.modifiers = [HeroModifier.cascade()]
@@ -256,22 +250,33 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             return cell
         }
 
-        
-
          let isEvenIndexPath = indexPath.item % 2 == 0
   
         // Check for the last item in the collectionview
         if indexPath.item > 0 && isLastItem == true   {
 
-
-
+            if indexPath.item % 2 != 0 {
+                cell.frame.origin.x = cell.frame.origin.x + 16
+            }
             
-            if isfirstItem == false && isLastItem == true && isEvenIndexPath == true{
-                cell.frame.origin.x = cell.frame.origin.x - 13
+            if isLastItem == true && isEvenIndexPath == true {
+                cell.frame.origin.x = cell.frame.origin.x - 15
             }
             
             reloadEditMode()
             cell.setupProfileCell()
+            
+              
+             if profileData.count > 4 {
+                cell.profileImage.isHidden = true
+                cell.profileAddIcon.isHidden = true
+                cell.profileName.isHidden = true
+                cell.backgroundColor = .clear
+                cell.layer.borderColor = UIColor.clear.cgColor
+                cell.isUserInteractionEnabled = false
+                return cell
+             }
+            
             
             return cell
         }
@@ -285,22 +290,42 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-      // Shows the activity indicator meaning where loging into a profile
-      showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: .custom)
+        let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
-            let appTabBarController = CustomTabBarController()
-            self.present(appTabBarController, animated: false, completion: nil)
+        if cell.profileName.text != "Add Profile" {
+            
+            let cellID = self.userProfileIdRecogizer[indexPath.item]
+            
+            guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+            
+            let isActiveDict = ["isActive": true ]
+            Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(cellID).updateChildValues(isActiveDict)
+            
+            // Shows the activity indicator meaning where loging into a profile
+            self.showActivityIndicator(color: Colors.btnLightGray.withAlphaComponent(0.4), maskType: .custom)
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                let appTabBarController = CustomTabBarController()
+                appTabBarController.modalPresentationStyle = .overCurrentContext
+                SVProgressHUD.dismiss()
+                self.present(appTabBarController, animated: false, completion: {
+     
+                })
+
+            }
         }
         
-
+ 
         
-        let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
+    
+        
         
         // If the add profile cell is selected
         if cell.profileName.text == "Add Profile" {
-            let navigationController = UINavigationController(rootViewController: CreateProfileController())
+            let createController = CreateProfileController()
+            createController.profileData = self.profileData
+            let navigationController = UINavigationController(rootViewController: createController)
+            
             self.present(navigationController, animated: false, completion: nil)
         }
         
@@ -313,18 +338,27 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         
         if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
 
+        guard let activeProfileName = activeProfile?.profileName else {return}
+            
             userProfileIndexPath = indexPath.item
-            let editController = EditProfileController() 
+            let editController = EditProfileController()
+            if profileData[indexPath.item].profileName == activeProfileName{
+                editController.rubbishBin.isHidden = true
+            }
             let cellImageString = profileData[indexPath.item].profileImage
             editController.profileImage.image = profileCachedImages[cellImageString]
             editController.oldProfileURL = cellImageString
             editController.textFieldText = profileData[indexPath.item].profileName
             editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
+            editController.activeUser = activeProfile
             let navigationController = UINavigationController(rootViewController: editController)
+            navigationController.modalPresentationStyle = .currentContext
             navigationController.hero.isEnabled = true
             cell.isSelected = false
             
-            self.present(navigationController, animated: true, completion: nil)
+    
+            self.navigationController?.present(navigationController, animated: true
+                , completion: nil)
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false
         }
@@ -332,14 +366,16 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-
+        guard let activeProfileName = activeProfile?.profileName else {return}
         
         let cell = customCollectionViews.cellForItem(at: indexPath) as! ProfileCustomCell
         
         // If the add profile cell is selected
         if cell.profileName.text == "Add Profile" {
-            let navigationController = UINavigationController(rootViewController: CreateProfileController())
-            self.present(navigationController, animated: false, completion: nil)
+            let createController = CreateProfileController()
+            createController.profileData = self.profileData
+            let navigationController = UINavigationController(rootViewController: createController)
+            self.present(navigationController, animated: true, completion: nil)
 
         }
           
@@ -348,16 +384,23 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
          if doneStack.isHidden == false && cell.profileName.text != "Add Profile" {
             userProfileIndexPath = indexPath.item
             let editController = EditProfileController()
+            if profileData[indexPath.item].profileName == activeProfileName{
+                editController.rubbishBin.isHidden = true
+            }
             let cellImageString = profileData[indexPath.item].profileImage
             editController.profileImage.image = profileCachedImages[cellImageString]
             editController.oldProfileURL = cellImageString
             editController.textFieldText = profileData[indexPath.item].profileName
             editController.holdUserIDRecognizer = userProfileIdRecogizer[indexPath.item]
+            editController.activeUser = activeProfile
             let navigationController = UINavigationController(rootViewController: editController)
+            print(navigationController.viewControllers)
+            navigationController.modalPresentationStyle = .formSheet
             navigationController.hero.isEnabled = true
             
 
-        self.present(navigationController, animated: true, completion: nil)
+               self.navigationController?.present(navigationController, animated: true
+                 , completion: nil)
 
             cell.shadowView.isHidden = false
             cell.editIcon.isHidden = false
@@ -371,12 +414,10 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
         view.addSubview(customCollectionViews)
         view.addSubview(shadowView)
         NSLayoutConstraint.activate([
-            
-            
-            
-            customCollectionViews.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 65),
-            customCollectionViews.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -65),
-            customCollectionViews.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+        
+            customCollectionViews.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 75),
+            customCollectionViews.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -75),
+            customCollectionViews.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
             customCollectionViews.heightAnchor.constraint(equalToConstant: 700),
             
             
@@ -406,10 +447,11 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     @objc func handleEditingMode(){
+        
+        navigationItem.title = "Manage Profiles"
         editStack.isHidden = true
         doneStack.isHidden = false
         
-        navigationItem.title = "Manage Profiles"
         
         for section in 0..<customCollectionViews.numberOfSections {
             // Looping through entire cells except the last one 
@@ -418,10 +460,12 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
             }
         }
         
-    }
-    
-    @objc func handleFinishMode(){
+       
+
         
+    }
+
+    @objc func handleFinishMode(){
         navigationItem.title = "Who's Watching?"
     
         editStack.isHidden = false
@@ -434,12 +478,22 @@ class ProfileSelector: UIViewController, UICollectionViewDelegate, UICollectionV
                 customCollectionViews.deselectItem(at: IndexPath(item: item, section: section), animated: false)
             }
         }
+        if pushFromSuperView == false {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     
+       func helperMethod(){
+           if #available(iOS 13.0, *) {
+               self.isModalInPresentation = true
+           }
+       }
+       
  
     
-    
-
-    
 }
+
+
+

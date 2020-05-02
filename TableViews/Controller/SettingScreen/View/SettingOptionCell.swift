@@ -18,6 +18,7 @@ class SettingOptionCell: UICollectionViewCell, UICollectionViewDelegate, UIColle
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
+        cv.alwaysBounceVertical = false
         cv.delegate = self
         cv.dataSource = self
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +29,7 @@ class SettingOptionCell: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .orange
+        backgroundColor = .clear
         setupCollectionView()
         setupLayout()
     }
@@ -56,7 +57,12 @@ class SettingOptionCell: UICollectionViewCell, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: settingCellID, for: indexPath) as! InnerSettingCell
         
+        let lastItem = indexPath.item + 1 == innerCollectionView.numberOfItems(inSection: 0)
         let settingOptionArray = ProfileConfigurationOptions.allCases
+        
+        if lastItem == true {
+            cell.underlineView.isHidden = true
+        }
         
         for item in settingOptionArray {
             cell.settingLabel.text = settingOptionArray[indexPath.item].text
@@ -64,8 +70,10 @@ class SettingOptionCell: UICollectionViewCell, UICollectionViewDelegate, UIColle
             return cell
         }
         
+        
         return cell
     }
+
     
     func setupLayout(){
         addSubview(innerCollectionView)

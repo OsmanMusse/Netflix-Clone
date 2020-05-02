@@ -105,7 +105,7 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
         view.backgroundColor =  UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1)
         setupNavigationbar()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "arrow-point-to-right").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBackBtn))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "volume-up-interface-symbol").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBackBtn))
         
         setupViews()
   
@@ -223,8 +223,7 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
                           
                       })
                 
-    
-                      
+
                   
               alertController.addAction(tryAgainAction)
                 self.present(alertController, animated: true, completion: nil)
@@ -235,6 +234,7 @@ class SignInScreen: UIViewController, UITextFieldDelegate{
            
             let profileSelectorController = ProfileSelector()
             let navigationController = UINavigationController(rootViewController: profileSelectorController)
+            navigationController.modalPresentationStyle = .fullScreen
             SVProgressHUD.dismiss()
             self.present(navigationController, animated: false, completion: nil)
         }

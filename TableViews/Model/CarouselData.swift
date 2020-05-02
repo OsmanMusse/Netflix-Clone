@@ -13,5 +13,4 @@ class CarouselData {
     var title: String?
     var description: String?
     var CarouselImage: UIImage?
-    
 }

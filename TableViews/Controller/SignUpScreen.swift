@@ -224,6 +224,8 @@ class SignUpScreen: UIViewController, UITextFieldDelegate{
                 
             })
             // Go to the profile selector to select the your profile
+            let profileSelector = ProfileSelector()
+            profileSelector.modalPresentationStyle = .fullScreen
             self.present(ProfileSelector(), animated: true, completion: nil)
         }
     }

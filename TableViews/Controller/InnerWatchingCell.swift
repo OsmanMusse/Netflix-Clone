@@ -25,7 +25,7 @@ class InnerWatchingCell: UICollectionViewCell {
     var videoInformation: VideoData? {
         didSet{
             
-            guard let urlString = videoInformation?.videoName else {return}
+            guard let urlString = videoInformation?.videoTitle else {return}
             
             guard let url = URL(string: urlString) else {return}
             URLSession.shared.dataTask(with: url) { (data, response, error) in

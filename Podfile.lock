@@ -84,6 +84,7 @@ PODS:
   - GTMSessionFetcher/Core (1.3.1)
   - Hero (1.5.0)
   - leveldb-library (1.22)
+  - lottie-ios (3.1.8)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Hero
+  - lottie-ios
   - SVProgressHUD
   - XLPagerTabStrip
 
@@ -121,6 +123,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - Hero
     - leveldb-library
+    - lottie-ios
     - nanopb
     - PromisesObjC
     - SVProgressHUD
@@ -144,11 +147,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 44091e211d758c25f8b27f1a2810440a06fe8d4c
+PODFILE CHECKSUM: b44a9a16eba2f651ed3229bdfcb8bb592c1d23da
 
 COCOAPODS: 1.9.1

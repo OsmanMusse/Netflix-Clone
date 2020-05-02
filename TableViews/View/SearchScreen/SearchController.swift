@@ -85,7 +85,6 @@ var searchTextCharacter: Int?
         // Database will be written within the view not the controller
         
         // set up the modal
-        filmCategory = VideoCategory.getVideoCategory()
         
         collectionView.alwaysBounceVertical = true
         // Hack to get the textfield placeholder to center in the search bar
@@ -166,7 +165,7 @@ var searchTextCharacter: Int?
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         filterVideoCollection = self.videoCollection.filter { (videos) -> Bool in
-            guard let videoName = videos.videoName else {return true}
+            guard let videoName = videos.videoTitle else {return true}
             searchTextCharacter = searchText.count
             return videoName.contains(searchText)
             
@@ -237,7 +236,7 @@ var searchTextCharacter: Int?
                 guard let videoTitle = item["videoTitle"] as? String else {return}
                 
                 let singleVideo = VideoData()
-                singleVideo.videoName = videoTitle
+                singleVideo.videoTitle = videoTitle
                 self.filterVideoCollection.append(singleVideo)
                 
                 
@@ -253,8 +252,7 @@ var searchTextCharacter: Int?
                 guard let image = UIImage(data: data!) else {return}
                 
                 let video = VideoData()
-                video.videoImage = image
-                video.videoName = videoName
+                video.videoTitle = videoName
                 
         
                 DispatchQueue.main.async {

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "4A4E573B-B1D1-47AD-AEE4-9EF6AEB8164B"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "02A18FF6-2CD3-48BB-8FE9-24E32B4F5757"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -19,6 +21,7 @@
             landmarkType = "3">
             <Locations>
                <Location
+                  uuid = "02A18FF6-2CD3-48BB-8FE9-24E32B4F5757 - ca983216d4581725"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -34,6 +37,7 @@
                   offsetFromSymbolStart = "114">
                </Location>
                <Location
+                  uuid = "02A18FF6-2CD3-48BB-8FE9-24E32B4F5757 - b5098f34d77e0729"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -49,6 +53,7 @@
                   offsetFromSymbolStart = "128">
                </Location>
                <Location
+                  uuid = "02A18FF6-2CD3-48BB-8FE9-24E32B4F5757 - 9ea3c03558f6e6b3"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -64,6 +69,7 @@
                   offsetFromSymbolStart = "131">
                </Location>
                <Location
+                  uuid = "02A18FF6-2CD3-48BB-8FE9-24E32B4F5757 - 82cfe8e3ffc77f6"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -84,6 +90,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "6AE9559D-E1D9-4FF8-921A-D0FC3020D52F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -100,6 +107,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "68E523F7-9114-4A9B-A826-41B94D5E37DE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -116,6 +124,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "ED904B2B-E9C6-4E78-86CE-93684C85DEF9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -132,6 +141,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "2930E193-5630-4AED-9513-177F68DCEF50"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -148,15 +158,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "0EC24956-857F-43D3-9371-8334DBEC460B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/ImageSelectorController.swift"
-            timestampString = "607748282.390305"
+            timestampString = "607981567.263503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -164,11 +175,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "76C969CF-0A88-46C2-A36E-B7A264DF5D4F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/CustomImagePickerCell.swift"
-            timestampString = "607748282.3905849"
+            timestampString = "607895567.712101"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
@@ -180,11 +192,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "16C47927-D3EF-444D-AEC3-77960B1FF605"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.942427"
+            timestampString = "608161290.023132"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -196,59 +209,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableViews/View/ProfileCustomCell.swift"
-            timestampString = "607748282.390758"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12"
-            landmarkName = "unknown"
-            landmarkType = "0">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "globalinit_33_3C1BFE4F21460BFB27CBFC16FEFD9B78_func0"
-                  moduleName = "TableViews"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/View/ProfileCustomCell.swift"
-                  timestampString = "607538777.666743"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TableViews.profileCachedImages.unsafeMutableAddressor : Swift.Dictionary&lt;Swift.String, __C.UIImage&gt;"
-                  moduleName = "TableViews"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/View/ProfileCustomCell.swift"
-                  timestampString = "607538777.6792229"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "9E395EBC-B875-4850-861D-885A2E0AA894"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.942524"
+            timestampString = "608161290.023204"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
@@ -260,15 +226,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "FFD4ACA6-B415-4E9C-9238-FA3F1970C32C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.390941"
+            timestampString = "607984989.170399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "handleSavingMode()"
             landmarkType = "7">
          </BreakpointContent>
@@ -276,15 +243,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "CD6EFE6F-7536-4FD7-AD42-46138135D092"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.3910331"
+            timestampString = "607984989.170592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
             landmarkName = "handleSavingMode()"
             landmarkType = "7">
          </BreakpointContent>
@@ -292,15 +260,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "4548CBE7-9007-4FF0-92C8-BAF8332200A6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.391122"
+            timestampString = "607984989.170833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "handleSavingMode()"
             landmarkType = "7">
          </BreakpointContent>
@@ -308,27 +277,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.391205"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "getFirebaseChildremoved()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "AD4D1398-0E7D-412B-A22E-A2F847CE2148"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/CustomImagePickerCell.swift"
-            timestampString = "607748282.391311"
+            timestampString = "607895567.712247"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
@@ -340,11 +294,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "AEBED784-D724-492B-8452-94F706B408FE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.942669"
+            timestampString = "608161290.02334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
@@ -356,11 +311,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "313C40C1-C71D-4AE1-9AD9-183847DC983C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.942719"
+            timestampString = "608161290.023398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
@@ -372,11 +328,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "98B6CBAC-BAA0-4FC8-8514-BF279CDFB846"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.9427609"
+            timestampString = "608161290.023445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "23"
@@ -388,11 +345,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "FAE6C17E-83C4-4AAE-96C7-02256D9D0C3D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/View/InnerImagePickerCell.swift"
-            timestampString = "607789558.942802"
+            timestampString = "608161290.0234801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -404,15 +362,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "DBEC7471-DD3E-41B2-AB38-60E0652C54E8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/ImageSelectorController.swift"
-            timestampString = "607748282.3916349"
+            timestampString = "607981567.26389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "ImageSelectorController"
             landmarkType = "3">
          </BreakpointContent>
@@ -420,11 +379,12 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/ImageSelectorController.swift"
-            timestampString = "607748282.391829"
+            timestampString = "607981567.263945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
@@ -433,6 +393,7 @@
             landmarkType = "3">
             <Locations>
                <Location
+                  uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945 - 511a32681e864f61"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -448,6 +409,7 @@
                   offsetFromSymbolStart = "114">
                </Location>
                <Location
+                  uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945 - bdb91f00a0d0536d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -463,6 +425,7 @@
                   offsetFromSymbolStart = "128">
                </Location>
                <Location
+                  uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945 - e6731274fe484ff2"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -478,6 +441,7 @@
                   offsetFromSymbolStart = "132">
                </Location>
                <Location
+                  uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945 - 87aa5cfc088ea97b"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -493,6 +457,7 @@
                   offsetFromSymbolStart = "163">
                </Location>
                <Location
+                  uuid = "483891B2-797E-4C6C-B8B7-966B7C5F3945 - 9ebfb64c8c0872be"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -513,77 +478,84 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "37724069-3C1F-4549-B479-1FEC0E54F13F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.392036"
+            timestampString = "607984989.171762"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "EditProfileController"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
+            landmarkName = "handleSavingMode()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ECB98507-E3A4-4C3D-9BA9-3500708F4133"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
+            timestampString = "607984989.171867"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "handleSavingMode()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "428509CF-E59C-49AE-9B51-A354F6C11F8D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TableViews/Controller/SettingScreen/View/MenuCell.swift"
+            timestampString = "608224801.210367"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "MenuCell"
             landmarkType = "3">
             <Locations>
                <Location
+                  uuid = "428509CF-E59C-49AE-9B51-A354F6C11F8D - 65db03180df58d5f"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "TableViews.EditProfileController.imageSelectorData.getter : Swift.Array&lt;TableViews.ImagePicker&gt;"
+                  symbolName = "TableViews.MenuCell.profileData.getter : Swift.Array&lt;TableViews.ProfileModel&gt;"
                   moduleName = "TableViews"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileScreen/EditProfileController.swift"
-                  timestampString = "607630310.212031"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/SettingScreen/View/MenuCell.swift"
+                  timestampString = "607884894.833624"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
                   offsetFromSymbolStart = "114">
                </Location>
                <Location
+                  uuid = "428509CF-E59C-49AE-9B51-A354F6C11F8D - c3c1264c4c287d4b"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "TableViews.EditProfileController.imageSelectorData.setter : Swift.Array&lt;TableViews.ImagePicker&gt;"
+                  symbolName = "TableViews.MenuCell.profileData.setter : Swift.Array&lt;TableViews.ProfileModel&gt;"
                   moduleName = "TableViews"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileScreen/EditProfileController.swift"
-                  timestampString = "607630310.2137949"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/SettingScreen/View/MenuCell.swift"
+                  timestampString = "607884894.836195"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
                   offsetFromSymbolStart = "128">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TableViews.EditProfileController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TableViews.EditProfileController"
-                  moduleName = "TableViews"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileScreen/EditProfileController.swift"
-                  timestampString = "607630310.215516"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "1765">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TableViews.EditProfileController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TableViews.EditProfileController&gt;"
-                  moduleName = "TableViews"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/ProfileScreen/EditProfileController.swift"
-                  timestampString = "607630310.217427"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "1734">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -591,159 +563,227 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "192B06BA-4E65-4F2E-815E-34828FBAE5BB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.392164"
+            filePath = "TableViews/View/ProfileCustomCell.swift"
+            timestampString = "607917161.3690979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "handleSavingMode()"
-            landmarkType = "7">
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "ProfileCustomCell"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "750A3AB0-D07B-412C-8624-9C9517A6F3D3"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/EditProfileController.swift"
-            timestampString = "607748282.3922451"
+            filePath = "TableViews/View/ProfileCustomCell.swift"
+            timestampString = "607917161.369962"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "handleSavingMode()"
-            landmarkType = "7">
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "750A3AB0-D07B-412C-8624-9C9517A6F3D3 - d73bdaeb905dc5c3"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "globalinit_33_3C1BFE4F21460BFB27CBFC16FEFD9B78_func0"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/View/ProfileCustomCell.swift"
+                  timestampString = "607892962.100883"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "750A3AB0-D07B-412C-8624-9C9517A6F3D3 - fa2b4d71628898ce"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TableViews.profileCachedImages.unsafeMutableAddressor : Swift.Dictionary&lt;Swift.String, __C.UIImage&gt;"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/View/ProfileCustomCell.swift"
+                  timestampString = "607892962.102994"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F27570D5-D3ED-46CB-8465-198D02D9117A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.392325"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "getFirebaseChildremoved()"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "collectionView(_:didDeselectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "B832FE39-D53D-404A-8A1C-C18063C77FAC"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.392514"
+            filePath = "TableViews/Controller/SettingScreen/View/MenuCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
-            landmarkName = "getFirebaseChildremoved()"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "fetchRemovedProfile()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "08B4E3C4-1AFF-40CE-9FB2-8A638AEA2271"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.39263"
+            filePath = "TableViews/Controller/SettingScreen/View/MenuCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "fetchNewProfile()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "08B4E3C4-1AFF-40CE-9FB2-8A638AEA2271 - dc0186d0394bd05e"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (TableViews.ProfileModel) -&gt; () in TableViews.MenuCell.fetchNewProfile() -&gt; ()"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/SettingScreen/View/MenuCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
+                  offsetFromSymbolStart = "360">
+               </Location>
+               <Location
+                  uuid = "08B4E3C4-1AFF-40CE-9FB2-8A638AEA2271 - 2783c835fdb94d38"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (TableViews.ProfileModel) -&gt; () in TableViews.MenuCell.fetchNewProfile() -&gt; ()"
+                  moduleName = "TableViews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mezut/Websites/Mahad/Hanad/Algorithms-DataStrucutre/Java-Programming/Trading-Analysis/Netflix-Clone/TableViews/Controller/SettingScreen/View/MenuCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "22">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EEFBADB3-8E95-44F7-BB8C-6017A05F6691"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TableViews/Controller/SettingScreen/View/MenuCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "fetchNewProfile()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "A5F27038-0F42-4DB2-BD6F-46230FDC1C59"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.3927161"
+            filePath = "TableViews/Controller/SettingScreen/View/InnerMenuCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "profileInformation"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BD5C2B03-5681-44D2-9B61-651663A87E71"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TableViews/Controller/SettingScreen/Extension/Extension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "getUserProfile(userID:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            uuid = "E5F7284D-F895-40C6-BCF9-EBCE2015D140"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.392807"
+            filePath = "TableViews/Controller/HomeScreen/Controller/VideoController/SingleVideoController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "1749FC86-DD54-4DF8-931B-F16897FF9C8D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.392887"
+            filePath = "TableViews/Controller/HomeScreen/View/BaseViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
-            landmarkName = "collectionView(_:didSelectItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.392962"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableViews/Controller/ProfileScreen/ProfileSelector.swift"
-            timestampString = "607748282.393025"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -15,3 +15,6 @@ protocol SingleVideoHeaderDelegate {
     func isMoreLikeThisLayout()
 }
 
+protocol didSelectShareIcon {
+    func didSelectShareIcon()
+}

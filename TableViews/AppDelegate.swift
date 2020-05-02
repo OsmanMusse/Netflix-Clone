@@ -12,6 +12,7 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    
     var window: UIWindow?
 
 
@@ -22,14 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let initialScreen = initalHomeScreen(collectionViewLayout: layout)
+        let navigationController = UINavigationController(rootViewController: initialScreen)
+        navigationController.modalPresentationStyle = .fullScreen
         
-      
-
-        let tabBarController = CustomTabBarController()
-        window?.backgroundColor = .white
-        window?.rootViewController = tabBarController
-        
-    
+        window?.backgroundColor = .black
+        window?.rootViewController = navigationController
+              
   
         
         return true

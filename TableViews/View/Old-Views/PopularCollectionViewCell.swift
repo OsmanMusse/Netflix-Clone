@@ -15,21 +15,7 @@ class PopularCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate,
     
     
     
-    let popularVideos: [VideoData] = {
-        let video1 = VideoData()
-        video1.imageTitle = UIImage(named: "romance-image")
-        
-        let video2 = VideoData()
-        video2.imageTitle = UIImage(named: "the-alienist")
-        
-        let video3 = VideoData()
-        video3.imageTitle = UIImage(named: "designated-survior")
-        
-        let video4 = VideoData()
-        video4.imageTitle = UIImage(named: "crown")
-        
-        return [video1, video2, video3, video4]
-    }()
+  
     
     lazy var customCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -71,7 +57,7 @@ class PopularCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate,
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return popularVideos.count
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -80,7 +66,6 @@ class PopularCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = customCollectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PopularCustomCell
-        cell.popularVideos = popularVideos[indexPath.row]
         
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true

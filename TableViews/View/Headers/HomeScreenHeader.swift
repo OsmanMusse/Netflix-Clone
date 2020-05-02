@@ -180,7 +180,7 @@ class HomeScreenHeader: UICollectionViewCell {
             guard let videoUrl = videoInformation[0]["videoUrl"] as? String else {return}
             
             let singleHeroHeader = VideoData()
-            singleHeroHeader.videoName = videoUrl
+            singleHeroHeader.videoTitle = videoUrl
             self.imageUrl.append(singleHeroHeader)
             
             
