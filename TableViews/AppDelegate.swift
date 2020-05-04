@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
+         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let initialScreen = initalHomeScreen(collectionViewLayout: layout)

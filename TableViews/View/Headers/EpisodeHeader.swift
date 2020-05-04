@@ -15,6 +15,16 @@ class EpisodeHeader: UICollectionViewCell {
     
     let padding: CGFloat = 8
     
+    lazy var overlayAnimationView: UIView = {
+        let view = UIView()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleModalExit))
+        view.addGestureRecognizer(tap)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let seasonLabel:UILabel = {
         let label = UILabel()
         label.text = "Season 1"
@@ -24,11 +34,14 @@ class EpisodeHeader: UICollectionViewCell {
     }()
     
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -37,6 +50,7 @@ class EpisodeHeader: UICollectionViewCell {
     
     func setupLayout(){
         addSubview(seasonLabel)
+        addSubview(overlayAnimationView)
         
         
         NSLayoutConstraint.activate([
@@ -44,10 +58,20 @@ class EpisodeHeader: UICollectionViewCell {
             seasonLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             seasonLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             
+            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor),
+            overlayAnimationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            overlayAnimationView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            overlayAnimationView.heightAnchor.constraint(equalToConstant: 800),
+            
             
             ])
     }
     
+    @objc func handleModalExit(){
+        let notification = Notification(name: NotificationName.OverlayViewDidTap)
+        NotificationCenter.default.post(notification)
+        overlayAnimationView.isHidden = true
+    }
     
     
     

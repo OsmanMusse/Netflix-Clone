@@ -18,16 +18,28 @@ import Network
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     
-    let cellId = "cellId"
+    private let cellId = "cellId"
     var delegate: SingleVideoHeaderDelegate?
     
     var imageUrls = [VideoData]()
     var singleVideoController: SingleVideoController?
+    
+    // Constraints Reference
     var likeXAnchor: NSLayoutConstraint?
     var likeYAnchor: NSLayoutConstraint?
     var dislikeXAnchor: NSLayoutConstraint?
     var dislikeYAnchor: NSLayoutConstraint?
+    var playBtnBottomAnchor: NSLayoutConstraint?
+    
+    var backBtnState: Bool? {
+        didSet{
+            guard let isVisible = backBtnState else {return}
+            goBackView.isHidden = isVisible
+        }
+    }
    
+    
+    
     
     var videoInformation: VideoData? {
         didSet{
@@ -146,9 +158,6 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     }()
 
 
-
-
-
     var blurEffectView: UIVisualEffectView = {
         let osman = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurView = UIVisualEffectView(effect: osman)
@@ -168,9 +177,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         var blackView = UIView()
         blackView.backgroundColor = .black
         blackView.layer.cornerRadius = 20
-        blackView.backgroundColor = .black
-        blackView.alpha = 0.7
-        blackView.isOpaque = true
+        blackView.alpha = 0.6
         blackView.translatesAutoresizingMaskIntoConstraints = false
 
         blackView.addSubview(crossIcon)
@@ -179,6 +186,27 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         crossIcon.centerXAnchor.constraint(equalTo: blackView.centerXAnchor).isActive = true
         
         return blackView
+    }()
+    
+    
+    lazy var backBtn: UIButton = {
+        let backBtn = UIButton(type: .system)
+        backBtn.setImage(UIImage(named: "left-arrow")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        backBtn.addTarget(self, action: #selector(handleBackBtn), for: .touchUpInside)
+        backBtn.translatesAutoresizingMaskIntoConstraints = false
+        return backBtn
+    }()
+    lazy var goBackView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 20
+        view.backgroundColor = .black
+        view.alpha = 0.6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backBtn)
+        
+        backBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        backBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        return view
     }()
 
 
@@ -438,6 +466,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         return view
     }()
     
+
     
     
     
@@ -445,6 +474,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         super.init(frame: frame)
         videoImage.hero.id = "skyWalker"
         setupAnimationConstraints()
+        createObservers()
         setupLayout()
     }
     
@@ -477,17 +507,60 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         cancelBtn.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
     
+    func createObservers(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleExitRating), name: NotificationName.OverlayViewDidTap, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleExitRating), name: NotificationName.videoOptionOverlayDidTap, object: nil)
+    }
+    
+    func setupProgressViewConstraints(){
+        
+        
+        playBtnBottomAnchor =  playBtn.bottomAnchor.constraint(equalTo: videoDescriptionLabel.topAnchor, constant: -35)
+        playBtnBottomAnchor?.isActive = true
+        
+        blurEffectView.contentView.addSubview(progressView)
+        blurEffectView.contentView.addSubview(videoRemainingLabel)
+        blurEffectView.contentView.addSubview(overlayAnimationView)
+        NSLayoutConstraint.activate([
+          videoRemainingLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+          videoRemainingLabel.topAnchor.constraint(equalTo: playBtn.bottomAnchor, constant: 14),
+          
+          progressView.topAnchor.constraint(equalTo: videoRemainingLabel.topAnchor, constant: 6),
+          progressView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+          progressView.trailingAnchor.constraint(equalTo: videoRemainingLabel.leadingAnchor, constant: -20),
+          progressView.heightAnchor.constraint(equalToConstant: 4),
+          
+          overlayAnimationView.leadingAnchor.constraint(equalTo: blurEffectView.leadingAnchor),
+          overlayAnimationView.topAnchor.constraint(equalTo: blurEffectView.topAnchor),
+          overlayAnimationView.trailingAnchor.constraint(equalTo: blurEffectView.trailingAnchor),
+          overlayAnimationView.heightAnchor.constraint(equalToConstant: 850)
+          
+          
+          
+        ])
+    }
+    
+    
+    
     func checkIfVideoWasPlayed(videoInfo: VideoData){
-        guard let videoTitle = videoInfo.videoTitle else {return}
-        Firebase.Database.isVideoResumable(videoTitle: videoTitle) { (videoResumeTime, videoFullTime) in
-         self.playBtn.setTitle("Resume", for: .normal)
-         let remainingTime = self.calculateVideoTime(videoResumeTime: videoResumeTime, videoFullTime: videoFullTime)
-         self.videoRemainingLabel.text = "\(remainingTime) remaining"
-         return
-        }
+       guard let videoTitle = videoInfo.videoTitle else {return}
+       Firebase.Database.isVideoResumable(videoTitle: videoTitle) { (videoResumeTime, videoFullTime) in
+        self.setupProgressViewConstraints()
+        self.playBtn.setTitle("Resume", for: .normal)
+        let remainingTime = self.calculateVideoTime(videoResumeTime: videoResumeTime, videoFullTime: videoFullTime)
+        self.videoRemainingLabel.text = "\(remainingTime) remaining"
+        return
+      }
+        
         
         playBtn.setTitle("Play", for: .normal)
+        playBtnBottomAnchor =  playBtn.bottomAnchor.constraint(equalTo: videoDescriptionLabel.topAnchor, constant: -10)
+        playBtnBottomAnchor?.isActive = true
+        
     }
+    
+    
+    
     
     func calculateVideoTime(videoResumeTime: CGFloat, videoFullTime: CGFloat) -> String {
         let videoFullMinutes = Int(videoFullTime) / 60
@@ -535,16 +608,13 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
           blurEffectView.contentView.addSubview(videoCast)
           blurEffectView.contentView.addSubview(videoDescriptionLabel)
           blurEffectView.contentView.addSubview(playBtn)
-          blurEffectView.contentView.addSubview(progressView)
-          blurEffectView.contentView.addSubview(videoRemainingLabel)
           blurEffectView.contentView.addSubview(videoWatchTitle)
           blurEffectView.contentView.addSubview(videoStackView)
           blurEffectView.contentView.addSubview(videoImageShadow)
           blurEffectView.contentView.addSubview(videoTitleShadow)
           blurEffectView.contentView.addSubview(videoImage)
           blurEffectView.contentView.addSubview(blackCancelView)
-          blurEffectView.contentView.addSubview(overlayAnimationView)
-        
+          blurEffectView.contentView.addSubview(goBackView)
           likeXAnchor = likeContainerView.centerXAnchor.constraint(equalTo: videoOptionStackView.subviews[1].centerXAnchor)
           likeXAnchor?.isActive = true
           likeYAnchor = likeContainerView.centerYAnchor.constraint(equalTo: videoOptionStackView.subviews[1].centerYAnchor)
@@ -554,6 +624,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
           dislikeXAnchor?.isActive = true
           dislikeYAnchor = dislikeContainerView.centerYAnchor.constraint(equalTo: videoOptionStackView.subviews[1].centerYAnchor)
           dislikeYAnchor?.isActive = true
+        
+          playBtnBottomAnchor?.isActive = true
+
         
      
         NSLayoutConstraint.activate([
@@ -581,6 +654,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             blackView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),
             blackView.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor),
             blackView.heightAnchor.constraint(equalToConstant: 220),
+        
             
             blurEffectView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),
             blurEffectView.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor),
@@ -641,18 +715,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             videoDescriptionLabel.trailingAnchor.constraint(equalTo: blurEffectView.trailingAnchor, constant: -13),
 
             playBtn.centerXAnchor.constraint(equalTo: videoStackView.centerXAnchor),
-            playBtn.bottomAnchor.constraint(equalTo: videoDescriptionLabel.topAnchor, constant: -35),
             playBtn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
             playBtn.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
             playBtn.heightAnchor.constraint(equalToConstant: 36),
-            
-            videoRemainingLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
-            videoRemainingLabel.topAnchor.constraint(equalTo: playBtn.bottomAnchor, constant: 14),
-            
-            progressView.topAnchor.constraint(equalTo: videoRemainingLabel.topAnchor, constant: 6),
-            progressView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
-            progressView.trailingAnchor.constraint(equalTo: videoRemainingLabel.leadingAnchor, constant: -20),
-            progressView.heightAnchor.constraint(equalToConstant: 4),
                         
             videoWatchTitle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             videoWatchTitle.bottomAnchor.constraint(equalTo: playBtn.topAnchor, constant: -10),
@@ -686,10 +751,11 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             blackCancelView.widthAnchor.constraint(equalToConstant: 40),
             blackCancelView.heightAnchor.constraint(equalToConstant: 40),
             
-            overlayAnimationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor),
-            overlayAnimationView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            overlayAnimationView.heightAnchor.constraint(equalToConstant: 850)
+            goBackView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 10),
+            goBackView.topAnchor.constraint(equalTo: backgroundImage.safeAreaLayoutGuide.topAnchor, constant: 10),
+            goBackView.widthAnchor.constraint(equalToConstant: 40),
+            goBackView.heightAnchor.constraint(equalToConstant: 40),
+            
         
 
             ])
@@ -709,6 +775,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         dislikeYAnchor?.constant = -90
         
         singleVideoController?.disableScrolling()
+        singleVideoController?.episodeHeader?.overlayAnimationView.isHidden = false
         self.overlayAnimationView.isUserInteractionEnabled = true
         
         UIView.animate(withDuration: 0.3) {
@@ -717,8 +784,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
       
      }
     
-    @objc func handleExitRating(){
+    @objc func handleExitRating(notifcation: NSNotification?){
         UIView.manipulateElements(viewsToHide: [overlayAnimationView,singleVideoController!.overlayView], enabledAlpha: true, enableHidden: nil)
+
         videoOptionStackView.isHidden = false
         
         likeXAnchor?.constant = 0
@@ -727,6 +795,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         dislikeYAnchor?.constant = 0
        
         singleVideoController?.enableScrolling()
+    
+        singleVideoController?.episodeHeader?.overlayAnimationView.isHidden = true
        
        UIView.animate(withDuration: 0.3) {
         UIView.manipulateElements(viewsToHide: [self.likeContainerView,self.dislikeContainerView,self.cancelContainerView], enabledAlpha: true, enableHidden: nil)
@@ -766,8 +836,12 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     }
     
     @objc func handleModalDismiss(){
-        singleVideoController?.goToHomeScreen()
+        singleVideoController?.dismiss(animated: false, completion: nil)
     }
+    
+    @objc func handleBackBtn(){
+        self.singleVideoController?.dismiss(animated: false, completion: nil)
+     }
     
     
     
@@ -815,6 +889,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             self.redSliderTrailer.alpha = 0.0
         }
     }
+    
+ 
     
     
     required init?(coder aDecoder: NSCoder) {

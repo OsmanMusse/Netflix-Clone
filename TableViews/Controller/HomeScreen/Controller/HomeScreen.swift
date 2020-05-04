@@ -79,7 +79,6 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
 
     
     override func viewDidLoad() {
-
         view.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         navigationController?.hidesBarsOnSwipe = true
         self.tabBarController?.tabBar.barTintColor = .black
@@ -170,15 +169,16 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let layout = StretchyHeaderLayout()
         let singleVideoController = SingleVideoController(collectionViewLayout: layout)
         singleVideoController.modalPresentationStyle = .currentContext
-        singleVideoController.hero.isEnabled = allowScreenTransitionAnimation
         singleVideoController.animateCell = allowCellAnimation
-         singleVideoController.video = video
-        self.present(singleVideoController, animated: true, completion: nil)
+        singleVideoController.video = video
+        singleVideoController.isBackBtnHidden = true
+        self.navigationController?.present(singleVideoController, animated: true, completion: nil)
+        
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 2{
+        if section == 2 {
             return videoInformation.count
         }
         return 1
@@ -290,3 +290,4 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
 
     
     
+

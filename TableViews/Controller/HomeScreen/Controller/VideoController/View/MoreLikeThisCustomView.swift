@@ -15,7 +15,9 @@ class MoreLikeThisCustomView: UICollectionViewCell, UICollectionViewDelegate, UI
     private let cellID = "cellID"
     private let padding: CGFloat = 3
     
+    var videoCategory: String?
     var videoInformation: [VideoData] = []
+    var singleVideoController: SingleVideoController?
     
      lazy private var  customCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,10 +51,10 @@ class MoreLikeThisCustomView: UICollectionViewCell, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Do something here when cell is clicked
         let cell = customCollectionView.cellForItem(at: indexPath) as! MoreLikeThisCustomCell
-        print(cell.videoInformation?.videoTitle)
-        
-        
+        cell.videoInformation?.videocategory = videoCategory
+        singleVideoController?.goToVideoController(video: cell.videoInformation!)
     }
     
 
@@ -62,6 +64,7 @@ class MoreLikeThisCustomView: UICollectionViewCell, UICollectionViewDelegate, UI
         setupCollectionView()
         setupLayout()
     }
+    
     
     func setupCollectionView(){
         customCollectionView.register(MoreLikeThisCustomCell.self, forCellWithReuseIdentifier: cellID)

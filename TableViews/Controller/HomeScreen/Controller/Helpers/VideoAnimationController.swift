@@ -8,18 +8,58 @@
 
 import UIKit
 
-class VideoAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+
+
+class VideoAnimationController: NSObject {
     
+    private let animationDuraion: Double
+    private let animationType: AnimationType
+    
+    enum AnimationType {
+        case present
+        case dismiss
+    }
+    
+    init(animationDuration: Double, animationType: AnimationType) {
+        self.animationDuraion = animationDuration
+        self.animationType = animationType
+    }
+}
+
+extension VideoAnimationController: UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        if let time = TimeInterval(exactly: 1.0) {
-            return time
-        }
-        return TimeInterval(exactly: 1.02)!
+        return TimeInterval(exactly: animationDuraion) ?? 0
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let toViewController =  transitionContext.viewController(forKey: .to) else {return}
+        
+        switch animationType {
+        case .present:
+            transitionContext.containerView.addSubview(toViewController.view)
+        presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
+        case .dismiss: return
+        }
+    }
+    
+    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView){
+
+        if let keyWindow = UIApplication.shared.keyWindow {
+            viewToAnimate.frame = CGRect(x: keyWindow.frame.width, y: keyWindow.frame.height
+                , width: 30, height: 30)
+            
+           let duration = transitionDuration(using: transitionContext)
+            
+            UIView.animate(withDuration: duration, animations: {
+                viewToAnimate.frame = keyWindow.frame
+            }) { _ in
+                transitionContext.completeTransition(true)
+            }
+        }
+        
         
     }
     
     
 }
+

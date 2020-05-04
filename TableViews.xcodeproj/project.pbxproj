@@ -49,6 +49,7 @@
 		D342AD4F245C8AA30018D847 /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342AD4E245C8AA30018D847 /* CategoryList.swift */; };
 		D342AD51245C98FC0018D847 /* MoreLikeThisCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342AD50245C98FC0018D847 /* MoreLikeThisCustomCell.swift */; };
 		D342AD53245DC3B10018D847 /* VideoAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342AD52245DC3B10018D847 /* VideoAnimationController.swift */; };
+		D342AD55245F6D950018D847 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342AD54245F6D950018D847 /* Notifications.swift */; };
 		D344EB31245BD2AF00351816 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D344EB30245BD2AE00351816 /* GoogleService-Info.plist */; };
 		D351178E243937D600C6888F /* SettingScreenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351178D243937D600C6888F /* SettingScreenHeader.swift */; };
 		D35117902439472900C6888F /* ProfileMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351178F2439472900C6888F /* ProfileMenuController.swift */; };
@@ -175,6 +176,7 @@
 		D342AD4E245C8AA30018D847 /* CategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
 		D342AD50245C98FC0018D847 /* MoreLikeThisCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreLikeThisCustomCell.swift; sourceTree = "<group>"; };
 		D342AD52245DC3B10018D847 /* VideoAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnimationController.swift; sourceTree = "<group>"; };
+		D342AD54245F6D950018D847 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		D344EB30245BD2AE00351816 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D351178D243937D600C6888F /* SettingScreenHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScreenHeader.swift; sourceTree = "<group>"; };
 		D351178F2439472900C6888F /* ProfileMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuController.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				D319203C244E668000DC9A8D /* VideoTime.swift */,
 				D31C908A24551625001A68A4 /* Alert.swift */,
 				D342AD52245DC3B10018D847 /* VideoAnimationController.swift */,
+				D342AD54245F6D950018D847 /* Notifications.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 				D31C90892454FE90001A68A4 /* VideoController.swift in Sources */,
 				D3B0A5702333F83F0049ED44 /* MyListController.swift in Sources */,
 				D376C9C42315E63900E1755F /* SettingScreenController.swift in Sources */,
+				D342AD55245F6D950018D847 /* Notifications.swift in Sources */,
 				9D33B874241AB26900987A87 /* CustomCell.swift in Sources */,
 				D30FA55A2447C819003FEF21 /* CustomImageView.swift in Sources */,
 				D374933E24450A1000BDA8BC /* WarCustomCell.swift in Sources */,

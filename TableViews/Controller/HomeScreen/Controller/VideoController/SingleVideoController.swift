@@ -31,6 +31,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     var singleHeader: SingleVideoHeader?
     var episodeHeader: EpisodeHeader?
+    var videoOptionCell: VideoOptionCell?
+    var isBackBtnHidden: Bool?
 
     var videoCategory: [VideoCategory]?
     var video: VideoData?
@@ -41,8 +43,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         view.alpha = 0
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleRating))
         view.addGestureRecognizer(tapGesture)
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-       view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.red.withAlphaComponent(0.7)
+        view.translatesAutoresizingMaskIntoConstraints = false
        return view
     }()
     
@@ -56,6 +58,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     
     override func viewDidLoad() {
+        transitioningDelegate = self
         super.viewDidLoad()
         // Setting up the data source of the screen
         setupNavigation()
@@ -71,8 +74,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         }
         
       // Removes the unwanted translucent background color from the navigation bar
-      navigationController?.isNavigationBarHidden = true
-      navigationController?.navigationBar.isTranslucent = true
+      navigationController?.isNavigationBarHidden = false
+      navigationController?.navigationBar.isTranslucent = false
       navigationController?.navigationBar.barTintColor =  Colors.mainblackColor
       navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
     }
@@ -97,10 +100,10 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         switch section {
-        case 0:  return CGSize(width: self.view.frame.width, height: 710)
+        case 0:  return CGSize(width: self.view.frame.width, height: 700)
         case 1:  return CGSize(width: self.view.frame.width, height: 70)
         default:
-             return CGSize(width: self.view.frame.width, height: 710)
+             return CGSize(width: self.view.frame.width, height: 700)
         }
      
     }
@@ -116,6 +119,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
                 singleHeader?.videoInformation = video
+                singleHeader?.backBtnState = isBackBtnHidden
                 singleHeader?.delegate = self
                 return singleHeader!
             case 1:
@@ -138,6 +142,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                 singleHeader?.singleVideoController = self
                 singleHeader?.videoInformation = video
+                singleHeader?.backBtnState = isBackBtnHidden
                 return singleHeader!
             case 1:
                 let trailerHeader = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
@@ -158,12 +163,14 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 case 0:
                     singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
                     singleHeader?.singleVideoController = self
-//                    singleHeader?.videoInformation = video
+                    singleHeader?.videoInformation = video
+                    singleHeader?.backBtnState = isBackBtnHidden
                     return singleHeader!
                 case 1:
                     let MoreHeader = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
-                    MoreHeader.backgroundColor = .orange
+                    MoreHeader.singleVideoController = self
                     MoreHeader.videoInformation = similarVideos
+                    MoreHeader.videoCategory = video?.videocategory
                     
                     return MoreHeader
                     
@@ -180,7 +187,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         else {
             singleHeader =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerCellId, for: indexPath) as? SingleVideoHeader
             singleHeader?.singleVideoController = self
-                  singleHeader?.videoInformation = video
+            singleHeader?.videoInformation = video
+            singleHeader?.backBtnState = isBackBtnHidden
             return singleHeader!
         }
        
@@ -200,18 +208,23 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         let offsetY = scrollView.contentOffset.y
         let calculatedNumber = abs(offsetY) / 100
         let newNumber = 1.0 - calculatedNumber
-        
-        singleHeader?.blackCancelView.alpha = newNumber
-        
+
+        if offsetY < -30.0 {
+            singleHeader?.blackCancelView.alpha = newNumber
+            singleHeader?.goBackView.alpha = newNumber
+        }
+    
+    
         // Dimiss the controller if dragged down
-        if offsetY <= -220.00 {
-            navigationController?.dismiss(animated: true, completion: nil)
+        if offsetY <= -140.0 {
+            let layout = UICollectionViewFlowLayout()
+            self.navigationController?.popViewController(animated: true)
         }
         
         if offsetY >= 300 {
-            navigationController?.isNavigationBarHidden = false
+//            navigationController?.isNavigationBarHidden = true
         } else {
-             navigationController?.isNavigationBarHidden = true
+             navigationController?.isNavigationBarHidden = false
         }
     
             if let layout = collectionViewLayout as? StretchyHeaderLayout {
@@ -330,7 +343,8 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if isEpisodeGrid {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoOptionCellId, for: indexPath)
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoOptionCellId, for: indexPath) as! VideoOptionCell
+            cell.singleVideoController = self
             return cell
         }
         
@@ -343,16 +357,29 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         
         if isMoreLikeThisGrid {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
+            cell.singleVideoController = self
             cell.videoInformation = similarVideos
+            cell.videoCategory = video?.videocategory
             return cell
         }
         else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoOptionCellId, for: indexPath)
-            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoOptionCellId, for: indexPath) as! VideoOptionCell
+            cell.singleVideoController = self
             return cell
         }
        
         
+    }
+    
+    
+     func goToVideoController(video: VideoData) {
+        let layout = StretchyHeaderLayout()
+        let singleVideoController = SingleVideoController(collectionViewLayout: layout)
+        singleVideoController.modalPresentationStyle = .overCurrentContext
+        singleVideoController.transitioningDelegate = self
+        singleVideoController.definesPresentationContext = true
+        singleVideoController.video = video
+        self.present(singleVideoController, animated: true, completion: nil)
     }
     
     
@@ -382,8 +409,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         isTrailerGrid = true
         isEpisodeGrid = false
         isMoreLikeThisGrid = false
-    
-        
+
         UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()
         }, completion: nil)
@@ -396,7 +422,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         isTrailerGrid = false
         isEpisodeGrid = false
         
-        
         UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()
         }, completion: nil)
@@ -404,18 +429,19 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     }
     
     @objc func handleRating(){
-        singleHeader?.handleExitRating()
+        singleHeader?.handleExitRating(notifcation: nil)
     }
     
     func setupLayout(){
-        view.addSubview(overlayView)
-        
-        NSLayoutConstraint.activate([
-            overlayView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            overlayView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            overlayView.heightAnchor.constraint(equalToConstant: 186),
-            overlayView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-        ])
+        self.view.addSubview(overlayView)
+        print(videoOptionCell?.frame)
+            NSLayoutConstraint.activate([
+            
+                overlayView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                overlayView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                overlayView.topAnchor.constraint(equalTo: self.collectionView.bottomAnchor, constant: 0),
+                
+            ])
     }
     
     func goToHomeScreen(){
@@ -437,4 +463,10 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
 }
 
 
-
+extension SingleVideoController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return VideoAnimationController(animationDuration: 0.3, animationType: .present)
+        
+    }
+ 
+}

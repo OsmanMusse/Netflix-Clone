@@ -23,7 +23,6 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     }
     
     
-    
     var homeScreen: HomeScreen?
     
     let innerCellId = "innerCellId"
@@ -87,7 +86,7 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = innerCollectionView.cellForItem(at: indexPath) as! InnerBaseViewCell
         guard let specificVideo = videoData?.videoData?[indexPath.item] else {return}
-        homeScreen?.goToVideoController(video: specificVideo, allowScreenTransitionAnimation: true, allowCellAnimation: true)
+        homeScreen?.goToVideoController(video: specificVideo, allowScreenTransitionAnimation: false, allowCellAnimation: false)
     }
     
     

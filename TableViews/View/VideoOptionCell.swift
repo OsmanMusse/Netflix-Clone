@@ -11,6 +11,10 @@ import UIKit
 class VideoOptionCell: UICollectionViewCell {
     
     
+    var singleVideoController: SingleVideoController?
+    
+
+    
     lazy var videoImage: UIImageView = {
        let image = UIImageView(image: #imageLiteral(resourceName: "druken-watermelon-ep1"))
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -104,8 +108,13 @@ class VideoOptionCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = .clear
         setupLayout()
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handeClick)))
     }
     
+    @objc func handeClick(){
+        let notification = Notification(name: NotificationName.videoOptionOverlayDidTap)
+        NotificationCenter.default.post(notification)
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -116,7 +125,7 @@ class VideoOptionCell: UICollectionViewCell {
         addSubview(videoDescription)
         
         NSLayoutConstraint.activate([
-            
+          
             videoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             videoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             videoStackView.heightAnchor.constraint(equalToConstant: 110),
@@ -124,10 +133,12 @@ class VideoOptionCell: UICollectionViewCell {
             
             videoDescription.topAnchor.constraint(equalTo: videoStackView.bottomAnchor, constant: 10),
             videoDescription.leadingAnchor.constraint(equalTo: videoStackView.leadingAnchor),
-            videoDescription.trailingAnchor.constraint(equalTo: videoStackView.trailingAnchor)
-            
+            videoDescription.trailingAnchor.constraint(equalTo: videoStackView.trailingAnchor),
+          
             ])
     }
+    
+
     
     override func layoutSubviews() {
         videoTitle.centerTextVertically()

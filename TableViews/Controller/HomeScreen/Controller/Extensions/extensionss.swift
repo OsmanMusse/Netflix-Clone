@@ -317,7 +317,3 @@ extension NetworkingAlert {
 }
 
 
-
-extension SingleVideoController {
-    
-}
