@@ -12,10 +12,13 @@ import Firebase
 import Network
 
 
-
  var imageCache2 = [String: UIImage]()
 
+
+
+
 class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
     
     
     private let cellId = "cellId"
@@ -31,6 +34,8 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     var dislikeYAnchor: NSLayoutConstraint?
     var playBtnBottomAnchor: NSLayoutConstraint?
     
+    var shouldAnimationGoDown: Bool?
+    
     var backBtnState: Bool? {
         didSet{
             guard let isVisible = backBtnState else {return}
@@ -43,13 +48,17 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     var videoInformation: VideoData? {
         didSet{
-            videoTitleShadow.text = videoInformation?.videoTitle
             guard let imageURL = videoInformation?.videoURL else {return}
             videoImage.loadImage(urlString: imageURL)
-            videoTitleShadow.text = ""
             
             if let videoInfo = videoInformation {
+                let crossBtn = videoOptionStackView.arrangedSubviews[0].subviews[0] as! UIButton
+                let plusIcon = #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal)
+                let tickIcon = #imageLiteral(resourceName: "interface").withRenderingMode(.alwaysOriginal)
+                print(videoInfo.isAddedToMyList)
+                crossBtn.setImage(videoInfo.isAddedToMyList == true ? tickIcon : plusIcon, for: .normal)
                checkIfVideoWasPlayed(videoInfo: videoInfo)
+                
             }
         }
   }
@@ -289,9 +298,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     lazy var videoOptionStackView: UIStackView = {
         
-        
-        let crossIcon = UIButton(type: .system)
-        crossIcon.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
+        let crossIcon = UIButton(type: .custom)
+        crossIcon.addTarget(self, action: #selector(addToMyList(button:)), for: .touchUpInside)
+        crossIcon.isSelected = false
         crossIcon.contentMode = .scaleAspectFit
         let myListLabel = UILabel()
         myListLabel.text = "My List"
@@ -305,7 +314,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         let rateIcon = UIButton(type: .system)
         rateIcon.isUserInteractionEnabled = true
         rateIcon.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysOriginal), for: .normal)
-        rateIcon.addTarget(self, action: #selector(handleRating), for: .touchUpInside)
+        rateIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRating)))
         rateIcon.isUserInteractionEnabled = true
         rateIcon.contentMode = .scaleAspectFit
         let myRateLabel = UILabel()
@@ -437,6 +446,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
       view.layer.borderColor = UIColor.gray.cgColor
       view.layer.borderWidth = 0.5
       view.clipsToBounds = true
+        
       view.alpha = 0
       view.translatesAutoresizingMaskIntoConstraints = false
       return view
@@ -469,7 +479,6 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
 
     
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         videoImage.hero.id = "skyWalker"
@@ -477,6 +486,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         createObservers()
         setupLayout()
     }
+    
+    
+    
     
     func setupAnimationConstraints(){
         let likeButton = UIButton(type: .system)
@@ -508,8 +520,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     }
     
     func createObservers(){
-        NotificationCenter.default.addObserver(self, selector: #selector(handleExitRating), name: NotificationName.OverlayViewDidTap, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleExitRating), name: NotificationName.videoOptionOverlayDidTap, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleExitRating), name: NotificationName.OverlayViewDidTap.name, object: nil)
     }
     
     func setupProgressViewConstraints(){
@@ -582,12 +593,9 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.x)
     }
 
     func setupLayout() {
-        
-     
           addSubview(backgroundImage)
           addSubview(blackView)
           addSubview(blurEffectView)
@@ -755,27 +763,62 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             goBackView.topAnchor.constraint(equalTo: backgroundImage.safeAreaLayoutGuide.topAnchor, constant: 10),
             goBackView.widthAnchor.constraint(equalToConstant: 40),
             goBackView.heightAnchor.constraint(equalToConstant: 40),
-            
-        
-
+           
             ])
         
 
     }
     
-    
-    @objc func handleRating(){
-        UIView.manipulateElements(viewsToShow: [likeContainerView,dislikeContainerView,cancelContainerView], enabledAlpha: true, enableHidden: nil)
-        UIView.manipulateElements(viewsToShow: [overlayAnimationView,singleVideoController!.overlayView], enabledAlpha: true, enableHidden: nil)
-        videoOptionStackView.isHidden = true
+    @objc func addToMyList(button: UIButton){
+        button.isSelected = !button.isSelected
         
-        likeXAnchor?.constant = -75
-        likeYAnchor?.constant = -90
-        dislikeXAnchor?.constant = 75
-        dislikeYAnchor?.constant = -90
+        if button.isSelected {
+            button.setImage(#imageLiteral(resourceName: "interface").withRenderingMode(.alwaysOriginal), for: .normal)
+            if let videoInfo = videoInformation {
+                // Do Something
+                Firebase.Database.updateMyListData(videoInfo: videoInfo)
+                delegate?.didTapLikeIcon()
+                return
+            }
+            
+        } else {
+            button.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
+            if let videoInfo = videoInformation {
+             // Do Something
+                
+            return 
+          }
+        }
+        
+        
+    
+    }
+    
+    
+    @objc func handleRating(gesture: UITapGestureRecognizer){
+        UIView.manipulateElements(viewsToShow: [likeContainerView,dislikeContainerView,cancelContainerView], enabledAlpha: true, enableHidden: nil)
+        UIView.manipulateElements(viewsToShow: [overlayAnimationView], enabledAlpha: true, enableHidden: nil)
+        videoOptionStackView.isHidden = true
+     
+        
+        if shouldAnimationGoDown == false {
+            likeXAnchor?.constant = -75
+            likeYAnchor?.constant = 90
+            dislikeXAnchor?.constant = 75
+            dislikeYAnchor?.constant = 90
+           
+        } else {
+           likeXAnchor?.constant = -75
+           likeYAnchor?.constant = -90
+           dislikeXAnchor?.constant = 75
+           dislikeYAnchor?.constant = -90
+        }
+       
         
         singleVideoController?.disableScrolling()
         singleVideoController?.episodeHeader?.overlayAnimationView.isHidden = false
+        singleVideoController?.trailerCustomCell?.overlayAnimationView.isHidden = false
+        singleVideoController?.moreLikeThisCustomCell?.overlayAnimationView.isHidden = false
         self.overlayAnimationView.isUserInteractionEnabled = true
         
         UIView.animate(withDuration: 0.3) {
@@ -785,7 +828,7 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
      }
     
     @objc func handleExitRating(notifcation: NSNotification?){
-        UIView.manipulateElements(viewsToHide: [overlayAnimationView,singleVideoController!.overlayView], enabledAlpha: true, enableHidden: nil)
+        UIView.manipulateElements(viewsToHide: [overlayAnimationView], enabledAlpha: true, enableHidden: nil)
 
         videoOptionStackView.isHidden = false
         
@@ -795,9 +838,10 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
         dislikeYAnchor?.constant = 0
        
         singleVideoController?.enableScrolling()
-    
         singleVideoController?.episodeHeader?.overlayAnimationView.isHidden = true
-       
+        singleVideoController?.trailerCustomCell?.overlayAnimationView.isHidden = true
+        singleVideoController?.moreLikeThisCustomCell?.overlayAnimationView.isHidden = true
+     
        UIView.animate(withDuration: 0.3) {
         UIView.manipulateElements(viewsToHide: [self.likeContainerView,self.dislikeContainerView,self.cancelContainerView], enabledAlpha: true, enableHidden: nil)
         self.layoutIfNeeded()

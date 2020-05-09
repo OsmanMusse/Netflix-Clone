@@ -15,12 +15,20 @@ import Firebase
 
 
 class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
     var videoData: VideoCategory? {
         didSet{
             headerLabel.text = videoData?.name
+            
         }
     }
+    
+    var videoInfo: [VideoData]? {
+        didSet{
+          headerLabel.text = "My List"
+       }
+    }
+    
     
     
     var homeScreen: HomeScreen?
@@ -65,11 +73,14 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
  
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let videoCount = videoData?.videoData?.count {
+        if let videoCount = videoData?.videoData?.count, videoCount > 0 {
+            return videoCount
+        } else {
+            if let videoCount = videoInfo?.count {
             return videoCount
         }
-        return 2
-        
+    }
+            return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -77,17 +88,23 @@ class BaseViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as! InnerBaseViewCell
-        cell.videoData = videoData?.videoData?[indexPath.item]
-        
-        return cell
+        if videoData == nil {
+            let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as! InnerBaseViewCell
+            cell.videoInfo = videoInfo?[indexPath.item]
+            return cell
+        } else {
+            let cell = innerCollectionView.dequeueReusableCell(withReuseIdentifier: innerCellId, for: indexPath) as! InnerBaseViewCell
+            cell.videoInfo = videoData?.videoData?[indexPath.item]
+            return cell
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = innerCollectionView.cellForItem(at: indexPath) as! InnerBaseViewCell
-        guard let specificVideo = videoData?.videoData?[indexPath.item] else {return}
-        homeScreen?.goToVideoController(video: specificVideo, allowScreenTransitionAnimation: false, allowCellAnimation: false)
-    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = innerCollectionView.cellForItem(at: indexPath) as! InnerBaseViewCell
+//        guard let specificVideo = videoData?.videoData?[indexPath.item] else {return}
+//        homeScreen?.goToVideoController(video: specificVideo, allowScreenTransitionAnimation: false, allowCellAnimation: false)
+//    }
     
     
     

@@ -17,39 +17,21 @@ import Hero
 var videoImageCache = [String: UIImage]()
 
 class InnerBaseViewCell: UICollectionViewCell {
-   
-    var videoData: VideoData? {
+
+    
+    var videoInfo: VideoData? {
         didSet{
-            
-            guard let videoURL = videoData?.videoURL else {return}
-            guard let url = URL(string: videoURL) else {return}
-            URLSession.shared.dataTask(with: url) { (data, response, err) in
-                if let err = err {
-                    print(err)
-                }
-                
-                if url.absoluteString != videoURL {
-                    return
-                }
-                
-                
-                guard let data = data else {return}
-                
-                guard let constructedImage = UIImage(data: data) else {return}
-         
-                DispatchQueue.main.async {
-                    self.customImageView.image = constructedImage
-                }
-            }.resume()
-            
+            if let videoURL = videoInfo?.videoURL {
+                self.customImageView.loadImage(urlString: videoURL)
+            }
         }
     }
     
     
 
     
-    var customImageView: UIImageView = {
-        let image = UIImageView()
+    var customImageView: CustomImageView = {
+        let image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()

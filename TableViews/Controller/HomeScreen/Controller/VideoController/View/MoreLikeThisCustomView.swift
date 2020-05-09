@@ -31,6 +31,16 @@ class MoreLikeThisCustomView: UICollectionViewCell, UICollectionViewDelegate, UI
         return cv
     }()
     
+    lazy var overlayAnimationView: UIView = {
+           let view = UIView()
+           let tap = UITapGestureRecognizer(target: self, action: #selector(handleModalExit))
+           view.addGestureRecognizer(tap)
+           view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+           view.isHidden = true
+           view.translatesAutoresizingMaskIntoConstraints = false
+           return view
+       }()
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         videoInformation.count
@@ -75,16 +85,26 @@ class MoreLikeThisCustomView: UICollectionViewCell, UICollectionViewDelegate, UI
         }
     }
     
-
+    @objc func handleModalExit(){
+        let notification = Notification(name: NotificationName.OverlayViewDidTap.name)
+        NotificationCenter.default.post(notification)
+    }
     
+ 
     func setupLayout(){
         addSubview(customCollectionView)
+        addSubview(overlayAnimationView)
         NSLayoutConstraint.activate([
         
             customCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             customCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             customCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             customCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor),
+            overlayAnimationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            overlayAnimationView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            overlayAnimationView.heightAnchor.constraint(equalToConstant: 800),
             
         ])
     }

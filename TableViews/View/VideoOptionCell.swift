@@ -109,10 +109,11 @@ class VideoOptionCell: UICollectionViewCell {
         backgroundColor = .clear
         setupLayout()
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handeClick)))
+        self.isOpaque = false
     }
     
     @objc func handeClick(){
-        let notification = Notification(name: NotificationName.videoOptionOverlayDidTap)
+        let notification = Notification(name: NotificationName.OverlayViewDidTap.name)
         NotificationCenter.default.post(notification)
     }
     required init?(coder aDecoder: NSCoder) {

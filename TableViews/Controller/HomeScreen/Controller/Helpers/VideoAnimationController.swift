@@ -20,6 +20,7 @@ class VideoAnimationController: NSObject {
         case dismiss
     }
     
+    
     init(animationDuration: Double, animationType: AnimationType) {
         self.animationDuraion = animationDuration
         self.animationType = animationType

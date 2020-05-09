@@ -18,6 +18,9 @@ class MoreLikeThisCustomCell: UICollectionViewCell{
         }
     }
     
+
+       
+    
     var videoImage: CustomImageView = {
        let image = CustomImageView()
        image.translatesAutoresizingMaskIntoConstraints = false
@@ -39,10 +42,13 @@ class MoreLikeThisCustomCell: UICollectionViewCell{
             videoImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             videoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             videoImage.topAnchor.constraint(equalTo: self.topAnchor),
-            videoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            videoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+        
         
         ])
     }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

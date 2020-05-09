@@ -37,7 +37,6 @@ class EpisodeHeader: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .clear
         setupLayout()
     }
     
@@ -58,7 +57,7 @@ class EpisodeHeader: UICollectionViewCell {
             seasonLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             seasonLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             
-            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor),
+            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor,constant: 0),
             overlayAnimationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             overlayAnimationView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             overlayAnimationView.heightAnchor.constraint(equalToConstant: 800),
@@ -68,9 +67,8 @@ class EpisodeHeader: UICollectionViewCell {
     }
     
     @objc func handleModalExit(){
-        let notification = Notification(name: NotificationName.OverlayViewDidTap)
+        let notification = Notification(name: NotificationName.OverlayViewDidTap.name)
         NotificationCenter.default.post(notification)
-        overlayAnimationView.isHidden = true
     }
     
     

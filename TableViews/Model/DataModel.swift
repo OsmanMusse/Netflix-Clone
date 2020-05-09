@@ -22,6 +22,7 @@ class VideoData {
     var imageBorderColor: UIColor?
     var videocategory: String?
     var videoTrailer: [VideoTrailer]?
+    var isAddedToMyList = false
     
 
     

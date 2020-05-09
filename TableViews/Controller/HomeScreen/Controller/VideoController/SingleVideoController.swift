@@ -12,6 +12,7 @@ import Hero
 import Firebase
 
 
+
 class SingleVideoController: UICollectionViewController, UICollectionViewDelegateFlowLayout, SingleVideoHeaderDelegate{
     
     
@@ -32,29 +33,17 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     var singleHeader: SingleVideoHeader?
     var episodeHeader: EpisodeHeader?
     var videoOptionCell: VideoOptionCell?
+    var trailerCustomCell: TrailerCustomView?
+    var moreLikeThisCustomCell: MoreLikeThisCustomView?
+    var homeScreen: HomeScreen?
     var isBackBtnHidden: Bool?
 
     var videoCategory: [VideoCategory]?
     var video: VideoData?
     var similarVideos: [VideoData] = []
     
-    lazy var overlayView: UIView = {
-       let view = UIView()
-        view.alpha = 0
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleRating))
-        view.addGestureRecognizer(tapGesture)
-        view.backgroundColor = UIColor.red.withAlphaComponent(0.7)
-        view.translatesAutoresizingMaskIntoConstraints = false
-       return view
-    }()
-    
-    
-    
-    var animateCell: Bool?{
-        didSet{
-            
-        }
-    }
+
+
     
     
     override func viewDidLoad() {
@@ -128,7 +117,7 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 return episodeHeader!
                 
             default:
-                let header2 = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
+                 episodeHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                 episodeHeader?.backgroundColor = .purple
                 episodeHeader?.singleVideoReference = self
                 return episodeHeader!
@@ -145,12 +134,13 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                 singleHeader?.backBtnState = isBackBtnHidden
                 return singleHeader!
             case 1:
-                let trailerHeader = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
-                trailerHeader?.videoInformation = video?.videoTrailer?[indexPath.item]
-                return trailerHeader!
+                let trailerCustomCell = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
+                trailerCustomCell?.videoInformation = video?.videoTrailer?[indexPath.item]
+                trailerCustomCell?.videoController = self
+                return trailerCustomCell!
                 
             default:
-                let header2 = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
+                 episodeHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                 episodeHeader?.backgroundColor = .purple
                 episodeHeader?.singleVideoReference = self
                 return episodeHeader!
@@ -167,15 +157,15 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
                     singleHeader?.backBtnState = isBackBtnHidden
                     return singleHeader!
                 case 1:
-                    let MoreHeader = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
-                    MoreHeader.singleVideoController = self
-                    MoreHeader.videoInformation = similarVideos
-                    MoreHeader.videoCategory = video?.videocategory
+                    moreLikeThisCustomCell = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
+                    moreLikeThisCustomCell?.singleVideoController = self
+                    moreLikeThisCustomCell?.videoInformation = similarVideos
+                    moreLikeThisCustomCell?.videoCategory = video?.videocategory
                     
-                    return MoreHeader
+                    return moreLikeThisCustomCell!
                     
                 default:
-                    let header2 = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
+                     episodeHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: episodeHeaderId, for: indexPath) as? EpisodeHeader
                     episodeHeader?.backgroundColor = .purple
                     episodeHeader?.singleVideoReference = self
                     return episodeHeader!
@@ -208,6 +198,12 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         let offsetY = scrollView.contentOffset.y
         let calculatedNumber = abs(offsetY) / 100
         let newNumber = 1.0 - calculatedNumber
+        
+        if offsetY < 429.0 {
+            singleHeader?.shouldAnimationGoDown = true
+        } else {
+             singleHeader?.shouldAnimationGoDown = false
+        }
 
         if offsetY < -30.0 {
             singleHeader?.blackCancelView.alpha = newNumber
@@ -222,38 +218,9 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         }
         
         if offsetY >= 300 {
-//            navigationController?.isNavigationBarHidden = true
         } else {
              navigationController?.isNavigationBarHidden = false
         }
-    
-            if let layout = collectionViewLayout as? StretchyHeaderLayout {
-                let isEpiosdeColorWhite = singleHeader?.episodeBtn.titleLabel?.textColor == UIColor.white
-                 if(offsetY > 710 && isEpiosdeColorWhite == true) {
-                layout.sectionHeadersPinToVisibleBounds = true
-                    episodeHeader?.seasonLabel.alpha = 0.0
-                 } else{
-                    layout.sectionHeadersPinToVisibleBounds = false
-                     episodeHeader?.seasonLabel.alpha = 1.0
-                }
-                
-                guard let layoutInfo = layout.layoutAttributesForElements(in: collectionView.frame) else {return}
-                
-                layoutInfo.forEach({ (attributes) in
-                    if attributes.representedElementKind == UICollectionView.elementKindSectionHeader && attributes.indexPath.section == 1  && attributes.indexPath.item == 0 {
-                        if attributes.frame.origin.y > 710 {
-                             navigationItem.title = "Season 1"
-                        } else {
-                            guard let videoName = video?.videoTitle else {return}
-                          navigationItem.title = videoName
-                        }
-                    }
-                })
-
-                
-         
-        }
-  
         
     }
     
@@ -349,18 +316,18 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         }
         
         if isTrailerGrid {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
-            cell?.videoController = self
-            cell?.videoInformation =  video?.videoTrailer?[indexPath.item]
-            return cell!
+            trailerCustomCell = collectionView.dequeueReusableCell(withReuseIdentifier: trailerGidCellId, for: indexPath) as? TrailerCustomView
+            trailerCustomCell?.videoController = self
+            trailerCustomCell?.videoInformation =  video?.videoTrailer?[indexPath.item]
+            return trailerCustomCell!
         }
         
         if isMoreLikeThisGrid {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
-            cell.singleVideoController = self
-            cell.videoInformation = similarVideos
-            cell.videoCategory = video?.videocategory
-            return cell
+            moreLikeThisCustomCell  = collectionView.dequeueReusableCell(withReuseIdentifier: moreLikeThisCellId, for: indexPath) as! MoreLikeThisCustomView
+            moreLikeThisCustomCell?.singleVideoController = self
+            moreLikeThisCustomCell?.videoInformation = similarVideos
+            moreLikeThisCustomCell?.videoCategory = video?.videocategory
+            return moreLikeThisCustomCell!
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoOptionCellId, for: indexPath) as! VideoOptionCell
@@ -433,15 +400,6 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func setupLayout(){
-        self.view.addSubview(overlayView)
-        print(videoOptionCell?.frame)
-            NSLayoutConstraint.activate([
-            
-                overlayView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                overlayView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                overlayView.topAnchor.constraint(equalTo: self.collectionView.bottomAnchor, constant: 0),
-                
-            ])
     }
     
     func goToHomeScreen(){
@@ -453,6 +411,10 @@ class SingleVideoController: UICollectionViewController, UICollectionViewDelegat
         shareScreen.singleVideoController = self
         shareScreen.modalPresentationStyle = .overFullScreen
         self.present(shareScreen, animated: false, completion: nil)
+    }
+    
+    func didTapLikeIcon() {
+        homeScreen?.getMyListData()
     }
     
     override func viewDidLayoutSubviews() {

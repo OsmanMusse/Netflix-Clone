@@ -24,6 +24,19 @@ class TrailerCustomView: UICollectionViewCell {
         }
     }
     
+    
+    
+    lazy var overlayAnimationView: UIView = {
+        let view = UIView()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleModalExit))
+        view.addGestureRecognizer(tap)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        view.isHidden = true
+        view.isOpaque = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     var videoImage: CustomImageView  = {
         var image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -65,6 +78,7 @@ class TrailerCustomView: UICollectionViewCell {
         addSubview(videoImage)
         addSubview(videoPlayBtn)
         addSubview(videoTitle)
+        addSubview(overlayAnimationView)
         
         NSLayoutConstraint.activate([
             videoImage.topAnchor.constraint(equalTo: self.topAnchor,constant: 20),
@@ -76,9 +90,19 @@ class TrailerCustomView: UICollectionViewCell {
             videoPlayBtn.centerYAnchor.constraint(equalTo: videoImage.centerYAnchor),
             
             videoTitle.topAnchor.constraint(equalTo: videoImage.bottomAnchor, constant: 8),
-            videoTitle.leadingAnchor.constraint(equalTo: videoImage.leadingAnchor)
+            videoTitle.leadingAnchor.constraint(equalTo: videoImage.leadingAnchor),
+            
+            overlayAnimationView.topAnchor.constraint(equalTo: self.topAnchor),
+            overlayAnimationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            overlayAnimationView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            overlayAnimationView.heightAnchor.constraint(equalToConstant: 800),
             
             ])
+    }
+    
+    @objc func handleModalExit(){
+        let notification = Notification(name: NotificationName.OverlayViewDidTap.name)
+        NotificationCenter.default.post(notification)
     }
     
     required init?(coder aDecoder: NSCoder) {

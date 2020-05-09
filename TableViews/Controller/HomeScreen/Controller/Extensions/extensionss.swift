@@ -15,6 +15,7 @@ import Firebase
 
 extension Firebase.Database {
     
+    
     static func getSpecficVideoCategory(catergoryName: CategoryList, completion: @escaping ([VideoData]) -> Void){
         Firebase.Database.database().reference().child("Videocategories").observeSingleEvent(of: .value) { (snapShot) in
             
@@ -61,69 +62,43 @@ extension Firebase.Database {
       } // Closing getSpecficVideoCategory Function
     
 
-    static func getVideoCategories(completion: @escaping (VideoCategory) -> Void){
-        
+    static func getVideoCategories(completion: @escaping ([VideoCategory]) -> Void){
         Firebase.Database.database().reference().child("Videocategories").observe(.value) { (snapShot) in
-            
-            guard let arrayCategory = snapShot.value as? [String: Any] else {return}
-             let videoCategory = VideoCategory()
-             var videoArray = [VideoData]()
-             var videoTrailerArray = [VideoTrailer]()
-
-
-            
-            for item in arrayCategory {
-               guard let dictionary = item.value as? [String: Any] else {return}
-               guard let categoryTitle = dictionary["name"] as? String else {return}
-            
-               videoCategory.videoData?.removeAll()
-            
-               videoCategory.name = categoryTitle
-            
-               guard let categoryVideos = dictionary["videoData"] as? [String:Any] else {return}
-
-               videoArray = []
-               videoTrailerArray = []
-            
-                for video in categoryVideos {
-                    var videoInfo = VideoData()
-                    var videoTrailer = VideoTrailer()
-                    guard let videoDict = video.value as? [String:Any] else {return}
-                    
-                    if let videoTitle = videoDict["videoTitle"] as? String {
-                        videoInfo.videoTitle = videoTitle
-                        videoInfo.videocategory = categoryTitle
-                    }
-                    
-                    guard let videoURL = videoDict["videoURL"] as? String else {return}
-                    videoInfo.videoURL = videoURL
-                    
-                    
-                    videoTrailerArray.removeAll()
-                    
-                    if let videoTrailerDict = videoDict["videoTrailer"] as? [String: Any], let trailerTitle = videoTrailerDict["trailerTitle"] as? String,let  videoURL = videoTrailerDict["videoURL"] as? String {
-                        videoTrailer.videoTitle = trailerTitle
-                        videoTrailer.videoURL = videoURL
-                    }
-                    
-                    videoTrailerArray.append(videoTrailer)
-                    videoInfo.videoTrailer = videoTrailerArray
-                    
-                    videoArray.append(videoInfo)
-
-                    videoCategory.videoData = videoArray
-                    
+            var videoCategoryArray:[VideoCategory] = []
+            var videoDataArray: [VideoData] = []
+            guard let categoryDict = snapShot.value as? [String: Any] else {return}
+            for videoDict in categoryDict {
+                var videoCategoryInfo = VideoCategory()
+                guard let videoCategoryDict = videoDict.value as? [String: Any] else {return}
+                guard let videoCategoryName = videoCategoryDict["name"] as? String else {return}
+                guard let videoDataDict = videoCategoryDict["videoData"] as? [String: Any] else {return}
+                if videoDataArray.count > 0 {
+                    videoCategoryInfo.name = videoCategoryName
+                    videoCategoryInfo.videoData = videoDataArray
+                    videoCategoryArray.append(videoCategoryInfo)
+                }
+           
+                videoDataArray = []
+                
+    
+                for video in videoDataDict {
+                    var videoData = VideoData()
+                    guard let dict = video.value as? [String: Any] else {return}
+                    guard let videoTitle = dict["videoTitle"] as? String else {return}
+                    guard let videoURL = dict["videoURL"] as? String else {return}
+                    videoData.videoTitle = videoTitle
+                    videoData.videoURL = videoURL
+                    videoDataArray.append(videoData)
                 }
                 
+    
                 
-                completion(videoCategory)
                 
             }
-          
-
+            
+            completion(videoCategoryArray)
         }
-    
-    } // Closing Get Video Category Function
+    }
     
     static func getActiveUser(completion: @escaping (ProfileModel) -> Void) {
          let userID = Firebase.Auth.auth().currentUser?.uid
@@ -140,7 +115,6 @@ extension Firebase.Database {
                 let userProfile = ProfileModel(profileName: profileName, profileImage: "")
                 userProfile.userIdentifier = profileKey
                 completion(userProfile)
-                
             }
                 
           }
@@ -234,10 +208,63 @@ extension Firebase.Database {
         }
         
         
+    } // Closing ValidateVideoTimeChange
+    
+    
+    static func updateMyListData(videoInfo: VideoData){
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.getActiveUser { (profileModel) in
+            guard let userIdentifier = profileModel.userIdentifier else {return}
+            guard let videoTitle = videoInfo.videoTitle else {return}
+            guard let videoURL = videoInfo.videoURL else {return}
+            let randomKey = UUID().uuidString
+            let videoDict = ["videoTitle": videoTitle, "videoURL": videoURL, "likes": 1] as [String : Any]
+            let dict = [randomKey:videoDict]
+            
+            Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIdentifier).child("My List").observeSingleEvent(of: .value) { (snapShot) in
+
+                if let dict = snapShot.value as? [String:Any] {
+                    for video in dict {
+                        if let videoDictionary = video.value as? [String: Any], videoTitle == videoDictionary["videoTitle"] as? String {
+                            Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIdentifier).child("My List").child(video.key).removeValue()
+                            return
+                        
+                        }
+                        
+                    }
+                    
+                }
+                
+                Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIdentifier).child("My List").updateChildValues(dict)
+            }
+            
+             
+            
+        }
         
     }
+    static func getMyListData(completion: @escaping ([VideoData]) -> Void) {
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.getActiveUser { (profileModel) in
+            guard let userIdentifier = profileModel.userIdentifier else {return}
+            Firebase.Database.database().reference().child("Users").child(userID).child("Profiles").child(userIdentifier).child("My List").observe(.value) { (snapShot) in
+                var videoDataArray: [VideoData] = []
+                guard let videoDict = snapShot.value as? [String:Any] else {return}
+                for video in videoDict {
+                    var videoInfo = VideoData()
+                    guard let videoDictionary = video.value as? [String: Any] else {return}
+                    guard let videoTitle = videoDictionary["videoTitle"] as? String else {return}
+                    guard let videoURL = videoDictionary["videoURL"] as? String else {return}
+                    videoInfo.videoTitle = videoTitle
+                    videoInfo.videoURL = videoURL
+                    videoInfo.isAddedToMyList = true
+                    videoDataArray.append(videoInfo)
+                }
+                completion(videoDataArray)
+            }
+        }
+    }
     
-
     
 }
 

@@ -13,6 +13,14 @@ protocol SingleVideoHeaderDelegate {
     func isEpisodeLayout()
     func isTrailerLayout()
     func isMoreLikeThisLayout()
+    func didTapLikeIcon()
+}
+
+extension SingleVideoHeaderDelegate {
+    func isEpisodeLayout(){}
+    func isTrailerLayout(){}
+    func isMoreLikeThisLayout(){}
+    func didTapLikeIcon(){}
 }
 
 protocol didSelectShareIcon {
