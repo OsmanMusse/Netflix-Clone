@@ -88,6 +88,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionViewConfig()
         getMyListData()
         getVideoData()
+        setupLayout()
     }
     
   
@@ -164,8 +165,6 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         // Will allow the Hero Header to fill the upper part of the navigation bar
         collectionView.contentInsetAdjustmentBehavior = .never
-        
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
 
     }
     
@@ -223,6 +222,8 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
      
     }
    
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
             return CGSize(width: view.frame.width, height: 500)
@@ -235,7 +236,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexPath.section == 2 {
-            return CGSize(width: view.frame.width, height: 300)
+            return CGSize(width: view.frame.width, height: 350)
         }
           else {
             return CGSize(width: view.frame.width - 2 * padding, height: 190)
@@ -244,7 +245,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: collectionViewPadding, right: 0)
+        return UIEdgeInsets(top: collectionViewPadding, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -275,6 +276,16 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
     }
  
+    
+    func setupLayout(){
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -125),
+        ])
+    }
    
     @objc func handleRefresh(){
         collectionView.reloadData()

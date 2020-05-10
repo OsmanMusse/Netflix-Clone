@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Firebase
 
 
 class VideoViewCell: UICollectionViewCell {
@@ -17,8 +18,10 @@ class VideoViewCell: UICollectionViewCell {
     var player: AVPlayer?
     var videoPlayerLayer:CALayer?
     
-    let videoPoster: UIImageView = {
-        let image = UIImageView(image: #imageLiteral(resourceName: "The-red-sea-poster"))
+    var isChecked = false
+    
+    let videoPoster: CustomImageView = {
+        let image = CustomImageView(image: #imageLiteral(resourceName: "The-red-sea-poster"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -70,8 +73,8 @@ class VideoViewCell: UICollectionViewCell {
     
   
     lazy var soundControls: UIButton = {
-       let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "volume-up-interface-symbol").withRenderingMode(.alwaysOriginal), for: .normal)
+       let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "speaker-off").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleSound), for: .touchUpInside)
         button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +101,7 @@ class VideoViewCell: UICollectionViewCell {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFUIDisplay-Bold", size: 16.5)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        button.setImage(#imageLiteral(resourceName: "close").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
         button.backgroundColor = UIColor(red: 87/255, green: 87/255, blue: 87/255, alpha: 1)
         button.layer.cornerRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -130,6 +133,29 @@ class VideoViewCell: UICollectionViewCell {
         
     }()
     
+    var randomNumberView: UIView = {
+        let videoNumberTag = UILabel()
+        videoNumberTag.text = "18"
+        videoNumberTag.textColor = .white
+        videoNumberTag.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+       let view = UIView()
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        view.addSubview(videoNumberTag)
+        
+        videoNumberTag.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        videoNumberTag.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
+        return view
+    }()
     
     var isPlaying = false
     
@@ -143,6 +169,9 @@ class VideoViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
     
     
     func setupLayout(){
@@ -195,6 +224,8 @@ class VideoViewCell: UICollectionViewCell {
     func setupVideoControls() {
         containerView.addSubview(blackView)
         blackView.addSubview(soundControls)
+        blackView.addSubview(randomNumberView)
+        
         
         
         NSLayoutConstraint.activate([
@@ -206,6 +237,11 @@ class VideoViewCell: UICollectionViewCell {
             soundControls.centerYAnchor.constraint(equalTo: blackView.centerYAnchor),
             soundControls.centerXAnchor.constraint(equalTo: blackView.centerXAnchor),
             
+            randomNumberView.leadingAnchor.constraint(equalTo: videoPoster.leadingAnchor, constant: 18),
+            randomNumberView.bottomAnchor.constraint(equalTo: videoPoster.bottomAnchor, constant: -10),
+            
+            
+            
             ])
       
     }
@@ -213,14 +249,14 @@ class VideoViewCell: UICollectionViewCell {
     
     
     func setupVideoLauncher(){
-        let urlString = "https://www.youtube.com/watch?v=iRo18pUs61Q"
+        let urlString = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         if let url = URL(string: urlString) {
              player = AVPlayer(url: url)
             
             let playerLayer = AVPlayerLayer(player: player)
             playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                        videoView.layer.addSublayer(playerLayer)
-             playerLayer.frame = self.bounds
+            videoView.layer.addSublayer(playerLayer)
+            playerLayer.frame = self.bounds
     
             self.videoPlayerLayer = playerLayer
             
@@ -237,15 +273,17 @@ class VideoViewCell: UICollectionViewCell {
     
     
     @objc func handleSound(){
+        isChecked = !isChecked
         
-        if isPlaying{
-            player?.pause()
-               soundControls.setImage(#imageLiteral(resourceName: "volume-up-interface-symbol").withRenderingMode(.alwaysOriginal), for: .normal)
+        if isChecked {
+            soundControls.setImage(#imageLiteral(resourceName: "volume-up-interface-symbol").withRenderingMode(.alwaysOriginal), for: .normal)
+            player?.isMuted = false
+            return
         } else {
-            player?.play()
-              soundControls.setImage(#imageLiteral(resourceName: "speaker-off").withRenderingMode(.alwaysOriginal), for: .normal)
+            soundControls.setImage(#imageLiteral(resourceName: "speaker-off").withRenderingMode(.alwaysOriginal), for: .normal)
+            player?.isMuted = true
+            return
         }
-        isPlaying = !isPlaying
     }
 
     

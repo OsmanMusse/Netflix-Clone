@@ -263,10 +263,35 @@ extension Firebase.Database {
                 completion(videoDataArray)
             }
         }
+    } // Closing getMyListData Function
+    
+    static func getRandomHeroImage(completion: @escaping  (VideoData) -> Void){
+        Firebase.Database.database().reference().child("HeroImages").observeSingleEvent(of: .value) { (snapShot) in
+            guard let dict = snapShot.value as? [String : Any] else {return}
+            var videoDataArray: [VideoData] = []
+            let videoDataInfo = VideoData()
+            for item in dict {
+                    guard let videoInfo = item.value as? [String: Any] else {return}
+                    guard let videoTitle = videoInfo["videoTitle"] as? String else {return}
+                    guard let videoURL = videoInfo["videoURL"] as? String else {return}
+                    videoDataInfo.videoTitle = videoTitle
+                    videoDataInfo.videoURL = videoURL
+                    videoDataArray.append(videoDataInfo)
+                
+                if videoDataArray.count == 1 {
+                    completion(videoDataArray[0])
+                }
+                
+                }
+                
+            }
+            
+            
+            
+        }
     }
     
-    
-}
+  
 
 
 extension UIView {

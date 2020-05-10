@@ -24,8 +24,8 @@ class HomeScreenHeader: UICollectionViewCell {
     
     var delegate: HomeScreenRefreshDelegate?
     
-    var imagePoster: UIImageView = {
-       let image = UIImageView()
+    var imagePoster: CustomImageView = {
+       let image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -86,6 +86,7 @@ class HomeScreenHeader: UICollectionViewCell {
         button.setTitle("Play", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFUIDisplay-Bold", size: 16.5)
+        button.isSelected = false
         button.setImage(#imageLiteral(resourceName: "play-button").withRenderingMode(.alwaysOriginal), for: .normal)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
@@ -162,71 +163,24 @@ class HomeScreenHeader: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        setupHeroImage()
+        getHeroImage()
     }
-    
+   
     
   
-    
-    func setupHeroImage(){
-        
-        
-        let firebaseDatabase = Database.database().reference()
-        firebaseDatabase.observeSingleEvent(of: .value) { (snapShot) in
-            guard let dictionary = snapShot.value as? [String: [Dictionary<String,AnyObject>]] else {return }
-            guard let firstItem = dictionary["Videocategories"] else {return}
-            guard let videoSection = firstItem[3]["videoData"] else {return}
-            guard let videoInformation = videoSection as? [Dictionary<String, AnyObject>] else {return}
-            guard let videoUrl = videoInformation[0]["videoUrl"] as? String else {return}
-            
-            let singleHeroHeader = VideoData()
-            singleHeroHeader.videoTitle = videoUrl
-            self.imageUrl.append(singleHeroHeader)
-            
-            
-            guard let url = URL(string: videoUrl) else {return}
-                
-                URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    guard let imageData = data else {return}
-                    
-                    let constructedImage = UIImage(data: imageData)
-                    
-                    DispatchQueue.main.async {
-                        self.imagePoster.image = constructedImage
-                    }
-                    
-                    }.resume()
-    }
-        
-        
-    }
-    
-    
-    
-    fileprivate func saveHeroImageToDatabase(){
-        let firebaseDatabaseReference = Database.database().reference().child("Videocategories/0/videoData")
-        
-        let ref = firebaseDatabaseReference.childByAutoId()
-    
-        let value =  ["videoURL": "https://firebasestorage.googleapis.com/v0/b/netflix-clone-933db.appspot.com/o/The-Stranger-Header.png?alt=media&token=1cf56780-9564-4fc8-b44d-6e45143e9cc0"]
-        ref.updateChildValues(value) { (error, ref) in
-            if let  error = error {
-                print("Error Updating the Firebase RealTime Database")
+    func getHeroImage(){
+        Firebase.Database.getRandomHeroImage { (heroImage) in
+            guard let heroURL = heroImage.videoURL else {return}
+            DispatchQueue.main.async {
+                self.imagePoster.loadImage(urlString: heroURL)
             }
             
         }
         
-          addIconBtn.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-            delegate?.didRefreshFirebaseDatabase()
-      
     }
-    
-    
+          
     @objc func handleAddBtn(){
         addIconBtn.setImage(#imageLiteral(resourceName: "tick").withRenderingMode(.alwaysOriginal), for: .normal)
-        saveHeroImageToDatabase()
-
     }
     
     
@@ -235,10 +189,6 @@ class HomeScreenHeader: UICollectionViewCell {
         homeScreen?.goToVideoController(video: imageUrl[0], allowScreenTransitionAnimation: true, allowCellAnimation: false)
         
     }
-    
-    
-   
-    
     
     
     func setupLayout(){
