@@ -79,6 +79,7 @@
 		D3893A19230316D500685C78 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3893A18230316D500685C78 /* Colors.swift */; };
 		D394793D22EE635E0005A790 /* CustomPreviewsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D394793C22EE635E0005A790 /* CustomPreviewsViewCell.swift */; };
 		D397C2EE22F11C4C0025DF9E /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D397C2ED22F11C4C0025DF9E /* VideoViewCell.swift */; };
+		D3A684B32468BE290030ECFE /* NetworkAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A684B22468BE290030ECFE /* NetworkAlertView.swift */; };
 		D3A7E4BB2433C96800317785 /* CustomImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A7E4BA2433C96800317785 /* CustomImagePickerCell.swift */; };
 		D3A81D8D230CD26A007852F8 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81D8C230CD26A007852F8 /* extensions.swift */; };
 		D3A81D8F230EE121007852F8 /* EpisodeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */; };
@@ -206,6 +207,7 @@
 		D3893A18230316D500685C78 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D394793C22EE635E0005A790 /* CustomPreviewsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPreviewsViewCell.swift; sourceTree = "<group>"; };
 		D397C2ED22F11C4C0025DF9E /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
+		D3A684B22468BE290030ECFE /* NetworkAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlertView.swift; sourceTree = "<group>"; };
 		D3A7E4BA2433C96800317785 /* CustomImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerCell.swift; sourceTree = "<group>"; };
 		D3A81D8C230CD26A007852F8 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		D3A81D8E230EE121007852F8 /* EpisodeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeader.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 		D30FA55D24488B33003FEF21 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D3A684B22468BE290030ECFE /* NetworkAlertView.swift */,
 				D30FA55E24488B4C003FEF21 /* VideoLauncher.swift */,
 				D319203C244E668000DC9A8D /* VideoTime.swift */,
 				D31C908A24551625001A68A4 /* Alert.swift */,
@@ -577,6 +580,8 @@
 		D37493392445051900BDA8BC /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
+				D30FA55D24488B33003FEF21 /* Helpers */,
+				D3749342244535CF00BDA8BC /* Extensions */,
 				D374933A2445052200BDA8BC /* Modal */,
 				D374933B2445052600BDA8BC /* View */,
 				D374933C2445052C00BDA8BC /* Controller */,
@@ -609,8 +614,6 @@
 				D338C1BA22D0289900295657 /* HomeScreen.swift */,
 				D31C90882454FE90001A68A4 /* VideoController.swift */,
 				D30FA55B24488ADE003FEF21 /* VideoController */,
-				D30FA55D24488B33003FEF21 /* Helpers */,
-				D3749342244535CF00BDA8BC /* Extensions */,
 				D334446C24578A7A002667EB /* ShareScreen.swift */,
 			);
 			path = Controller;
@@ -888,6 +891,7 @@
 				D30FA55F24488B4C003FEF21 /* VideoLauncher.swift in Sources */,
 				D334446D24578A7A002667EB /* ShareScreen.swift in Sources */,
 				D334447024578C01002667EB /* ShareApp.swift in Sources */,
+				D3A684B32468BE290030ECFE /* NetworkAlertView.swift in Sources */,
 				D3CEFBB422EC024000421AC4 /* DataModel.swift in Sources */,
 				9D33B86D241AB23700987A87 /* SignInScreen.swift in Sources */,
 				D36AF3B023E62B16004BDCDB /* InnerBaseViewCell.swift in Sources */,

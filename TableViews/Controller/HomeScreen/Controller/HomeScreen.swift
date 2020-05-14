@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import SVProgressHUD
-import SwiftUI
 
 class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomeScreenRefreshDelegate, SingleVideoHeaderDelegate{
     
@@ -24,6 +23,7 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     let myListCellID = "myListCellID"
     
     var isAddBtnActive = false
+    
     
     func didRefreshFirebaseDatabase() {
         isAddBtnActive = true
@@ -110,7 +110,6 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
             self.myListData = videoData
             self.collectionView.reloadData()
         }
-
         
     }
     
@@ -256,7 +255,8 @@ class HomeScreen: UICollectionViewController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.section == 2{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoViewCellId, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoViewCellId, for: indexPath) as! VideoViewCell
+            cell.homeScreen = self
             return cell
         }
                 

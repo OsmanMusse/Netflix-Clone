@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Firebase
+import Network
 
 
 class VideoViewCell: UICollectionViewCell {
@@ -17,9 +18,14 @@ class VideoViewCell: UICollectionViewCell {
     
     var player: AVPlayer?
     var videoPlayerLayer:CALayer?
+    var homeScreen: HomeScreen?
     
     var isChecked = false
+    var isPlaying = false
+    var isToggled = false
+    var isInternetConnectionValid: Bool = true
     
+    var videoTrailerData = VideoData()
     let videoPoster: CustomImageView = {
         let image = CustomImageView(image: #imageLiteral(resourceName: "The-red-sea-poster"))
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +60,7 @@ class VideoViewCell: UICollectionViewCell {
     lazy var blackView: UIView = {
         var blackView = UIView()
         blackView.backgroundColor = .black
-        blackView.layer.cornerRadius = 19
+        blackView.layer.cornerRadius = 21
         blackView.isHidden = true
         blackView.backgroundColor = .black
         blackView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +80,7 @@ class VideoViewCell: UICollectionViewCell {
   
     lazy var soundControls: UIButton = {
        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "speaker-off").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "speaker-off-2").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleSound), for: .touchUpInside)
         button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -95,14 +101,15 @@ class VideoViewCell: UICollectionViewCell {
     }()
     
     
-    var listButton: UIButton = {
-        let button = UIButton(type: .system)
+    lazy var listButton: UIButton = {
+        let button = UIButton(type: .custom)
         button.setTitle("My List", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFUIDisplay-Bold", size: 16.5)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.backgroundColor = UIColor(red: 87/255, green: 87/255, blue: 87/255, alpha: 1)
+        button.addTarget(self, action: #selector(addToMyList), for: .touchUpInside)
+        button.backgroundColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
         button.layer.cornerRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -142,11 +149,11 @@ class VideoViewCell: UICollectionViewCell {
         
        let view = UIView()
         view.backgroundColor = .black
-        view.layer.cornerRadius = 2
+        view.layer.cornerRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 36).isActive = true
         
         view.addSubview(videoNumberTag)
         
@@ -157,20 +164,57 @@ class VideoViewCell: UICollectionViewCell {
         return view
     }()
     
-    var isPlaying = false
+
+
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
+        fetchObservers()
         setupLayout()
         setupVideoControls()
         setupVideoLauncher()
+        
+        Firebase.Database.getRandomTrailerVideo { (videoData) in
+            let videoTrailerTitle = videoData.videoTitle
+            let videoTrailerURL = videoData.videoURL
+            let videoTrailerKey = videoData.videoKeyIdentifier
+            
+            self.videoTrailerData.videoTitle = videoTrailerTitle
+            self.videoTrailerData.videoURL = videoTrailerURL
+            self.videoTrailerData.videoKeyIdentifier = videoTrailerKey
+            print(self.videoTrailerData.videoKeyIdentifier)
+            
+        }
+        
+        
+        
     }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+
+    
+    func fetchObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(internetConnectionInvalid), name: NotificationName.internetConnectionInvalid.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(internetConnectionValid), name: NotificationName.internetConnectionValid.name, object: nil)
     }
     
+    func showAlertController(){
+        let alertController = UIAlertController(title: nil, message: "Could Not Update My List", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel) { (alertAction) in
+            DispatchQueue.main.async {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+           
+        }
+        alertController.addAction(alertAction)
+        DispatchQueue.main.async {
+             self.homeScreen?.present(alertController, animated: true, completion: nil)
+        }
+       
+    }
     
+ 
     
     
     
@@ -210,7 +254,7 @@ class VideoViewCell: UICollectionViewCell {
             buttonStackView.bottomAnchor.constraint(equalTo: videoView.bottomAnchor),
             buttonStackView.leadingAnchor.constraint(equalTo: videoView.leadingAnchor, constant: 10),
             buttonStackView.trailingAnchor.constraint(equalTo: videoView.trailingAnchor, constant: -10),
-            buttonStackView.heightAnchor.constraint(equalToConstant:35)
+            buttonStackView.heightAnchor.constraint(equalToConstant:40)
             
             
             ])
@@ -230,8 +274,8 @@ class VideoViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             blackView.trailingAnchor.constraint(equalTo: videoPoster.trailingAnchor, constant: -18),
-            blackView.widthAnchor.constraint(equalToConstant: 38),
-            blackView.heightAnchor.constraint(equalToConstant: 38),
+            blackView.widthAnchor.constraint(equalToConstant: 42),
+            blackView.heightAnchor.constraint(equalToConstant: 42),
             blackView.bottomAnchor.constraint(equalTo: videoPoster.bottomAnchor, constant: -10),
             
             soundControls.centerYAnchor.constraint(equalTo: blackView.centerYAnchor),
@@ -260,7 +304,8 @@ class VideoViewCell: UICollectionViewCell {
     
             self.videoPlayerLayer = playerLayer
             
-              player?.play()
+            player?.play()
+            player?.isMuted = true
             
             player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
             
@@ -276,16 +321,42 @@ class VideoViewCell: UICollectionViewCell {
         isChecked = !isChecked
         
         if isChecked {
-            soundControls.setImage(#imageLiteral(resourceName: "volume-up-interface-symbol").withRenderingMode(.alwaysOriginal), for: .normal)
+            soundControls.setImage(#imageLiteral(resourceName: "speaker-on-2").withRenderingMode(.alwaysOriginal), for: .normal)
             player?.isMuted = false
             return
         } else {
-            soundControls.setImage(#imageLiteral(resourceName: "speaker-off").withRenderingMode(.alwaysOriginal), for: .normal)
+            soundControls.setImage(#imageLiteral(resourceName: "speaker-off-2").withRenderingMode(.alwaysOriginal), for: .normal)
             player?.isMuted = true
             return
         }
     }
-
+    
+    
+    @objc func internetConnectionValid(){
+        isInternetConnectionValid = true
+    }
+    
+    @objc func internetConnectionInvalid(){
+        isInternetConnectionValid = false
+    }
+    
+    @objc func addToMyList( _ button: UIButton){
+        isToggled = !isToggled
+        
+        if isInternetConnectionValid == true {
+            if isToggled {
+              Firebase.Database.addToMyList(videoInfo: videoTrailerData)
+                button.setImage(#imageLiteral(resourceName: "tick").withRenderingMode(.alwaysOriginal), for: .normal)
+            } else {
+                 Firebase.Database.removeFromMyList(videoInfo: videoTrailerData)
+                button.setImage(#imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+            
+        } else {
+            print("Internet Error")
+            showAlertController()
+        }
+    }
     
    
   
@@ -300,11 +371,6 @@ class VideoViewCell: UICollectionViewCell {
        
     }
 
-
-
-    
-
-    
  
     override func layoutSubviews() {
       super.layoutSubviews()
@@ -315,6 +381,12 @@ class VideoViewCell: UICollectionViewCell {
         super.layoutSublayers(of: layer)
         let videoBounds = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height - padding)
         videoPlayerLayer?.frame = videoBounds
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
 }

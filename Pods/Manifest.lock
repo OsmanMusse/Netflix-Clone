@@ -91,6 +91,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PromisesObjC (1.2.8)
+  - ReachabilitySwift (5.0.0)
   - SVProgressHUD (2.2.5)
   - XLPagerTabStrip (8.1.0)
 
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Hero
   - lottie-ios
+  - ReachabilitySwift
   - SVProgressHUD
   - XLPagerTabStrip
 
@@ -126,6 +128,7 @@ SPEC REPOS:
     - lottie-ios
     - nanopb
     - PromisesObjC
+    - ReachabilitySwift
     - SVProgressHUD
     - XLPagerTabStrip
 
@@ -150,9 +153,10 @@ SPEC CHECKSUMS:
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: b44a9a16eba2f651ed3229bdfcb8bb592c1d23da
+PODFILE CHECKSUM: 7430bae065e24c7473d2619064b2d883f0be8b5c
 
 COCOAPODS: 1.9.1

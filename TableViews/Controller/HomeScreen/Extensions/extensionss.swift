@@ -265,30 +265,98 @@ extension Firebase.Database {
         }
     } // Closing getMyListData Function
     
+    
+    
+
+    static func addToMyList(videoInfo: VideoData){
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.getActiveUser { (profileData) in
+            guard let userIdentifier = profileData.userIdentifier else {return}
+            guard let videoTitle = videoInfo.videoTitle else {return}
+            guard let videoURL = videoInfo.videoURL else {return}
+            let randomKey = UUID().uuidString
+            let videoInfoDict = ["videoTitle": videoTitle, "videoURL": videoURL]
+            let videoDict = [randomKey : videoInfoDict]
+            Firebase.Database.database().reference().child("MyList").child(userID).child(userIdentifier).updateChildValues(videoDict)
+        }
+        
+    } // Closing Add To My List Function
+    
+    static func removeFromMyList(videoInfo: VideoData){
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.getActiveUser { (profileInfo) in
+            guard let userIdentifier = profileInfo.userIdentifier else {return}
+            guard let videoKey = videoInfo.videoKeyIdentifier else {return}
+            Firebase.Database.database().reference().child("MyList").child(userID).child(userIdentifier).child(videoKey).removeValue()
+        }
+        
+    }
+    
+    
+    
+    
+    
+    static func getRandomTrailerVideo(completion: @escaping (VideoData) -> Void){
+        guard let userID = Firebase.Auth.auth().currentUser?.uid else {return}
+        Firebase.Database.database().reference().child("Videocategories").observeSingleEvent(of: .value) { (snapShot) in
+            guard let dict = snapShot.value as? [String: Any] else {return}
+            for videoCategory in dict  {
+                guard let videoDict = videoCategory.value as? [String: Any] else {return}
+                guard let categoryName = videoDict["name"] as? String else {return}
+                guard let categoryVideos = videoDict["videoData"] as? [String: Any] else {return}
+                if categoryName == "Trending Now" {
+                    for videos in categoryVideos {
+                        let videoInfo = VideoData()
+                        guard let videoTrailerDict = videos.value as? [String:Any] else {return}
+                        for videoTrailer in videoTrailerDict {
+                            let videoKey = UUID().uuidString
+                            guard let videoTrailerArray = videoTrailerDict["videoTrailer"] as? [String: Any] else {return}
+                            guard let videoTrailerTitle = videoTrailerArray["trailerTitle"] as? String else {return}
+                            guard let videoTrailerURL = videoTrailerArray["videoURL"] as? String else {return}
+                            videoInfo.videoTitle = videoTrailerTitle
+                            videoInfo.videoURL = videoTrailerURL
+                            videoInfo.videoKeyIdentifier = videoKey
+                            completion(videoInfo)
+                            return
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     static func getRandomHeroImage(completion: @escaping  (VideoData) -> Void){
-        Firebase.Database.database().reference().child("HeroImages").observeSingleEvent(of: .value) { (snapShot) in
-            guard let dict = snapShot.value as? [String : Any] else {return}
-            var videoDataArray: [VideoData] = []
-            let videoDataInfo = VideoData()
-            for item in dict {
-                    guard let videoInfo = item.value as? [String: Any] else {return}
-                    guard let videoTitle = videoInfo["videoTitle"] as? String else {return}
-                    guard let videoURL = videoInfo["videoURL"] as? String else {return}
-                    videoDataInfo.videoTitle = videoTitle
-                    videoDataInfo.videoURL = videoURL
-                    videoDataArray.append(videoDataInfo)
-                
-                if videoDataArray.count == 1 {
-                    completion(videoDataArray[0])
-                }
-                
-                }
+        Firebase.Database.database().reference(withPath: ".info/connected") .child("HeroImages").observe(.value) { (snapShot) in
+            if snapShot.value as? Bool ?? false {
+                 guard let dict = snapShot.value as? [String : Any] else {return}
+                 var videoDataArray: [VideoData] = []
+                 let videoDataInfo = VideoData()
+                 for item in dict {
+                         guard let videoInfo = item.value as? [String: Any] else {return}
+                         guard let videoTitle = videoInfo["videoTitle"] as? String else {return}
+                         guard let videoURL = videoInfo["videoURL"] as? String else {return}
+                         videoDataInfo.videoTitle = videoTitle
+                         videoDataInfo.videoURL = videoURL
+                         videoDataArray.append(videoDataInfo)
+                     
+                     if videoDataArray.count == 1 {
+                         completion(videoDataArray[0])
+                     }
+                     
+                     }
+
+            }
                 
             }
             
             
             
-        }
+        }  // Closing Random Hero Image
+    
+
+    
     }
     
   

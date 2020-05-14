@@ -776,7 +776,6 @@ class SingleVideoHeader: UICollectionViewCell, UICollectionViewDelegate, UIColle
             button.setImage(#imageLiteral(resourceName: "interface").withRenderingMode(.alwaysOriginal), for: .normal)
             if let videoInfo = videoInformation {
                 // Do Something
-                Firebase.Database.updateMyListData(videoInfo: videoInfo)
                 delegate?.didTapLikeIcon()
                 return
             }

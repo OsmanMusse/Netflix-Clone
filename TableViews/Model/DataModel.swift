@@ -23,6 +23,9 @@ class VideoData {
     var videocategory: String?
     var videoTrailer: [VideoTrailer]?
     var isAddedToMyList = false
+    var videoKeyIdentifier:String?
+
+    
     
 
     

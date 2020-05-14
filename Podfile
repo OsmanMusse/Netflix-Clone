@@ -14,6 +14,7 @@ pod 'Firebase/Storage'
 pod 'Hero'
 pod 'SVProgressHUD'
 pod 'lottie-ios'
+pod 'ReachabilitySwift'
 
 end
 
@@ -30,6 +31,7 @@ pod 'Firebase/Storage'
 pod 'Hero'
 pod 'SVProgressHUD'
 pod 'lottie-ios'
+pod  'ReachabilitySwift' 
 
 
 

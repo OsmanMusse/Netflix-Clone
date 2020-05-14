@@ -8,11 +8,15 @@
 
 import UIKit
 import Firebase
+import Reachability
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+
+    var reachability:Reachability?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -30,9 +34,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = .black
         window?.rootViewController = navigationController
-              
-  
         
+        let networkAlertView = NetworkAlertView()
+        
+          do {
+          try reachability = Reachability()
+            NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: Notification.Name.reachabilityChanged, object: reachability)
+            try reachability?.startNotifier()
+          } catch {
+               print("This is not working.")
+          }
+       
         return true
     }
 
@@ -56,6 +68,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    @objc func reachabilityChanged(note: NSNotification) {
+    let reachability = note.object as! Reachability
+    if reachability.connection != .unavailable {
+        if reachability.connection == .cellular {
+        let notification = Notification(name: NotificationName.internetConnectionValid.name)
+        NotificationCenter.default.post(notification)
+      
+    } else {
+      print("Reachable via Cellular")
+    }
+        
+    } else {
+      let notification = Notification(name: NotificationName.internetConnectionInvalid.name)
+      NotificationCenter.default.post(notification)
+    }
+        
     }
 
 
